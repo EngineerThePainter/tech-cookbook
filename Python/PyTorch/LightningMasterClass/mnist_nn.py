@@ -1,3 +1,4 @@
+import pdb
 import torch
 from torch import nn
 from torch import optim
@@ -22,6 +23,7 @@ class ResidualNetwork(nn.Module):
         drop_output = self.dropout(hidden_layer_2 + hidden_layer_1)
         logits = self.output_transformation(drop_output)
         return logits
+
 
 def main():
 
@@ -53,6 +55,8 @@ def main():
     nb_epochs = 5
     for epoch in range(nb_epochs):
         losses = list()
+        accuracies = list()
+        model.train()
         for batch in train_loader:
             x, y = batch
 
@@ -63,6 +67,7 @@ def main():
             # 1. Forward
             # logit = model(x) - for commented model
             logit = model.forward(x)
+            # pdb.set_trace() # uncomment for debugging
 
             # 2. Compute the objective function
             J = loss(logit, y)
@@ -80,10 +85,16 @@ def main():
             # with torch.no_grad(): params - eta * params.grad
 
             losses.append(J.item())
-        print(f'Epoch {epoch + 1}, train loss: {torch.tensor(losses).mean():.2f}')
+            accuracies.append(y.eq(logit.detach().argmax(dim=1)).float().mean())
+
+        print(f'Epoch {epoch + 1}')
+        print(f'Train Loss: {torch.tensor(losses).mean():.2f}')
+        print(f'Accuracy: {torch.tensor(accuracies).mean():.2f}')
 
         # Validation
         losses = list()
+        accuracies = list()
+        model.eval()
         for batch in val_loader:
             x, y = batch
 
@@ -100,8 +111,9 @@ def main():
             J = loss(logit, y)
 
             losses.append(J.item())
-
-        print(f'Epoch {epoch + 1}, validation loss: {torch.tensor(losses).mean():.2f}')
+            accuracies.append(y.eq(logit.detach().argmax(dim=1)).float().mean())
+        print(f'Val loss: {torch.tensor(losses).mean():.2f}')
+        print(f'Val accuracy: {torch.tensor(accuracies).mean():.2f}')
 
     return 0
 
