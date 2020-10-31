@@ -1,9 +1,11 @@
 """
 Note: the content of the movies from aforementioned playlist in README (7th August 2020)
-is pretty deprecated, here I'm presenting code with removed deprecation warnings pytorch_lightning 1.0.4
+is pretty deprecated, here I'm presenting code with removed deprecation warnings pytorch_lightning 1.0.4.
 """
 
 import pdb
+import multiprocessing
+
 import torch
 from torch import nn
 from torch import optim
@@ -30,6 +32,15 @@ class ResidualNetwork(pl.LightningModule):
         self.output_transformation = nn.Linear(64, 10)
         self.dropout = nn.Dropout(0.1)
         self.loss = nn.CrossEntropyLoss()
+        self.cpu_count = multiprocessing.cpu_count()
+        self.batch_size = 32
+
+    def prepare_data(self):
+        datasets.MNIST('data', train=True, download=True, transform=transforms.ToTensor())
+
+    def setup(self, stage):
+        dataset = datasets.MNIST('data', train=True, download=False, transform=transforms.ToTensor())
+        self.train_data, self.val_data = random_split(dataset, [55000, 5000])
 
     def forward(self, x):
         hidden_layer_1 = nn.functional.relu(self.input_transformation(x))
@@ -44,44 +55,36 @@ class ResidualNetwork(pl.LightningModule):
         return optimizer
 
     def training_step(self, batch, batch_idx):
+        return self._perform_step(batch)
+
+    def validation_step(self, batch, batch_idx):
+        results = self._perform_step(batch)
+        results['val_acc'] = results['step_acc']
+        del results['step_acc']
+        return results
+
+    def validation_epoch_end(self, val_step_outputs):
+        avg_val_loss = torch.tensor([x['loss'] for x in val_step_outputs]).mean()
+        avg_val_acc = torch.tensor([x['val_acc'] for x in val_step_outputs]).mean()
+        self.log('val_loss', avg_val_loss, on_epoch=True, prog_bar=True, logger=True)
+        self.log('avg_val_acc', avg_val_acc, on_epoch=True, prog_bar=True, logger=True)
+
+    def train_dataloader(self):
+        train_loader = DataLoader(self.train_data, batch_size=self.batch_size, num_workers=self.cpu_count)
+        return train_loader
+
+    def val_dataloader(self):
+        val_loader = DataLoader(self.val_data, batch_size=self.batch_size, num_workers=self.cpu_count)
+        return val_loader
+
+    def _perform_step(self, batch):
         x, y = batch
         batch_size = x.size(0)
         x = x.view(batch_size, -1)
         logits = self(x)
         J = self.loss(logits, y)
         acc = accuracy(logits, y)
-        pbar = {'train_acc': acc}
-        return {'loss': J, 'progress_bar': pbar}
-
-    def validation_step(self, batch, batch_idx):
-        results = self.training_step(batch, batch_idx)
-        results['progress_bar']['val_acc'] = results['progress_bar']['train_acc']
-        del results['progress_bar']['train_acc']
-        return results
-
-    def validation_epoch_end(self, val_step_outputs):
-        avg_val_loss = torch.tensor([x['loss'] for x in val_step_outputs]).mean()
-        avg_val_acc = torch.tensor([x['progress_bar']['val_acc'] for x in val_step_outputs]).mean()
-        self.log('val_loss', avg_val_loss)
-        self.log('avg_val_acc', avg_val_acc)
-
-    def train_dataloader(self):
-        train_data = datasets.MNIST('data', train=True, download=True, transform=transforms.ToTensor())
-        train, val = random_split(train_data, [55000, 5000])
-        train_loader = DataLoader(train, batch_size=32)
-        return train_loader
-
-    def val_dataloader(self):
-        train_data = datasets.MNIST('data', train=True, download=True, transform=transforms.ToTensor())
-        train, val = random_split(train_data, [55000, 5000])
-        val_loader = DataLoader(val, batch_size=32)
-        return val_loader
-
-
-class ImageClassifier(nn.Module):
-    def __init__(self):
-        self.resnet = ResidualNetwork()
-        self.fc = nn.Linear()
+        return {'loss': J, 'step_acc': acc}
 
 
 def main():
