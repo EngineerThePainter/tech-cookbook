@@ -7,7 +7,7 @@ void printTitle(const std::string& title) {
     std::cout << "********** " << title <<" **********" << std::endl;
 }
 
-void useMax1Template() {
+void max1SimpleUsage() {
     /**
      * The basics::max() is calculated for each type separately. 
      * The only requirement for this function is support for operator '<' used inside function body.
@@ -28,12 +28,47 @@ void useMax1Template() {
 
     const std::string s1 = "Math is fun";
     const std::string s2 = "Math";
-    std::cout << "max(s1, s2) = " << basics::max(s1, s2) << std::endl;
+    std::cout << "max(s1, s2) = " << basics::max(s1, s2) << std::endl << std::endl;
+}
+
+void max1ReturnType() {
+    printTitle("Using max1.hpp evaluation of different returns");
+
+    const int a = 5;
+    const double b = 6.66;
+    std::cout << "maxWithT1ReturnType(a, b) = " << basics::maxWithT1ReturnType(a, b) << std::endl;
+    std::cout << "maxWithT1ReturnType(b, a) = " << basics::maxWithT1ReturnType(b, a) << std::endl;
+
+    /**
+     * We HAVE TO specify the template types, as return type is not deduced.
+     */
+    std::cout << "Return type int for maxWithRTReturnType(a, b) = " <<
+        basics::maxWithRTReturnType<int, double, int>(a, b) << std::endl;
+    std::cout << "Return type double for maxWithRTReturnType(a, b) = " << 
+        basics::maxWithRTReturnType<int, double, double>(a, b) << std::endl;
+
+    /**
+     * When return type is first on the list we can go with this approach 
+     * and deduce rest of the types int and double.
+     */ 
+    std::cout << "Deduced double for maxWithRTReturnTypeAsFirstArgument(a, b) = " << 
+        basics::maxWithRTReturnTypeAsFirstArgument<double>(a, b) << std::endl;
+
+    std::cout << "Deduced int for maxWithRTReturnTypeAsFirstArgument(a, b) = " << 
+        basics::maxWithRTReturnTypeAsFirstArgument<int>(a, b) << std::endl;
+
+    // Auto is possible since C++14
+    std::cout << "Return type for maxWithAuto(a, b) = " <<
+        basics::maxWithAuto(a, b) << std::endl;
+
+    std::cout << "Return type for maxWithAuto(b, a) = " << 
+        basics::maxWithAuto(b, a) << std::endl;
+
 }
 
 int main() {
     std::cout << "C++ Templates Chapter 1" << std::endl;
-    useMax1Template();
-
+    max1SimpleUsage();
+    max1ReturnType();
     return 0;
 }
