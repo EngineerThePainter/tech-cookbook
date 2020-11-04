@@ -7,6 +7,18 @@ void printTitle(const std::string& title) {
     std::cout << "********** " << title <<" **********" << std::endl;
 }
 
+void emptyLine() {
+    std::cout << std::endl;
+}
+
+/**
+ * I know that T should be checked for operator<<, but currently I don't know how to ensure such thing :)
+ */
+template<typename T>
+void printCallFunction(const std::string& functionHeader, T value) {
+    std::cout<< "Call for " << functionHeader << " gives: " << value << std::endl;
+}
+
 void max1SimpleUsage() {
     /**
      * The basics::max() is calculated for each type separately. 
@@ -20,15 +32,16 @@ void max1SimpleUsage() {
     printTitle("Using max1.hpp");
 
     const int i = 404;
-    std::cout << "max(7, i) = " << basics::max(7, i) << std::endl;
+    printCallFunction("max(7, i)", basics::max(7, i));
 
     const double f1 = 3.4;
     const double f2 = -6.3;
-    std::cout << "max(f1, f2) = " << basics::max(f1, f2) << std::endl;
+    printCallFunction("max(f1, f2)", basics::max(f1, f2));
 
     const std::string s1 = "Math is fun";
     const std::string s2 = "Math";
-    std::cout << "max(s1, s2) = " << basics::max(s1, s2) << std::endl << std::endl;
+    printCallFunction("max(s1, s2))", basics::max(s1, s2));
+    emptyLine();
 }
 
 void max1ReturnType() {
@@ -36,34 +49,42 @@ void max1ReturnType() {
 
     const int a = 5;
     const double b = 6.66;
-    std::cout << "maxWithT1ReturnType(a, b) = " << basics::maxWithT1ReturnType(a, b) << std::endl;
-    std::cout << "maxWithT1ReturnType(b, a) = " << basics::maxWithT1ReturnType(b, a) << std::endl;
+    printCallFunction("maxWithT1ReturnType(a, b)", basics::maxWithT1ReturnType(a, b));
+    printCallFunction("maxWithT1ReturnType(b, a)", basics::maxWithT1ReturnType(b, a));
+    emptyLine();
 
     /**
      * We HAVE TO specify the template types, as return type is not deduced.
      */
-    std::cout << "Return type int for maxWithRTReturnType(a, b) = " <<
-        basics::maxWithRTReturnType<int, double, int>(a, b) << std::endl;
-    std::cout << "Return type double for maxWithRTReturnType(a, b) = " << 
-        basics::maxWithRTReturnType<int, double, double>(a, b) << std::endl;
+    printCallFunction("maxWithRTReturnType(a, b)", basics::maxWithRTReturnType<int, double, int>(a, b));
+    printCallFunction("maxWithRTReturnType(a, b)", basics::maxWithRTReturnType<int, double, double>(a, b));
+    emptyLine();
 
     /**
      * When return type is first on the list we can go with this approach 
      * and deduce rest of the types int and double.
      */ 
-    std::cout << "Deduced double for maxWithRTReturnTypeAsFirstArgument(a, b) = " << 
-        basics::maxWithRTReturnTypeAsFirstArgument<double>(a, b) << std::endl;
+    printCallFunction("maxWithRTReturnTypeAsFirstArgument(a, b)", basics::maxWithRTReturnTypeAsFirstArgument<double>(a, b));
+    printCallFunction("maxWithRTReturnTypeAsFirstArgument(a, b)", basics::maxWithRTReturnTypeAsFirstArgument<int>(a, b));
+    emptyLine();
 
-    std::cout << "Deduced int for maxWithRTReturnTypeAsFirstArgument(a, b) = " << 
-        basics::maxWithRTReturnTypeAsFirstArgument<int>(a, b) << std::endl;
+    // Calling this one is possible since C++14
+    printCallFunction("maxWithAuto(a, b)", basics::maxWithAuto(a, b));
+    printCallFunction("maxWithAuto(b, a)", basics::maxWithAuto(b, a));
+    emptyLine();
 
-    // Auto is possible since C++14
-    std::cout << "Return type for maxWithAuto(a, b) = " <<
-        basics::maxWithAuto(a, b) << std::endl;
+    // Decltype before C++14
+    printCallFunction("maxWithDecltype(a, b)", basics::maxWithDecltype(a, b));
+    printCallFunction("maxWithDecltype(b, a)", basics::maxWithDecltype(b, a));
+    emptyLine();
 
-    std::cout << "Return type for maxWithAuto(b, a) = " << 
-        basics::maxWithAuto(b, a) << std::endl;
+    printCallFunction("maxWithDecltypeDecay(a, b)", basics::maxWithDecltypeDecay(a, b));
+    printCallFunction("maxWithDecltypeDecay(b, a)", basics::maxWithDecltypeDecay(b, a));
+    emptyLine();
 
+    printCallFunction("maxWithCommonTypeT(a, b)", basics::maxWithCommonTypeT(a, b));
+    printCallFunction("maxWithCommonTypeT(b, a)", basics::maxWithCommonTypeT(b, a));
+    emptyLine();
 }
 
 int main() {
