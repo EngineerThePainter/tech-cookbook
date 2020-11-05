@@ -8,7 +8,8 @@ if (UNIX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra")
 endif(UNIX)
 
-set(HEADERS basics/max1.hpp)
+set(HEADERS basics/max.hpp)
+set(HEADERS basics/max_return_type.hpp)
 
 add_executable(${PROJECT_NAME} main.cpp ${HEADERS})
 
