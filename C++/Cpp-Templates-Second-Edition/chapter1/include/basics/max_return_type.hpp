@@ -3,6 +3,7 @@
 
 #include <type_traits>
 
+namespace chapter {
 namespace basics {
 
 template<typename T1, typename T2>
@@ -78,6 +79,7 @@ RT maxDefaultArgumentCommonType(T1 a, T2 b) {
     return b < a ? a : b;
 }
 
-}
+} // basics
+} // chapter
 
 #endif
