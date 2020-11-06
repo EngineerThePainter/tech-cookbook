@@ -14,7 +14,7 @@ Going to present here to some C++ template aspects implemented in my own way a b
 
 ## Content description <a name="content"></a>
 
-The plan is to put make all chapters from this book as a separate C++ projects, where some template aspects will be presented. How many of them and in which way? I have no idea, time will tell.
+The plan is to put make all chapters from this book in one C++ project, where some template aspects will be presented. How many of them and in which way? I have no idea, time will tell.
 
 ## Licensing, Authors, and Acknowledgements <a name="licensing"></a>
 

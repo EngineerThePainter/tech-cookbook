@@ -1,10 +1,13 @@
+#include "chapter1.hpp"
+
 #include <iostream>
 #include <string>
 
 #include "basics/max.hpp"
-#include "basics/max_return_type.hpp"
 #include "basics/max_overloads.hpp"
+#include "basics/max_return_type.hpp"
 
+namespace chapter {
 void printTitle(const std::string& title) {
     std::cout << "********** " << title <<" **********" << std::endl;
 }
@@ -106,6 +109,7 @@ void maxOverloadFunctionTemplate() {
     // <> tells explicitly to call template
     printCallFunction("maxOverload<>(7, 42)", basics::maxOverload<>(7, 42));
     printCallFunction("maxOverload<double>(7, 42)", basics::maxOverload<double>(7, 42));
+    // Calling this template may raise warning as there is implicit conversion from 'double' to 'int'.
     printCallFunction("maxOverload<double>('a', 42.7)", basics::maxOverload('a', 42.7));
     emptyLine();
 
@@ -141,10 +145,12 @@ void maxOverloadFunctionTemplate() {
     emptyLine();
 }
 
-int main() {
-    std::cout << "C++ Templates Chapter 1" << std::endl;
+void runChapter1() {
+    printTitle("C++ Templates Chapter 1");
+    emptyLine();
     maxSimpleUsage();
     maxReturnType();
     maxOverloadFunctionTemplate();
-    return 0;
+}
+
 }
