@@ -7,14 +7,9 @@
 #include "basics/max_overloads.hpp"
 #include "basics/max_return_type.hpp"
 
-namespace chapter {
-void printTitle(const std::string& title) {
-    std::cout << "********** " << title <<" **********" << std::endl;
-}
+#include "common_prints.hpp"
 
-void emptyLine() {
-    std::cout << std::endl;
-}
+namespace chapter {
 
 /**
  * I know that T should be checked for operator<<, but currently I don't know how to ensure such thing :)
