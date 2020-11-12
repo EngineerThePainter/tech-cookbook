@@ -2,7 +2,9 @@
 #define CHAPTER2_HPP
 
 namespace chapter {
-    void runChapter1();   
+
+void runChapter2(); 
+  
 }
 
 #endif

@@ -11,14 +11,6 @@
 
 namespace chapter {
 
-/**
- * I know that T should be checked for operator<<, but currently I don't know how to ensure such thing :)
- */
-template<typename T>
-void printCallFunction(const std::string& functionHeader, T value) {
-    std::cout<< "Call for " << functionHeader << " gives: " << value << std::endl;
-}
-
 void maxSimpleUsage() {
     /**
      * The basics::max() is calculated for each type separately. 
