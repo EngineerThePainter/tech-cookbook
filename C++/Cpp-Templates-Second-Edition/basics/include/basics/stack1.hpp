@@ -2,6 +2,8 @@
 #define STACK1_HPP
 
 #include <cassert>
+#include <iostream>
+#include <ostream>
 #include <vector>
 
 namespace chapter {
@@ -15,6 +17,12 @@ class Stack {
     T const& top() const;
     bool empty() const {
         return elems.empty();
+    }
+    
+    void printOn(std::ostream& strm) const {
+        for (T const& elem: elems) {
+            strm << elem << " ";
+        }
     }
 
     private:
