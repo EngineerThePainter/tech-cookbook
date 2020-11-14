@@ -6,6 +6,7 @@
 
 #include "basics/stack1.hpp"
 #include "basics/stack2.hpp"
+#include "basics/stackpartspec.hpp"
 #include "common_prints.hpp"
 
 namespace chapter {
@@ -65,6 +66,26 @@ void partialUsage() {
      * despite the fact that the operator<< is defined for this class template
     */
     // std::cout << "Calling operator<< on partialPairStack: " << partialPairStack << std::endl;
+    emptyLine();
+
+    printTitle("Partial specialization of class template");
+    basics::Stack<int*> partialPointerStack;
+    int* a = new int(42);
+    int* b = new int(404);
+
+    partialPointerStack.push(a);
+    partialPointerStack.push(b);
+    printCallFunction("partialPointerStack.top()", *partialPointerStack.top());
+    /**
+     * Impossible as there is no operator<< for this specialization
+    */
+    // std::cout << "Calling operator<< on partialPointerStack: " << partialPointerStack << std::endl;
+    delete a;
+    delete b;
+}
+
+void partialSpecialization() {
+
 }
 
 }
@@ -73,6 +94,7 @@ void runChapter2() {
     printTitle("C++ Templates Chapter 2");
     useStack();
     partialUsage();
+    partialSpecialization();
 }
 
 }
