@@ -9,6 +9,14 @@
 namespace chapter {
 namespace basics {
 
+/** Early declaration that will allow for operator<<
+ *  to be declared and defined as a friend inside Stack<T>
+ */
+template<typename T>
+class Stack;
+template<typename T>
+std::ostream& operator<< (std::ostream&, Stack<T>const&);
+
 template<typename T>
 class Stack {
     public:
@@ -26,6 +34,12 @@ class Stack {
     }
 
     private:
+
+    friend std::ostream& operator<< <T> (std::ostream& strm, Stack<T>const& s) {
+        s.printOn(strm);
+        return strm;
+    }
+
     std::vector<T> elems;
 };
 
