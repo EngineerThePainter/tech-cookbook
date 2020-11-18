@@ -9,6 +9,7 @@ set(HEADERS
     include/basics/max_overloads.hpp
     include/basics/stack1.hpp
     include/basics/stack2.hpp
+    include/basics/stack3.hpp
     include/basics/stackpartspec.hpp
 )
 

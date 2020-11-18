@@ -1,11 +1,14 @@
 #include "chapter2.hpp"
 
+#include <deque>
 #include <iostream>
 #include <string>
+#include <type_traits>
 #include <utility>
 
 #include "basics/stack1.hpp"
 #include "basics/stack2.hpp"
+#include "basics/stack3.hpp"
 #include "basics/stackpartspec.hpp"
 #include "common_prints.hpp"
 
@@ -82,10 +85,31 @@ void partialUsage() {
     // std::cout << "Calling operator<< on partialPointerStack: " << partialPointerStack << std::endl;
     delete a;
     delete b;
+    emptyLine();
 }
 
-void partialSpecialization() {
+void defaultClassTemplateArguments() {
+    printTitle("Default Class Template Arguments");
+    basics::StackDefaultArg<int> intStack;
+    intStack.push(5);
+    intStack.push(6);
+    printMessage("Declaration of this template with not default argument");
+    basics::StackDefaultArg<double, std::deque<double>> dblStack;
+    dblStack.push(42.5);
 
+    printCallFunction("intStack.top()", intStack.top());
+    printCallFunction("dblStack.top()", dblStack.top());
+    emptyLine();
+}
+
+void constness() {
+    printTitle("Checking constness");
+    using NormalIntStack = basics::Stack<int>;
+    using ConstIntStack = std::add_const_t<NormalIntStack>;
+    std::cout << std::boolalpha;
+    std::cout << "Const for NormalIntStack: " << std::is_const<NormalIntStack>::value << std::endl;
+    std::cout << "Const for ConstIntStack: " << std::is_const<ConstIntStack>::value << std::endl;
+    emptyLine();
 }
 
 }
@@ -94,7 +118,8 @@ void runChapter2() {
     printTitle("C++ Templates Chapter 2");
     useStack();
     partialUsage();
-    partialSpecialization();
+    defaultClassTemplateArguments();
+    constness();
 }
 
 }

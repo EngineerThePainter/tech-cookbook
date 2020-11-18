@@ -8,6 +8,8 @@ namespace chapter {
 
 inline void printTitle(const std::string& title) {std::cout << "********** " << title <<" **********" << std::endl;}
 
+inline void printMessage(const std::string& message) {std::cout << message << std::endl;}
+
 inline void emptyLine() {std::cout << std::endl;}
 
 /**
