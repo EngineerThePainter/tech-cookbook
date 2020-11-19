@@ -3,6 +3,7 @@
 #include <deque>
 #include <iostream>
 #include <string>
+#include <typeinfo>
 #include <type_traits>
 #include <utility>
 
@@ -10,6 +11,8 @@
 #include "basics/stack2.hpp"
 #include "basics/stack3.hpp"
 #include "basics/stackpartspec.hpp"
+#include "basics/templatized_aggregate.hpp"
+
 #include "common_prints.hpp"
 
 namespace chapter {
@@ -112,7 +115,34 @@ void constness() {
     emptyLine();
 }
 
+void classArgumentDeduction() {
+    printTitle("Deduction of class template arguments");
+    basics::Stack<int> intStack1;
+    basics::Stack<int> intStack2 = intStack1;
+    // since C++17
+    basics::Stack intStack3 = intStack1;
+
+    // Deduction of stack type based on the constructor
+    // since C++17
+    basics::Stack intStack4 = 42;
+    printCallFunction("intStack4.top()", intStack4.top());
+    emptyLine();
 }
+
+void templatizedAggregates() {
+    printTitle("Templatized Aggregates");
+    basics::ValueWithComment<int> vc = {42, "initial value"};
+    std::cout << "Type of vc.value: " << typeid(vc.value).name() << std::endl;
+    std::cout << "Type of vc.comment: " << typeid(vc.comment).name() << std::endl;
+
+    //Works since C++17
+    basics::ValueWithComment vc2 = {"hello", "initial value"};
+    std::cout << "Type of vc2.value: " << typeid(vc2.value).name() << std::endl;
+    std::cout << "Type of vc2.comment: " << typeid(vc2.comment).name() << std::endl;
+    emptyLine();
+}
+
+} // namespace
 
 void runChapter2() {
     printTitle("C++ Templates Chapter 2");
@@ -120,6 +150,8 @@ void runChapter2() {
     partialUsage();
     defaultClassTemplateArguments();
     constness();
+    classArgumentDeduction();
+    templatizedAggregates();
 }
 
 }

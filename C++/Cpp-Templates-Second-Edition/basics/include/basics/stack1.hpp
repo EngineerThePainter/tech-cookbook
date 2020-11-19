@@ -20,6 +20,12 @@ std::ostream& operator<< (std::ostream&, Stack<T>const&);
 template<typename T>
 class Stack {
     public:
+    Stack() = default;
+    Stack (T const& elem)
+    : elems({elem})
+    {
+    }
+
     void push(T const& elem);
     void pop();
     T const& top() const;
