@@ -1,14 +1,22 @@
-project(chapter1)
+project(basics)
 
 set(HEADERS
     include/chapter1.hpp
+    include/chapter2.hpp
+    include/common_prints.hpp
     include/basics/max.hpp
     include/basics/max_return_type.hpp
     include/basics/max_overloads.hpp
+    include/basics/stack1.hpp
+    include/basics/stack2.hpp
+    include/basics/stack3.hpp
+    include/basics/stackpartspec.hpp
+    include/basics/templatized_aggregate.hpp
 )
 
 set(SOURCES
     src/chapter1.cpp
+    src/chapter2.cpp
 )
 
 add_library(${PROJECT_NAME}

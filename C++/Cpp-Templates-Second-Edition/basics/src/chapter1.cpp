@@ -7,22 +7,9 @@
 #include "basics/max_overloads.hpp"
 #include "basics/max_return_type.hpp"
 
+#include "common_prints.hpp"
+
 namespace chapter {
-void printTitle(const std::string& title) {
-    std::cout << "********** " << title <<" **********" << std::endl;
-}
-
-void emptyLine() {
-    std::cout << std::endl;
-}
-
-/**
- * I know that T should be checked for operator<<, but currently I don't know how to ensure such thing :)
- */
-template<typename T>
-void printCallFunction(const std::string& functionHeader, T value) {
-    std::cout<< "Call for " << functionHeader << " gives: " << value << std::endl;
-}
 
 void maxSimpleUsage() {
     /**
