@@ -3,6 +3,7 @@ project(basics)
 set(HEADERS
     include/chapter1.hpp
     include/chapter2.hpp
+    include/chapter3.hpp
     include/common_prints.hpp
     include/basics/max.hpp
     include/basics/max_return_type.hpp
@@ -17,6 +18,7 @@ set(HEADERS
 set(SOURCES
     src/chapter1.cpp
     src/chapter2.cpp
+    src/chapter3.cpp
 )
 
 add_library(${PROJECT_NAME}
