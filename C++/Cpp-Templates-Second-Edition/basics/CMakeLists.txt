@@ -12,6 +12,7 @@ set(HEADERS
     include/basics/stack2.hpp
     include/basics/stack3.hpp
     include/basics/stackpartspec.hpp
+    include/basics/stacknontype.hpp
     include/basics/templatized_aggregate.hpp
 )
 
