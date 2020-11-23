@@ -52,6 +52,11 @@ T const& StackNonType<T, Maxsize>::top() const {
     return elems[numElems - 1];
 }
 
+template<auto Val, typename T = decltype(Val)>
+void printPassedX(T x) {
+    std::cout << "It's " << x << " for Val: " << Val << std::endl;
+}
+
 }
 }
 
