@@ -1,0 +1,3 @@
+/home/daniel/mydata/repos/tech-cookbook/Python/PythonWithCpp/build/CMakeFiles/rebuild_cache.dir
+/home/daniel/mydata/repos/tech-cookbook/Python/PythonWithCpp/build/CMakeFiles/edit_cache.dir
+/home/daniel/mydata/repos/tech-cookbook/Python/PythonWithCpp/build/CMakeFiles/MathCalc.dir
