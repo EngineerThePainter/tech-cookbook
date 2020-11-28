@@ -1,1 +1,0 @@
-/usr/bin/clang++-10 -fPIC  -Wall -Wextra  -shared -Wl,-soname,libMathCalc.so -o libMathCalc.so CMakeFiles/MathCalc.dir/math_calc.cpp.o 
