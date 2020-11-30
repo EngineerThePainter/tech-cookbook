@@ -1,5 +1,5 @@
 from invoke import task, run
-
+from invoke.exceptions import UnexpectedExit
 # def print_banner(msg):
 #     print("==================================================")
 #     print("= {} ".format(msg)
@@ -7,12 +7,15 @@ from invoke import task, run
 @task()
 def build_math_calc(c):
     """ Build the shared library for the sample C++ code """
-    # print_banner("Building C++ Library")
 
-    # run("mkdir build")
-    run("cmake -B build")
-    run("cmake --build build")
-    run("cp build/libMathCalc.so .")
+    try:
+        run("mkdir MathCalc/build")
+    except UnexpectedExit as identifier:
+        print(f"cannot create a directory: {identifier}")
+    
+    run("cmake -B MathCalc/build MathCalc/")
+    run("cmake --build MathCalc/build")
+    run("cp MathCalc/build/libMathCalc.so .")
     print("* Complete")
 
 
