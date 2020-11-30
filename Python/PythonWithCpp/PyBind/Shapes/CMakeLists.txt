@@ -11,8 +11,16 @@ endif(UNIX)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup(TARGETS)
 
-pybind11_add_module(${PROJECT_NAME} areas_calc.cpp areas_calc.hpp pybind_wrapper.cpp)
+set(HEADERS 
+areas_calc.hpp
+rectangle.hpp)
+
+set(SOURCES
+areas_calc.cpp
+rectangle.cpp)
+
+pybind11_add_module(${PROJECT_NAME} ${HEADERS} ${SOURCES} pybind_wrapper.cpp)
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
 target_link_libraries(${PROJECT_NAME} PUBLIC)
 
-add_executable(shapes main.cpp areas_calc.cpp areas_calc.hpp)
+add_executable(shapes main.cpp ${HEADERS} ${SOURCES})
