@@ -1,4 +1,4 @@
-import Shapes.build.lib.Shapes
+import Shapes
 
 def main():
     x, y = 6, 2.3

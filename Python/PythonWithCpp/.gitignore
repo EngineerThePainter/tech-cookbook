@@ -3,4 +3,4 @@ PyBind/Shapes/build/*
 Ctypes/libMathCalc.so
 venv/*
 .idea/*
-PyBind/Shapes/Shapes.cpython-38-x86_64-linux-gnu.so
+PyBind/Shapes.cpython-38-x86_64-linux-gnu.so
