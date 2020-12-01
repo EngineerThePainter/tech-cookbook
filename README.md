@@ -1,2 +1,5 @@
 # tech-cookbook
-The bucket project where I would like to put all things that I'm finding useful to present when working with algorithms, AI and programming languages.
+
+This project is going to be a bucket for everything new that I'm learning or finding fun from programming languages, algorithms and AI.
+
+I just want to see how big this repository I can make when reading technical books or reading articles. If you want to see anything special just let me know by creating an issue.
