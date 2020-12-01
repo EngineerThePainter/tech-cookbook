@@ -47,4 +47,5 @@ python3 use_math_calc.py
 
 ## Licensing, Authors, and Acknowledgements <a name='licensing'></a>
 
-I was using mostly this [article](https://realpython.com/python-bindings-overview/) written by Jim Anderson.
+As everything in this repo it's released under MIT License. When working on this sub-project I was using information from this [article](https://realpython.com/python-bindings-overview/) written by Jim Anderson and documentation.
+
