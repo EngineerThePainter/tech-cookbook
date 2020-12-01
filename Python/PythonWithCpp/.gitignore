@@ -1,0 +1,6 @@
+Ctypes/MathCalc/build/*
+PyBind/Shapes/build/*
+Ctypes/libMathCalc.so
+venv/*
+.idea/*
+PyBind/Shapes.cpython-38-x86_64-linux-gnu.so
