@@ -18,4 +18,4 @@ The goal of this small project is showing how to use C/C++ code from the Python 
 
 ## Licensing, Authors, and Acknowledgements <a name='licensing'></a>
 
-As everything in this repo it's under MIT License. When working on this sub-project I was using information from this [article](https://realpython.com/python-bindings-overview/) written by Jim Anderson and ctypes and pybind11 docs.
+As everything in this repo it's under MIT License. When working on this sub-project I was using information from this [article](https://realpython.com/python-bindings-overview/) written by [Jim Anderson](https://github.com/jima80525) and ctypes and pybind11 docs.
