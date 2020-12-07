@@ -3,7 +3,6 @@
 
 #include <string>
 
-namespace chapter {
 namespace basics {
 
 template<typename T>
@@ -15,6 +14,5 @@ struct ValueWithComment {
 ValueWithComment(char const*, char const*) -> ValueWithComment<std::string>;
 
 } // namespace basics
-} // namespace chapter
 
 #endif // TEMPLATIZED_AGGREGATE_HPP

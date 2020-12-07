@@ -6,7 +6,6 @@
 #include <ostream>
 #include <vector>
 
-namespace chapter {
 namespace basics {
 
 /** Early declaration that will allow for operator<<
@@ -67,6 +66,5 @@ T const& Stack<T>::top() const {
 }
 
 } // namespace basics
-} // namespace chapter
 
 #endif

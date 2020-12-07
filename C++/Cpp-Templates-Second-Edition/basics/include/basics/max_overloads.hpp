@@ -5,7 +5,6 @@
 #include <iostream>
 #include <string>
 
-namespace chapter {
 namespace basics {
 
 int maxOverload(int a, int b) {
@@ -71,6 +70,5 @@ int maxBadDeclarationOrder(int a, int b) {
 }
 
 } // basics
-} // chapter
 
 #endif

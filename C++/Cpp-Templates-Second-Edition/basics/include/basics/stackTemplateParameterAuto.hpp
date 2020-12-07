@@ -4,7 +4,6 @@
 #include <array>
 #include <cassert>
 
-namespace chapter {
 namespace basics {
 
 template<typename T, auto Maxsize>
@@ -55,7 +54,6 @@ T const& StackTemplateParameterAuto<T, Maxsize>::top() const {
     return elems[numElems - 1];
 }
 
-}
 }
 
 #endif // STACK_TEMPLATE_PARAMETER_AUTO_HPP

@@ -5,7 +5,6 @@
 #include <iostream>
 #include <vector>
 
-namespace chapter {
 namespace basics {
 
 template<typename T, typename Cont = std::vector<T>>
@@ -42,7 +41,6 @@ T const& StackDefaultArg<T, Cont>::top() const {
     return elems.back();
 }
 
-}
 }
 
 #endif

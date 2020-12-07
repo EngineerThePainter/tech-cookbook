@@ -1,7 +1,7 @@
 #ifndef CHAPTER4_HPP
 #define CHAPTER4_HPP
 
-namespace chapter {
+namespace chapters {
     void runChapter4();   
 }
 
