@@ -4,7 +4,6 @@
 #include <array>
 #include <cassert>
 
-namespace chapter {
 namespace basics {
 
 template<typename T, std::size_t Maxsize>
@@ -57,7 +56,6 @@ void printPassedX(T x) {
     std::cout << "It's " << x << " for Val: " << Val << std::endl;
 }
 
-}
 }
 
 #endif // STACK_NON_TYPE_HPP

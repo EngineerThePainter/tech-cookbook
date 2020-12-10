@@ -5,7 +5,6 @@
 
 #include "stack1.hpp"
 
-namespace chapter {
 namespace basics {
 
 /**
@@ -52,6 +51,5 @@ T* Stack<T*>::top() const {
 }
 
 } // namespace basics
-} // namespace chapter
 
 #endif

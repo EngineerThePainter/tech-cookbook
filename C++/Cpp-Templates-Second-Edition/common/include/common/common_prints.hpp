@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-namespace chapter {
+namespace common {
 
 inline void printTitle(const std::string& title) {std::cout << "********** " << title <<" **********" << std::endl;}
 

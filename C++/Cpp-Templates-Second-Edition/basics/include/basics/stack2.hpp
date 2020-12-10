@@ -8,7 +8,6 @@
 
 #include "stack1.hpp"
 
-namespace chapter {
 namespace basics {
 
 template<>
@@ -67,6 +66,5 @@ std::string const& Stack<std::string>::top() const {
 }
 
 } // basics
-} // chapter
 
 #endif
