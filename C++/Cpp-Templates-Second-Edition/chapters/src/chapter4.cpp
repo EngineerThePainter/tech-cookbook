@@ -2,11 +2,13 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include <basics/folding.hpp>
 #include <basics/variadic_creation.hpp>
 #include <basics/varprint1.hpp>
 #include <basics/varprint2.hpp>
+#include <basics/varusing.hpp>
 
 #include <common/common_prints.hpp>
 
@@ -55,6 +57,37 @@ namespace {
     basics::printFolding(p.name, p.age, p.weight);
     common::emptyLine();
  }
+
+ void variousExpressions() {
+    common::printTitle("Various expressions");
+    common::emptyLine();
+    common::printMessage("Printing doubled values");
+    basics::printDoubled<std::string, double, int>("hello", 40.4, 42);
+    common::emptyLine();
+    common::printMessage("Adding one to each argument");
+    basics::printOneAdded<char, double, int>('a', 45.6, 1);
+    common::emptyLine();
+
+    std::vector<std::string> coll = {"Good", "Bad", "Ugly"};
+    common::printMessage("Printing vector");
+    basics::printElems(coll, 2, 1, 0);
+    common::emptyLine();
+    common::printMessage("Printing vector by passing indexes");
+    basics::printIdx<2,1,0>(coll);
+    common::emptyLine();
+
+    /**
+     * Example below wraps the information about hash and equality functions into one typa and passes them
+     * as a type to unordered_set. When running you can see the calls on the overloaded types.
+     */ 
+    common::printMessage("Variadic Base classes and using");
+    using CustomerOP = basics::Overloader<basics::CustomerHash, basics::CustomerEq>;
+    std::unordered_set<basics::Customer, basics::CustomerHash, basics::CustomerEq> coll1 {{"Good"},{"Bad"},{"Ugly"}};
+    std::unordered_set<basics::Customer, CustomerOP, CustomerOP> coll2 {{"Good"}};
+    coll2.insert({"Bad"});
+    coll2.insert({"Bad"});
+    common::emptyLine();
+ }
 }
 
 void runChapter4() {
@@ -64,6 +97,7 @@ void runChapter4() {
     runVariadicPrint2();
     traverseOverTree();
     variadic_creation();
+    variousExpressions();
 }
 
 } // namespace chapters

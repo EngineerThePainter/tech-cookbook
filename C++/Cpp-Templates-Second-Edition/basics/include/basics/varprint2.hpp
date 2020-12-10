@@ -12,7 +12,7 @@ namespace basics {
  */
 template<typename T>
 void print2(T args) {
-    std::cout << "Calling print2" << std::endl;
+    // std::cout << "Calling print2" << std::endl;
     std::cout << args << std::endl;
 }
 

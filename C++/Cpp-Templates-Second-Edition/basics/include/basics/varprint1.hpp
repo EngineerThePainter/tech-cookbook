@@ -22,6 +22,26 @@ void print(T firstArg, Types... args) {
     print(args...);
 }
 
+template<typename... T>
+void printDoubled(T const&... args) {
+    print(args + args...);
+}
+
+template<typename... T>
+void printOneAdded(T const&... args) {
+    print(args + 1 ...);
+}
+
+template<typename C, typename... Idx>
+void printElems(C const& coll, Idx... idx) {
+    print(coll[idx] ...);
+}
+
+template<std::size_t... Idx, typename C>
+void printIdx(C const& coll) {
+    print(coll[Idx] ...);
+}
+
 } // basics
 
 #endif // VARPRINT1_HPP
