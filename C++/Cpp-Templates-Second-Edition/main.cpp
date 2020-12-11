@@ -5,11 +5,13 @@
 #include <chapters/chapter2.hpp>
 #include <chapters/chapter3.hpp>
 #include <chapters/chapter4.hpp>
+#include <chapters/chapter5.hpp>
 
 int main() {
     chapters::runChapter1();
     chapters::runChapter2();
     chapters::runChapter3();
     chapters::runChapter4();
+    chapters::runChapter5();
     return 0;
 }
