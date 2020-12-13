@@ -17,11 +17,11 @@ from pytorch_lightning import loggers as pl_loggers
 import pytorch_lightning as pl
 from pytorch_lightning.metrics.functional import accuracy
 
-print(torch.cuda.current_device())
-print(torch.cuda.device(0))
-print(torch.cuda.device_count())
-print(torch.cuda.get_device_name(0))
-print(torch.cuda.is_available())
+
+def get_gpu():
+    if torch.cuda.is_available():
+        return 1
+    return -1
 
 
 class ResidualNetwork(pl.LightningModule):
@@ -90,7 +90,7 @@ class ResidualNetwork(pl.LightningModule):
 def main():
     model = ResidualNetwork()
     tb_logger = pl_loggers.TensorBoardLogger('logs/')
-    trainer = pl.Trainer(max_epochs=5, gpus=1, logger=tb_logger)
+    trainer = pl.Trainer(max_epochs=5, gpus=get_gpu(), logger=tb_logger)
     trainer.fit(model)
 
     return 0

@@ -34,8 +34,7 @@ The ```mnist_nn.py``` shows a classification neural network for MNIST dataset us
 one presented in the movies with some small refactoring.
 
 The ```mnist_nn_lightning.py``` is the same neural network model, but trained using the PyTorch Lightning. I was writing it to 
-run it in the gpu environment. I don't know yet how what will happen when running training on the cpu, I think if that will be an issue 
-removal of the ```gpus``` parameter from the ```pl.Trainer``` constructor call should do the thing.
+run it on the gpu.
 
 ## Licensing, Authors, and Acknowledgements <a name='licensing'></a>
 
