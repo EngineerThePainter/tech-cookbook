@@ -6,6 +6,7 @@
 
 #include <basics/arrays.hpp>
 #include <basics/printcoll.hpp>
+#include <basics/stack7decl.hpp>
 
 #include <common/common_prints.hpp>
 
@@ -49,12 +50,33 @@ void arraysUsage() {
 
 int x[] = {0, 8, 15};
 
+void assignmentToDifferentType() {
+    common::printTitle("Assignment To Different Type");
+    basics::Stack<int> intStack;
+    intStack.push(1);
+    intStack.push(2);
+    intStack.push(3);
+
+    basics::Stack<float> floatStack;
+    /**
+     * Can do it here, doing it line above would require to call copy constructor which is not defined
+     */
+    floatStack = intStack;
+    common::printCallFunction("floatStack.top()", floatStack.top());
+    floatStack.pop();
+    common::printCallFunction("floatStack.top()", floatStack.top());
+    floatStack.pop();
+    common::printCallFunction("floatStack.top()", floatStack.top());
+    common::emptyLine();
 }
+
+} // namespace
 
 void runChapter5() {
     common::printTitle("C++ Templates Chapter 5");
     printingColls();
     arraysUsage();
+    assignmentToDifferentType();
     common::emptyLine();
 }
 
