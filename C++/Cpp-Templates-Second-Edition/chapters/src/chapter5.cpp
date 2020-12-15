@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <basics/arrays.hpp>
+#include <basics/boolstring.hpp>
 #include <basics/printcoll.hpp>
 #include <basics/stack7decl.hpp>
 
@@ -70,6 +71,19 @@ void assignmentToDifferentType() {
     common::emptyLine();
 }
 
+void memberFunctionTemplateSpecialization() {
+    common::printTitle("Member function template specialization");
+    std::cout << std::boolalpha;
+    basics::BoolString s1("hello");
+    common::printCallFunction("s1.get()", s1.get());
+    common::printCallFunction("s1.get<bool>()", s1.get<bool>());
+
+    basics::BoolString s2("on");
+    common::printCallFunction("s2.get()", s2.get());
+    common::printCallFunction("s2.get<bool>()", s2.get<bool>());
+    common::emptyLine();
+}
+
 } // namespace
 
 void runChapter5() {
@@ -77,6 +91,7 @@ void runChapter5() {
     printingColls();
     arraysUsage();
     assignmentToDifferentType();
+    memberFunctionTemplateSpecialization();
     common::emptyLine();
 }
 
