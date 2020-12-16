@@ -8,6 +8,7 @@
 #include <basics/boolstring.hpp>
 #include <basics/printcoll.hpp>
 #include <basics/stack7decl.hpp>
+#include <basics/variableTemplates.hpp>
 
 #include <common/common_prints.hpp>
 
@@ -84,6 +85,13 @@ void memberFunctionTemplateSpecialization() {
     common::emptyLine();
 }
 
+void variableTemplates() {
+    common::printTitle("Variable templates");
+    std::cout << "PI: " << basics::pi<float> << std::endl;
+    std::cout << "PI: " << basics::pi<long double> << std::endl;
+    common::emptyLine();
+}
+
 } // namespace
 
 void runChapter5() {
@@ -92,6 +100,7 @@ void runChapter5() {
     arraysUsage();
     assignmentToDifferentType();
     memberFunctionTemplateSpecialization();
+    variableTemplates();
     common::emptyLine();
 }
 
