@@ -8,6 +8,8 @@
 #include <basics/boolstring.hpp>
 #include <basics/printcoll.hpp>
 #include <basics/stack7decl.hpp>
+#include <basics/stack8decl.hpp>
+#include <basics/stack9.hpp>
 #include <basics/variableTemplates.hpp>
 
 #include <common/common_prints.hpp>
@@ -92,6 +94,55 @@ void variableTemplates() {
     common::emptyLine();
 }
 
+// Using Clang10 - it will not build despite the fact that it should since it's C++17
+// void templateTemplateParameters() {
+//     common::printTitle("Template template parameters");
+//     basics::StackTemplateTemplateParameter<int, std::vector> stackTemplateTemplate;
+//     stackTemplateTemplate.push(42);
+//     stackTemplateTemplate.push(43);
+//     stackTemplateTemplate.push(44);
+
+//     common::printCallFunction("stackTemplateTemplate.top()", stackTemplateTemplate.top());
+//     stackTemplateTemplate.pop();
+//     common::printCallFunction("stackTemplateTemplate.top()", stackTemplateTemplate.top());
+//     stackTemplateTemplate.pop();
+//     common::printCallFunction("stackTemplateTemplate.top()", stackTemplateTemplate.top());
+//     common::emptyLine();
+// }
+
+void finalStackVersion() {
+    common::printTitle("Final Stack version");
+    basics::Stack9<int> iStack;
+    basics::Stack9<float> fStack;
+
+    iStack.push(1);
+    iStack.push(2);
+    iStack.push(3);
+    common::printCallFunction("iStack.top()", iStack.top());
+
+    fStack.push(42.0);
+    common::printCallFunction("fStack.top()", fStack.top());
+
+    fStack = iStack;
+    common::printCallFunction("fStack.top()", fStack.top());
+    fStack.push(4.4);
+    common::printCallFunction("fStack.top()", fStack.top());
+
+    basics::Stack9<double, std::vector> vStack;
+    vStack.push(42.0);
+    vStack.push(40.4);
+    vStack.push(12.5);
+    common::printCallFunction("vStack.top()", vStack.top());
+
+    vStack = fStack;
+    std::cout << "vStack: ";
+    while(!vStack.empty()) {
+        std::cout << vStack.top();
+        vStack.pop();
+    }
+    common::emptyLine();
+}
+
 } // namespace
 
 void runChapter5() {
@@ -101,6 +152,8 @@ void runChapter5() {
     assignmentToDifferentType();
     memberFunctionTemplateSpecialization();
     variableTemplates();
+    // templateTemplateParameters();
+    finalStackVersion();
     common::emptyLine();
 }
 

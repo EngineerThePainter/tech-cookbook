@@ -1,5 +1,5 @@
 #ifndef STACK7DECL_HPP
-#define MAX_HPP
+#define STACK7DECL_HPP
 
 #include <cassert>
 #include <deque>
