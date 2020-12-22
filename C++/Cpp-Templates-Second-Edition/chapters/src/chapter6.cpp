@@ -31,15 +31,20 @@ void specialMemberFunctionTemplates() {
   basics::Person p2("tmp");
   basics::Person p3(p1);
   basics::Person p4(std::move(p1));
-
+  common::emptyLine();
   basics::Person2 p21(s);
   basics::Person2 p22("tmp");
   const basics::Person2 p23("ctmp");
   basics::Person2 p24(p23);
   /* The following approaches will not work, due to fact that predefined template is better than
      implemented copy and move constructor. This will not be the case if passed Person object will be const. */
-  // basics::Person2 r3(r1);
-  // basics::Person2 r4(std::move(r1));
+  // basics::Person2 p25(p21);
+  // basics::Person2 p26(std::move(21));
+  common::emptyLine();
+  basics::Person3 p31(s);
+  basics::Person3 p32("tmp");
+  basics::Person3 p33(p31);
+  basics::Person3 p34(std::move(p31));
 
   common::emptyLine();
 }
@@ -47,6 +52,7 @@ void specialMemberFunctionTemplates() {
 } // namespace
 
 void runChapter6() {
+  common::printTitle("C++ Templates Chapter 6");
   perfectForwarding();
   specialMemberFunctionTemplates();
 }
