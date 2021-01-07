@@ -9,6 +9,7 @@
 #include <chapters/chapter6.hpp>
 #include <chapters/chapter7.hpp>
 #include <chapters/chapter8.hpp>
+#include <chapters/chapter9.hpp>
 
 int main() {
     chapters::runChapter1();
@@ -19,5 +20,6 @@ int main() {
     chapters::runChapter6();
     chapters::runChapter7();
     chapters::runChapter8();
+    chapters::runChapter9();
     return 0;
 }
