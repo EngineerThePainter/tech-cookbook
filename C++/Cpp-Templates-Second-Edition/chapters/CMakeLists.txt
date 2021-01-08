@@ -10,6 +10,7 @@ set(HEADERS
     include/chapters/chapter7.hpp
     include/chapters/chapter8.hpp
     include/chapters/chapter9.hpp
+    include/chapters/chapter10.hpp
 )
 
 set(SOURCES
@@ -22,6 +23,7 @@ set(SOURCES
     src/chapter7.cpp
     src/chapter8.cpp
     src/chapter9.cpp
+    src/chapter10.cpp
 )
 
 add_library(${PROJECT_NAME}
