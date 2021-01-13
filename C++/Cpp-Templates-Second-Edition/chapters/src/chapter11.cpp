@@ -7,6 +7,9 @@
 #include <basics/foreach.hpp>
 #include <basics/foreachInvoke.hpp>
 #include <basics/invoke.hpp>
+#include <basics/maxdefaultdeclval.hpp>
+#include <basics/referror.hpp>
+#include <basics/tmplparamref.hpp>
 
 #include <common/common_prints.hpp>
 
@@ -70,12 +73,49 @@ void genericCalling() {
     common::emptyLine();
 }
 
+void declvalExample() {
+    common::printTitle("Max default declval");
+    common::printCallFunction("basics::maxDefaultDeclval(6, 6.1)", basics::maxDefaultDeclval(6, 6.1));
+    common::emptyLine();
+}
+
+void templateTypeParametersAsReferences() {
+    common::printTitle("Template type parameters as references");
+    std::cout << std::boolalpha;
+    int i;
+    int& r = i;
+    basics::tmplParamIsReference(i);
+    basics::tmplParamIsReference(r);
+    basics::tmplParamIsReference<int&>(i);
+    basics::tmplParamIsReference<int&>(r);
+    common::emptyLine();
+}
+
+int null = 0;
+
+void referror() {
+    common::printTitle("Reference Errors");
+    basics::RefMem<int> rm1, rm2;
+    rm1 = rm2;
+
+    // basics::RefMem<int&> rm3; // ERROR: invalid default value for Z
+    // basics::RefMem<int&, 0> rm4; //ERROR: invalid default value for Z
+
+    extern int null;
+    basics::RefMem<int&, null> rm5, rm6;
+    // rm5 = rm6; // ERROR: operator= is deleted due to reference member
+    common::emptyLine();
+}
+
 } // namespace
 
 void runChapter11() {
     common::printTitle("C++ Templates Chapter 11");
     supportingFunctionObjects();
     genericCalling();
+    declvalExample();
+    templateTypeParametersAsReferences();
+    referror();
     common::emptyLine();
 }
 
