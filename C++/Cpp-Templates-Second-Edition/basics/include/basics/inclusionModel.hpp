@@ -7,10 +7,13 @@
 namespace basics {
 
 /**
- * Since we are not in later C++ standard than 17 here, to provide a definition for 
- * template we need to use inclusion model, which means both declaration and definition of the 
- * template in header file. If the definition would go to the .cpp file the compilation would be 
+ * To provide a definition for template we need to use inclusion model,
+ * which means both declaration and definition of the template in header file.
+ * If the definition would go to the .cpp file the compilation would be 
  * successfull BUT the linker would not find the template definition and it would raise an error.
+ * 
+ * After C++17 we can use modules so, we can improve the compilation process when template definition
+ * includes large number of includes by including them from one general module. 
  */
 
 // template declaration
