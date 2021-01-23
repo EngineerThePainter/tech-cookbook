@@ -1,18 +1,18 @@
 project(basics)
 
-set(HEADERS
-    include/basics/max.hpp
-    include/basics/max_return_type.hpp
-    include/basics/max_overloads.hpp
-    include/basics/stack1.hpp
-    include/basics/stack2.hpp
-    include/basics/stack3.hpp
-    include/basics/stackpartspec.hpp
-    include/basics/stacknontype.hpp
-    include/basics/stackTemplateParameterAuto.hpp
-    include/basics/templatized_aggregate.hpp
-    include/basics/varprint1.hpp
-)
+# set(HEADERS
+#     # include/basics/max.hpp
+#     # include/basics/max_return_type.hpp
+#     # include/basics/max_overloads.hpp
+#     # include/basics/stack1.hpp
+#     # include/basics/stack2.hpp
+#     # include/basics/stack3.hpp
+#     # include/basics/stackpartspec.hpp
+#     # include/basics/stacknontype.hpp
+#     # include/basics/stackTemplateParameterAuto.hpp
+#     # include/basics/templatized_aggregate.hpp
+#     # include/basics/varprint1.hpp
+# )
 
 add_library(${PROJECT_NAME}
     INTERFACE
