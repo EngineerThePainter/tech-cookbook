@@ -5,6 +5,7 @@
 #include <common/common_prints.hpp>
 
 #include <details/adl.hpp>
+#include <details/anglebrackethack.hpp>
 #include <details/inject.hpp>
 
 namespace chapters {
@@ -25,12 +26,33 @@ void injectClassName() {
     common::emptyLine();
 }
 
+void angleBracketsHack() {
+    common::printTitle("Angle brackets hack");
+    /**
+     * In C++98 it will be 0
+     */
+    std::cout << (details::YY<details::XX<1> > ::num >::details::num>::details::num) << std::endl;
+    /**
+     * In C++98 it will be 3 due to treating '>>' as a right shift token - was changed since C++ 11
+     */
+    std::cout << (details::YY<details::XX<1 >> ::num >::details::num>::details::num) << std::endl;
+    common::emptyLine();
+}
+
+void dependentNamesOfTypes() {
+    common::printTitle("Dependent names of types");
+    common::printMessage("See details/evilSpecialization.hpp");
+    common::emptyLine();
+}
+
 } // namespace
 
 void runChapter13() {
     common::printTitle("C++ Templates Chapter 13");
     adl();
     injectClassName();
+    angleBracketsHack();
+    dependentNamesOfTypes();
     common::emptyLine();
 }
 

@@ -10,6 +10,11 @@ int C;
 class C {
 
     public:
+    C() {
+        //Just to avoid unused vatiable error
+        i[0] = 1;
+        i[1] = 2;
+    }
     static int f() {
         return sizeof(C);
     }
