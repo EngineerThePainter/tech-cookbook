@@ -14,6 +14,7 @@ set(HEADERS
     include/chapters/chapter11.hpp
     include/chapters/chapter12.hpp
     include/chapters/chapter13.hpp
+    include/chapters/chapter14.hpp
 )
 
 set(SOURCES
@@ -30,6 +31,7 @@ set(SOURCES
     src/chapter11.cpp
     src/chapter12.cpp
     src/chapter13.cpp
+    src/chapter14.cpp
 )
 
 add_library(${PROJECT_NAME}
@@ -53,7 +55,7 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
-target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra)
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -pedantic)
 if (UNIX)
   target_compile_options(${PROJECT_NAME} PRIVATE -Wextra)
 endif(UNIX)
