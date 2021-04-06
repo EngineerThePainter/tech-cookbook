@@ -7,6 +7,8 @@
 #include <details/nontmpl1.hpp>
 #include <details/nontmpl2.hpp>
 #include <details/tmplconstr.hpp>
+#include <details/tupleOverload.hpp>
+#include <details/variadicOverload.hpp>
 
 namespace chapters
 {
@@ -49,6 +51,22 @@ void templateConstructor() {
   common::emptyLine();
 }
 
+void variadicTemplateOverload() {
+  common::printTitle("Variadic template overload");
+  common::printCallFunction("details::fVar(0, 0.0)", details::fVar(0, 0.0));
+  common::printCallFunction("details::fVar((int*)nullptr, (double*)nullptr)", details::fVar((int*)nullptr, (double*)nullptr));
+  common::printCallFunction("details::fVar((int*)nullptr)", details::fVar((int*)nullptr));
+  common::emptyLine();
+}
+
+void tupleOverload() {
+  common::printTitle("Tuple overload");
+  common::printCallFunction("details::fTuple(details::Tuple<int, double>())", details::fTuple(details::Tuple<int, double>()));
+  common::printCallFunction("details::fTuple(details::Tuple<int*, double*>())", details::fTuple(details::Tuple<int*, double*>()));
+  common::printCallFunction("details::fTuple(details::Tuple<int*>())", details::fTuple(details::Tuple<int*>()));
+  common::emptyLine();
+}
+
 } // namespace
 
 void runChapter16()
@@ -57,6 +75,8 @@ void runChapter16()
   simpleFunctionOverload();
   nonTemplateOverload();
   templateConstructor();
+  variadicTemplateOverload();
+  tupleOverload();
   common::emptyLine();
 }
 }
