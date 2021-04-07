@@ -16,6 +16,7 @@
 #include <chapters/chapter13.hpp>
 #include <chapters/chapter14.hpp>
 #include <chapters/chapter15.hpp>
+#include <chapters/chapter16.hpp>
 
 int main() {
     chapters::runChapter1();
@@ -33,5 +34,6 @@ int main() {
     chapters::runChapter13();
     chapters::runChapter14();
     chapters::runChapter15();
+    chapters::runChapter16();
     return 0;
 }
