@@ -14,12 +14,6 @@ using tokenizer = boost::tokenizer<boost::char_separator<char>>;
 using point_t = bg::model::point<double, 2, bg::cs::geographic<bg::degree>>;
 using polyline_t = bg::model::linestring<point_t>;
 
-template<typename RadiusTypeOrSphere = double, typename CalculationType = void>
-class haversine_donut : public bg::strategy::distance::haversine<RadiusTypeOrSphere, CalculationType> {
-  public:
-  inline haversine_donut(): bg::strategy::distance::haversine<RadiusTypeOrSphere, CalculationType>(6378140.0) {}
-};
-
 auto readFile() {
   polyline_t coordinates{};
 
