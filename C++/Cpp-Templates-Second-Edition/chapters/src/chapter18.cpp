@@ -1,10 +1,13 @@
 #include "chapters/chapter18.hpp"
 
 #include <iostream>
+#include <list>
+#include <set>
 #include <vector>
 
 #include <common/common_prints.hpp>
 
+#include <poly/printmax.hpp>
 #include <poly/statichier.hpp>
 #include <poly/staticpoly.hpp>
 
@@ -28,12 +31,24 @@ void static_polymorphism() {
   common::emptyLine();
 }
 
+void generic_programming() {
+  common::printTitle("Generic programming demo");
+  std::vector<int> c1 {11,2,2,5,3,6,2,756,32,5435};
+  std::list<int> c2 {1,2,3,4,5,6,7,8,9,10};
+  std::set<int> c3;
+  poly::print_max(c1);
+  poly::print_max(c2);
+  poly::print_max(c3);
+  common::emptyLine();
+}
+
 } // namespace
 
 void runChapter18()
 {
   common::printTitle("C++ Templates Chapter 18");
   static_polymorphism();
+  generic_programming();
   common::emptyLine();
 }
 }
