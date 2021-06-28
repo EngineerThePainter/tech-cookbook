@@ -17,6 +17,7 @@ set(HEADERS
     include/chapters/chapter14.hpp
     include/chapters/chapter15.hpp
     include/chapters/chapter16.hpp
+    include/chapters/chapter18.hpp
 )
 
 set(SOURCES
@@ -36,6 +37,7 @@ set(SOURCES
     src/chapter14.cpp
     src/chapter15.cpp
     src/chapter16.cpp
+    src/chapter18.cpp
 )
 
 add_library(${PROJECT_NAME}
@@ -49,6 +51,7 @@ target_link_libraries(${PROJECT_NAME}
   basics
   common
   details
+  poly
 )
 
 
