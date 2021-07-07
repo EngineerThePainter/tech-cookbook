@@ -8,6 +8,8 @@
 #include <traits/accum3.hpp>
 // There is no accum4 since there is showing some custom class that I don't want to work on it
 #include <traits/accum5.hpp>
+#include <traits/accum6.hpp>
+#include <traits/accum0.hpp>
 
 namespace chapters
 {
@@ -68,6 +70,30 @@ void accumulationTraitWithParameter() {
   common::emptyLine();
 }
 
+class MultPolicy {
+  public:
+  template<typename T1, typename T2>
+  static void accumulate(T1& total, T2 const& value) {
+    total *= value;
+  }
+};
+
+void accumulationTraitWithPolicyClass() {
+  common::printTitle("Accumulation with trait and with policy class");
+  int num[] = {1, 2, 3, 4, 5};
+  std::cout << "The sum value of the integer values is " << traits::accum6(num, num+7) << std::endl;
+  // Oh NO! But the total in the beginning is 0!!! We need a different trait here!!!
+  std::cout << "The product value of the integer values is " << traits::accum6<int, MultPolicy>(num, num+7) << std::endl;
+  common::emptyLine();
+}
+
+void accumulationWithIteratorTrait() {
+  common::printTitle("Accumulation with iterator trait");
+  int num[] = {1, 2, 3, 4, 5};
+  std::cout << "The sum value of the integer values is " << traits::accum0(num, num+7) << std::endl;
+  common::emptyLine();
+}
+
 } // namespace
 
 void runChapter19()
@@ -77,6 +103,8 @@ void runChapter19()
   accumulationTrait();
   accumulationTraitWithValue();
   accumulationTraitWithParameter();
+  accumulationTraitWithPolicyClass();
+  accumulationWithIteratorTrait();
   common::emptyLine();
 }
 }
