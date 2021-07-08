@@ -10,6 +10,7 @@
 #include <traits/accum5.hpp>
 #include <traits/accum6.hpp>
 #include <traits/accum0.hpp>
+#include <traits/elementtype.hpp>
 
 namespace chapters
 {
@@ -94,6 +95,15 @@ void accumulationWithIteratorTrait() {
   common::emptyLine();
 }
 
+void elementTypes() {
+  common::printTitle("Element Types");
+  std::vector<bool> s;
+  traits::printElementType(s);
+  int arr[42];
+  traits::printElementType(arr);
+  common::emptyLine();
+}
+
 } // namespace
 
 void runChapter19()
@@ -105,6 +115,7 @@ void runChapter19()
   accumulationTraitWithParameter();
   accumulationTraitWithPolicyClass();
   accumulationWithIteratorTrait();
+  elementTypes();
   common::emptyLine();
 }
 }
