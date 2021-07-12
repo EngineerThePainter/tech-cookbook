@@ -11,6 +11,7 @@
 #include <traits/accum6.hpp>
 #include <traits/accum0.hpp>
 #include <traits/elementtype.hpp>
+#include <traits/issamedemo.hpp>
 
 namespace chapters
 {
@@ -104,6 +105,13 @@ void elementTypes() {
   common::emptyLine();
 }
 
+void isSameType() {
+  common::printTitle("Same Type");
+  traits::fooImpl(42);
+  traits::fooImpl(7.7);
+  common::emptyLine();
+}
+
 } // namespace
 
 void runChapter19()
@@ -116,6 +124,7 @@ void runChapter19()
   accumulationTraitWithPolicyClass();
   accumulationWithIteratorTrait();
   elementTypes();
+  isSameType();
   common::emptyLine();
 }
 }
