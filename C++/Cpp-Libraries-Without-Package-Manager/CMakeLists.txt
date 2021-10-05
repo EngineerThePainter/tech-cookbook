@@ -5,7 +5,7 @@ project(cpp-with-libraries)
 set(CMAKE_CXX_STANDARD 11)
 
 # Windows: I compiled my Boost using clang, so I had to set it
-# so cmake could use right library.
+# not doing it caused a build failure.
 set(Boost_COMPILER clangw12)
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_STATIC_RUNTIME OFF)

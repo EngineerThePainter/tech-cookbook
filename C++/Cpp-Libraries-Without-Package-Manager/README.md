@@ -25,3 +25,11 @@ Then just from the directory just go and go to the branch/tag with the desired r
 Then you can just add include it to be built as a part of your project - see `CMakeLists.txt` in the root directory.
 
 You can run tests using `ctest` from the build directory.
+
+
+## How to build it
+
+* Be sure you have a CMake in version at least 3.20.
+* You have to get and install Boost in your system, windows [example](https://www.boost.org/doc/libs/1_55_0/more/getting_started/windows.html).
+* Call `cmake . -G Ninja -B .\build\ -DCMAKE_PREFIX_PATH=(path_to_boost)` to generate makefiles.
+* Call `cmake --build .\build\` to build the project.
