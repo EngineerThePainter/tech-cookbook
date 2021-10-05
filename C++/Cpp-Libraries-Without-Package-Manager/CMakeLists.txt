@@ -16,10 +16,15 @@ message("Boost Found: " ${Boost_FOUND})
 message("Boost Include Dirs: " ${Boost_INCLUDE_DIRS})
 message("Boost Library Dirs: " ${Boost_LIBRARY_DIRS})
 
+find_package(Torch REQUIRED)
+
 enable_testing()
 
 add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
+message("Torch Libraries: " ${Torch_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${Torch_LIBRARIES})
+target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wall)
 
 add_subdirectory(googletest)
 add_subdirectory(test)

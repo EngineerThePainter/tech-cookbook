@@ -6,7 +6,9 @@
 #include <boost/chrono.hpp>
 #include <boost/optional/optional.hpp>
 
-void runTutorial1() {
+#include <torch/torch.h>
+
+void runBoostExample() {
     constexpr int timeout = 5;
     std::cout << "*** Tutorial 1: Using a timer synchronously ***" << std::endl;
     boost::asio::io_context io;
@@ -27,9 +29,7 @@ int main() {
     std::cout << "Optional not set" << std::endl;
   }
 
-  runTutorial1();
-  
-
+  runBoostExample();
   boost::chrono::nanoseconds start;
   boost::chrono::nanoseconds end;
   boost::chrono::milliseconds d = boost::chrono::duration_cast<boost::chrono::milliseconds>(end - start);
@@ -37,4 +37,7 @@ int main() {
   // d now holds the number of milliseconds from start to end.
 
   std::cout << d.count() << "ms\n";
+
+  torch::Tensor tensor = torch::eye(3);
+  std::cout << tensor << std::endl;
 }
