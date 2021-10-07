@@ -1,0 +1,3 @@
+[submodule "C++/Cpp-Libraries-Without-Package-Manager/googletest"]
+	path = C++/Cpp-Libraries-Without-Package-Manager/googletest
+	url = git@github.com:google/googletest.git
