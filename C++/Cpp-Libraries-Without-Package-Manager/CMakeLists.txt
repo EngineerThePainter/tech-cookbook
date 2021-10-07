@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.20)
 
 project(cpp-with-libraries)
 
-set(CMAKE_CXX_STANDARD 11)
-
 # By finding Boost CMake sets a bunch of the useful variables
 find_package(Boost 1.77.0 COMPONENTS chrono)
 message("Boost Found: " ${Boost_FOUND})
@@ -18,8 +16,6 @@ add_executable(${PROJECT_NAME} main.cpp)
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${TORCH_LIBRARIES})
 target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
 target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wall)
-
-set_property(TARGET cpp-with-libraries PROPERTY CXX_STANDARD 14)
 
 # From Torch documentation:
 # The following code block is suggested to be used on Windows.
