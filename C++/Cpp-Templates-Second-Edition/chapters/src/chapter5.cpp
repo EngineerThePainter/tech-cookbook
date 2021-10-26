@@ -25,32 +25,33 @@ void printingColls() {
     common::emptyLine();
 }
 
-template<typename T1, typename T2, typename T3>
-void arraysFoo(int a1[7], int a2[], // pointers by language rules
-               int (&a3)[42],       // reference to array of known bound
-               int (&x0)[],         // reference to array of unknown bound
-               T1 x1,               // passing by value decays
-               T2& x2, T3&& x3)     // passing by reference
-{
-    basics::MyClass<decltype(a1)>::print();
-    basics::MyClass<decltype(a2)>::print();
-    basics::MyClass<decltype(a3)>::print();
-    basics::MyClass<decltype(x0)>::print();
-    basics::MyClass<decltype(x1)>::print();
-    basics::MyClass<decltype(x2)>::print();
-    basics::MyClass<decltype(x3)>::print();
-}
+//Can't run it from here, due to wrong translation unit
+// template<typename T1, typename T2, typename T3>
+// void arraysFoo(int a1[7], int a2[], // pointers by language rules
+//                int (&a3)[42],       // reference to array of known bound
+//                int (&x0)[],         // reference to array of unknown bound
+//                T1 x1,               // passing by value decays
+//                T2& x2, T3&& x3)     // passing by reference
+// {
+//     basics::MyClass<decltype(a1)>::print();
+//     basics::MyClass<decltype(a2)>::print();
+//     basics::MyClass<decltype(a3)>::print();
+//     basics::MyClass<decltype(x0)>::print();
+//     basics::MyClass<decltype(x1)>::print();
+//     basics::MyClass<decltype(x2)>::print();
+//     basics::MyClass<decltype(x3)>::print();
+// }
 
-void arraysUsage() {
-    common::printTitle("Templates for raw arrays");
-    int a[42];
-    basics::MyClass<decltype(a)>::print();
-    extern int x[];
-    basics::MyClass<decltype(x)>::print();
-    common::printMessage("Now let's call arraysFoo()");
-    arraysFoo(a, a, a, x, x, x, x);
-    common::emptyLine();
-}
+// void arraysUsage() {
+//     common::printTitle("Templates for raw arrays");
+//     int a[42];
+//     basics::MyClass<decltype(a)>::print();
+//     extern int x[];
+//     basics::MyClass<decltype(x)>::print();
+//     common::printMessage("Now let's call arraysFoo()");
+//     arraysFoo(a, a, a, x, x, x, x);
+//     common::emptyLine();
+// }
 
 int x[] = {0, 8, 15};
 
@@ -148,7 +149,7 @@ void finalStackVersion() {
 void runChapter5() {
     common::printTitle("C++ Templates Chapter 5");
     printingColls();
-    arraysUsage();
+    // arraysUsage();
     assignmentToDifferentType();
     memberFunctionTemplateSpecialization();
     variableTemplates();
