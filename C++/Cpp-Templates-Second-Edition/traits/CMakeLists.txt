@@ -1,4 +1,6 @@
-project(basics)
+project(traits)
+
+set(HEADERS)
 
 add_library(${PROJECT_NAME}
     INTERFACE

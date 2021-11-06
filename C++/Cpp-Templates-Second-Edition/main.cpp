@@ -18,6 +18,7 @@
 #include <chapters/chapter15.hpp>
 #include <chapters/chapter16.hpp>
 #include <chapters/chapter18.hpp>
+#include <chapters/chapter19.hpp>
 
 int main() {
     chapters::runChapter1();
@@ -37,5 +38,6 @@ int main() {
     chapters::runChapter15();
     chapters::runChapter16();
     chapters::runChapter18();
+    chapters::runChapter19();
     return 0;
 }

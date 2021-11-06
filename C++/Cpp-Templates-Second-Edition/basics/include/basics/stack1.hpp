@@ -38,15 +38,17 @@ class Stack {
         }
     }
 
+    friend std::ostream& operator<< <T> (std::ostream& strm, Stack<T>const& s);
+
     private:
-
-    friend std::ostream& operator<< <T> (std::ostream& strm, Stack<T>const& s) {
-        s.printOn(strm);
-        return strm;
-    }
-
     std::vector<T> elems;
 };
+
+template<typename T>
+std::ostream& operator<< (std::ostream& strm, Stack<T>const& s) {
+        s.printOn(strm);
+        return strm;
+}
 
 template<typename T>
 void Stack<T>::push(T const& elem) {

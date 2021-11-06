@@ -24,6 +24,7 @@ class Stack<std::string> {
     void push(std::string const& elem);
     void pop();
     std::string const& top() const;
+    
     bool empty() const {
         return elems.empty();
     }
@@ -40,13 +41,16 @@ class Stack<std::string> {
 
     private:
 
-    friend std::ostream& operator<< <std::string> (std::ostream& strm, Stack<std::string>const& s) {
-        s.printOn(strm);
-        return strm;
-    }
+    friend std::ostream& operator<< <std::string> (std::ostream& strm, Stack<std::string>const& s);
 
     std::deque<std::string> elems;
 };
+
+template<>
+std::ostream& operator<< (std::ostream& strm, Stack<std::string>const& s) {
+        s.printOn(strm);
+        return strm;
+}
 
 void Stack<std::string>::push(std::string const& elem) {
     std::cout << "Calling push from string specialization" << std::endl;

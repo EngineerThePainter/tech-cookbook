@@ -18,6 +18,7 @@ set(HEADERS
     include/chapters/chapter15.hpp
     include/chapters/chapter16.hpp
     include/chapters/chapter18.hpp
+    include/chapters/chapter19.hpp
 )
 
 set(SOURCES
@@ -38,6 +39,7 @@ set(SOURCES
     src/chapter15.cpp
     src/chapter16.cpp
     src/chapter18.cpp
+    src/chapter19.cpp
 )
 
 add_library(${PROJECT_NAME}
@@ -52,6 +54,7 @@ target_link_libraries(${PROJECT_NAME}
   common
   details
   poly
+  traits
 )
 
 
@@ -62,7 +65,7 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
-target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -pedantic)
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall)
 if (UNIX)
   target_compile_options(${PROJECT_NAME} PRIVATE -Wextra)
 endif(UNIX)
