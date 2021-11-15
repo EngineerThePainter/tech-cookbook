@@ -14,7 +14,7 @@ advanceIter(Iterator& x, Distance n) {
 }
 
 template<typename Iterator, typename Distance>
-EnableIf<traits::IsBidirectionalIterator<Iterator> && !traits::IsRandomAccess<Iterator>>
+EnableIf<traits::IsBidirectionalIterator<Iterator> && !traits::IsRandomAccessIterator<Iterator>>
 advanceIter(Iterator& x, Distance n) {
   if (n > 0) {
     for (; n > 0; ++x, --n) {}
