@@ -57,6 +57,7 @@ target_link_libraries(${PROJECT_NAME}
   basics
   common
   details
+  inherit
   poly
   traits
   typeoverload
