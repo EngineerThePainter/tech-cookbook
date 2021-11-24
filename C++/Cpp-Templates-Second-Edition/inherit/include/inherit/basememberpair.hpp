@@ -15,7 +15,7 @@ class BaseMemberPair : private Base {
     return static_cast<Base const&>(*this);
   }
 
-  Base& base() const {
+  Base& base() {
     return static_cast<Base&>(*this);
   }
 
@@ -23,7 +23,7 @@ class BaseMemberPair : private Base {
     return this->mem;
   }
 
-  Member& member() const {
+  Member& member() {
     return this->mem;
   }
 };
