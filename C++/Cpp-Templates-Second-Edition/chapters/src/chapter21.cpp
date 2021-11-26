@@ -4,6 +4,7 @@
 #include <inherit/basememberpair.hpp>
 #include <inherit/ebco1.hpp>
 #include <inherit/objectcounter.hpp>
+#include <inherit/wrapper.hpp>
 
 namespace chapters
 {
@@ -28,6 +29,19 @@ void objectCounterCRTP() {
   common::emptyLine();
 }
 
+// Declaration of the foo available in the <inherit/wrapper.h>
+template<typename T>
+void foo(T const&);
+
+void BartonNackmanTrick() {
+  common::printTitle("Barton Nackman trick to overload functions in templates");
+  inherit::WrapperExampleClass exampleClass;
+  inherit::Wrapper<inherit::WrapperExampleClass> wrapper(exampleClass);
+  foo(wrapper); // Wrapper<WrapperExampleClass> is friendly associated with wrapper
+  // foo(exampleClass); // ERROR Wrapper<WrapperExampleClass> is not associated with exampleClass
+  common::emptyLine();
+}
+
 } // namespace
 
 void runChapter21()
@@ -35,6 +49,7 @@ void runChapter21()
   common::printTitle("C++ Templates Chapter 21");
   emptyBaseClassOptimization();
   objectCounterCRTP();
+  BartonNackmanTrick();
   common::emptyLine();
 }
 }
