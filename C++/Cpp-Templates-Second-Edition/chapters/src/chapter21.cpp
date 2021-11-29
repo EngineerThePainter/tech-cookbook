@@ -3,6 +3,7 @@
 #include <common/common_prints.hpp>
 #include <inherit/basememberpair.hpp>
 #include <inherit/ebco1.hpp>
+#include <inherit/equality_comparable.hpp>
 #include <inherit/objectcounter.hpp>
 #include <inherit/wrapper.hpp>
 
@@ -42,6 +43,16 @@ void BartonNackmanTrick() {
   common::emptyLine();
 }
 
+void operatorImplementationCRTP() {
+  common::printTitle("Operator Implementations");
+  common::printMessage("Calling inequality operator on type which call equality which is injected over CRTP.");
+  inherit::X x1(5), x2(7);
+  if (x1 != x2) {
+    common::printMessage("x1 and x2 are different");
+  }
+  common::emptyLine();
+}
+
 } // namespace
 
 void runChapter21()
@@ -50,6 +61,7 @@ void runChapter21()
   emptyBaseClassOptimization();
   objectCounterCRTP();
   BartonNackmanTrick();
+  operatorImplementationCRTP();
   common::emptyLine();
 }
 }
