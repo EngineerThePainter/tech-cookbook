@@ -6,6 +6,7 @@
 #include <inherit/equality_comparable.hpp>
 #include <inherit/objectcounter.hpp>
 #include <inherit/wrapper.hpp>
+#include <inherit/virtual.hpp>
 
 namespace chapters
 {
@@ -53,6 +54,18 @@ void operatorImplementationCRTP() {
   common::emptyLine();
 }
 
+void virtualizationCRTP() {
+  common::printTitle("Function virtualization with CRTP");
+  inherit::Base<inherit::NotVirtual>* p1 = new inherit::Derived<inherit::NotVirtual>;
+  p1->foo();
+  delete p1;
+
+  inherit::Base<inherit::Virtual>* p2 = new inherit::Derived<inherit::Virtual>;
+  p2->foo();
+  delete p2;
+  common::emptyLine();
+}
+
 } // namespace
 
 void runChapter21()
@@ -62,6 +75,7 @@ void runChapter21()
   objectCounterCRTP();
   BartonNackmanTrick();
   operatorImplementationCRTP();
+  virtualizationCRTP();
   common::emptyLine();
 }
 }
