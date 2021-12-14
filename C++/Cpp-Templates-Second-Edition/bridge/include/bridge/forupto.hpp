@@ -5,6 +5,8 @@
 #include <iostream>
 
 #include "functionptr.hpp"
+#include "functionptr-cpinv.hpp"
+#include "functionptr-init.hpp"
 
 namespace bridge {
 
