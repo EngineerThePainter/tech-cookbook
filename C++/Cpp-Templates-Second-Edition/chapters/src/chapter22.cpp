@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include <bridge/forupto1.hpp>
+#include <bridge/forupto.hpp>
 
 #include <common/common_prints.hpp>
 
@@ -16,6 +16,9 @@ namespace
     bridge::forUpTo(5, bridge::printInt);
     std::cout << std::endl;
     bridge::forUpToFunctional(5, bridge::printInt);
+    std::cout << std::endl;
+    common::printMessage("Custom function pointer implementation");
+    bridge::forUpToFunctionPointer(5, bridge::printInt);
     std::cout << std::endl;
     common::emptyLine();
   }
