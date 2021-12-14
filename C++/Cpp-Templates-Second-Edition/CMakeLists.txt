@@ -15,6 +15,7 @@ if (UNIX)
 endif(UNIX)
 
 add_subdirectory(basics)
+add_subdirectory(bridge)
 add_subdirectory(chapters)
 add_subdirectory(common)
 add_subdirectory(details)

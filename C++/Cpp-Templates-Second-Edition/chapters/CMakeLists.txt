@@ -21,6 +21,7 @@ set(HEADERS
     include/chapters/chapter19.hpp
     include/chapters/chapter20.hpp
     include/chapters/chapter21.hpp
+    include/chapters/chapter22.hpp
 )
 
 set(SOURCES
@@ -44,6 +45,7 @@ set(SOURCES
     src/chapter19.cpp
     src/chapter20.cpp
     src/chapter21.cpp
+    src/chapter22.cpp
 )
 
 add_library(${PROJECT_NAME}
@@ -55,6 +57,7 @@ add_library(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
   PUBLIC
   basics
+  bridge
   common
   details
   inherit
