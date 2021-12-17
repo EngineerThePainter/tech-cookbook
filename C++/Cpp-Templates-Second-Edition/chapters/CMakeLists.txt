@@ -22,6 +22,7 @@ set(HEADERS
     include/chapters/chapter20.hpp
     include/chapters/chapter21.hpp
     include/chapters/chapter22.hpp
+    include/chapters/chapter24.hpp
 )
 
 set(SOURCES
@@ -46,6 +47,7 @@ set(SOURCES
     src/chapter20.cpp
     src/chapter21.cpp
     src/chapter22.cpp
+    src/chapter24.cpp
 )
 
 add_library(${PROJECT_NAME}
@@ -63,6 +65,7 @@ target_link_libraries(${PROJECT_NAME}
   inherit
   poly
   traits
+  typelist
   typeoverload
 )
 
