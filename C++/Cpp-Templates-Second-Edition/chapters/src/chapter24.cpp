@@ -9,6 +9,7 @@
 #include <typelist/typelist_pop_front.hpp>
 #include <typelist/typelist_push_front.hpp>
 #include <typelist/nthelement.hpp>
+#include <typelist/largesttype.hpp>
 
 namespace chapters
 {
@@ -40,6 +41,9 @@ void runChapter24()
 
   printType<typelist::NthElement<SignedIntegralTypes, 3>>();
   printType<typelist::NthElement<SignedIntegralTypes, 1>>();
+
+  printType<typelist::LargestType<SignedIntegralTypes>>();
+  printType<typelist::LargestType<typelist::TypeList<>>>();
 
   common::emptyLine();
 }
