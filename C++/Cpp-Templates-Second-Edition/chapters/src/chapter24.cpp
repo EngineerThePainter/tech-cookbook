@@ -8,6 +8,7 @@
 #include <typelist/typelist_front.hpp>
 #include <typelist/typelist_pop_front.hpp>
 #include <typelist/typelist_push_front.hpp>
+#include <typelist/nthelement.hpp>
 
 namespace chapters
 {
@@ -36,6 +37,9 @@ void runChapter24()
 
   using PushFrontSignedIntegralTypes = typelist::PushFront<SignedIntegralTypes, bool>;
   printType<PushFrontSignedIntegralTypes>();
+
+  printType<typelist::NthElement<SignedIntegralTypes, 3>>();
+  printType<typelist::NthElement<SignedIntegralTypes, 1>>();
 
   common::emptyLine();
 }
