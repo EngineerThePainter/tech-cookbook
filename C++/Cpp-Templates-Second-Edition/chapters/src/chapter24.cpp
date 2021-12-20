@@ -7,6 +7,7 @@
 #include <typelist/typelist.hpp>
 #include <typelist/typelist_front.hpp>
 #include <typelist/typelist_pop_front.hpp>
+#include <typelist/typelist_push_back.hpp>
 #include <typelist/typelist_push_front.hpp>
 #include <typelist/nthelement.hpp>
 #include <typelist/largesttype.hpp>
@@ -17,8 +18,11 @@ namespace
 {
 
 template<typename T>
-void printType() {
+void printType(const std::string& message = "") {
   T x;
+  if (!message.empty()) {
+    common::printMessage(message);
+  }
   common::printMessage(typeid(x).name());
 }
 
@@ -28,22 +32,25 @@ void runChapter24()
 {
   common::printTitle("C++ Templates Chapter 24");
   using SignedIntegralTypes = typelist::TypeList<signed char, short, int, long, long long>;
-  printType<SignedIntegralTypes>();
+  printType<SignedIntegralTypes>("SignedIntegralTypes");
   
   using FrontSignedIntegralTypes = typelist::Front<SignedIntegralTypes>;
-  printType<FrontSignedIntegralTypes>();
+  printType<FrontSignedIntegralTypes>("Front");
 
   using PopFrontSignedIntegralTypes = typelist::PopFront<SignedIntegralTypes>;
-  printType<PopFrontSignedIntegralTypes>();
+  printType<PopFrontSignedIntegralTypes>("PopFront");
 
   using PushFrontSignedIntegralTypes = typelist::PushFront<SignedIntegralTypes, bool>;
-  printType<PushFrontSignedIntegralTypes>();
+  printType<PushFrontSignedIntegralTypes>("PushFront");
 
-  printType<typelist::NthElement<SignedIntegralTypes, 3>>();
-  printType<typelist::NthElement<SignedIntegralTypes, 1>>();
+  printType<typelist::NthElement<SignedIntegralTypes, 3>>("3rd element");
+  printType<typelist::NthElement<SignedIntegralTypes, 1>>("1st element");
 
-  printType<typelist::LargestType<SignedIntegralTypes>>();
-  printType<typelist::LargestType<typelist::TypeList<>>>();
+  printType<typelist::LargestType<SignedIntegralTypes>>("LargestType SignedIntegralTypes");
+  printType<typelist::LargestType<typelist::TypeList<>>>("LargestType Empty");
+
+  using PushBackSignedIntegralTypes = typelist::PushBack<SignedIntegralTypes, bool>;
+  printType<PushBackSignedIntegralTypes>("PushBack");
 
   common::emptyLine();
 }
