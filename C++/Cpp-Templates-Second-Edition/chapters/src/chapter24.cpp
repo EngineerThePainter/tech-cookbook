@@ -1,16 +1,20 @@
 #include "chapters/chapter24.hpp"
 
+#include <iostream>
 #include <typeinfo>
 
 #include <common/common_prints.hpp>
 
+#include <typelist/addconst.hpp>
+#include <typelist/largesttype.hpp>
+#include <typelist/nthelement.hpp>
 #include <typelist/typelist.hpp>
 #include <typelist/typelist_front.hpp>
 #include <typelist/typelist_pop_front.hpp>
 #include <typelist/typelist_push_back.hpp>
 #include <typelist/typelist_push_front.hpp>
-#include <typelist/nthelement.hpp>
-#include <typelist/largesttype.hpp>
+#include <typelist/typelist_reverse.hpp>
+#include <typelist/transform.hpp>
 
 namespace chapters
 {
@@ -21,9 +25,9 @@ template<typename T>
 void printType(const std::string& message = "") {
   T x;
   if (!message.empty()) {
-    common::printMessage(message);
+    std::cout << message << ": ";
   }
-  common::printMessage(typeid(x).name());
+  std::cout << typeid(x).name() << std::endl;
 }
 
 } // namespace
@@ -51,6 +55,12 @@ void runChapter24()
 
   using PushBackSignedIntegralTypes = typelist::PushBack<SignedIntegralTypes, bool>;
   printType<PushBackSignedIntegralTypes>("PushBack");
+
+  using ReverseSignedIntegralTypes = typelist::Reverse<SignedIntegralTypes>;
+  printType<ReverseSignedIntegralTypes>("Reverse");
+
+  // using TranformedToConstSignedIntegralTypes = typelist::Transform<SignedIntegralTypes, typelist::AddConst>;
+  // printType<TranformedToConstSignedIntegralTypes>("Const Transform");
 
   common::emptyLine();
 }
