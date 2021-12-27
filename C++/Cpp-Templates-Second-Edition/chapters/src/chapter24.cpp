@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <typeinfo>
+#include <type_traits>
 
 #include <common/common_prints.hpp>
 
@@ -59,8 +60,8 @@ void runChapter24()
   using ReverseSignedIntegralTypes = typelist::Reverse<SignedIntegralTypes>;
   printType<ReverseSignedIntegralTypes>("Reverse");
 
-  // using TranformedToConstSignedIntegralTypes = typelist::Transform<SignedIntegralTypes, typelist::AddConst>;
-  // printType<TranformedToConstSignedIntegralTypes>("Const Transform");
+  using TranformedToConstSignedIntegralTypes = typelist::Transform<SignedIntegralTypes, typelist::AddConstT>;
+  printType<TranformedToConstSignedIntegralTypes>("Const Transform");
 
   common::emptyLine();
 }
