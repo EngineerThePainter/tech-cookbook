@@ -23,6 +23,7 @@ set(HEADERS
     include/chapters/chapter21.hpp
     include/chapters/chapter22.hpp
     include/chapters/chapter24.hpp
+    include/chapters/chapter25.hpp
 )
 
 set(SOURCES
@@ -48,6 +49,7 @@ set(SOURCES
     src/chapter21.cpp
     src/chapter22.cpp
     src/chapter24.cpp
+    src/chapter25.cpp
 )
 
 add_library(${PROJECT_NAME}
@@ -67,6 +69,7 @@ target_link_libraries(${PROJECT_NAME}
   traits
   typelist
   typeoverload
+  tuples
 )
 
 
