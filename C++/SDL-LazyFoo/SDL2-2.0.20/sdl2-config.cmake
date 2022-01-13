@@ -1,3 +1,5 @@
+#This file is required on windows if going with SDL lib downloaded normally and not using a conan like I do.
+
 set(SDL2_INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/include")
 
 # Support both 32 and 64 bit builds
