@@ -1,4 +1,4 @@
-project(variant)
+project(debugging)
 
 set(HEADERS)
 
