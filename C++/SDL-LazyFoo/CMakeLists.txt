@@ -8,11 +8,13 @@ conan_basic_setup()
 set(HEADERS
   lesson1/lesson1.hpp
   lesson2/lesson2.hpp
+  lesson3/lesson3.hpp
 )
 
 set(SOURCES
   lesson1/src/lesson1.cpp
   lesson2/src/lesson2.cpp
+  lesson3/src/lesson3.cpp
 )
 
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} main.cpp)
@@ -25,4 +27,5 @@ target_include_directories(
   ${PROJECT_NAME} 
   PUBLIC 
   lesson1
-  lesson2)
+  lesson2
+  lesson3)
