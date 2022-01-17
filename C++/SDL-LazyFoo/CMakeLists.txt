@@ -10,6 +10,7 @@ set(HEADERS
   lesson2/lesson2.hpp
   lesson3/lesson3.hpp
   lesson4/lesson4.hpp
+  lesson5/lesson5.hpp
 )
 
 set(SOURCES
@@ -17,6 +18,7 @@ set(SOURCES
   lesson2/src/lesson2.cpp
   lesson3/src/lesson3.cpp
   lesson4/src/lesson4.cpp
+  lesson5/src/lesson5.cpp
 )
 
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} main.cpp)
@@ -31,4 +33,5 @@ target_include_directories(
   lesson1
   lesson2
   lesson3
-  lesson4)
+  lesson4
+  lesson5)
