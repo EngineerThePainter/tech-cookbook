@@ -35,3 +35,6 @@ target_include_directories(
   lesson3
   lesson4
   lesson5)
+
+add_custom_command(TARGET sdl-lazyfoo POST_BUILD 
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/images/ ${CMAKE_SOURCE_DIR}/build/bin/images/)
