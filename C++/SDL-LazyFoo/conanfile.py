@@ -6,7 +6,7 @@ class SDLLazyFoo(ConanFile):
    
   generators = "cmake"
 
-  requires = ("sdl/2.0.18", "sdl_image/2.0.5")
+  requires = [("sdl/2.0.18"), ("sdl_image/2.0.5")]
 
   default_options = {
     "sdl:shared": True
