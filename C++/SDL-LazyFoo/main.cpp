@@ -7,6 +7,7 @@
 #include "lesson5/lesson5.hpp"
 #include "lesson6/lesson6.hpp"
 #include "lesson7/lesson7.hpp"
+#include "lesson8/lesson8.hpp"
 
 int main(int argc, char* args[])
 {
@@ -16,7 +17,8 @@ int main(int argc, char* args[])
     // sdl_lazyfoo::lesson4::lesson4();
     // sdl_lazyfoo::lesson5::lesson5();
     // sdl_lazyfoo::lesson6::lesson6();
-    sdl_lazyfoo::lesson7::lesson7();
+    // sdl_lazyfoo::lesson7::lesson7();
+    sdl_lazyfoo::lesson8::lesson8();
 
     return 0;
 }
