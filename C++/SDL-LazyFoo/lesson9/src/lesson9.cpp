@@ -3,11 +3,11 @@
 
 #include "SDL2/SDL.h"
 #include "SDL_image.h"
-#include "lesson7.hpp"
+#include "lesson8.hpp"
 
 namespace sdl_lazyfoo
 {
-namespace lesson7
+namespace lesson9
 {
 namespace
 {
@@ -28,9 +28,8 @@ bool init()
     std::cerr << "SDL could not initialize SDL Error: " << SDL_GetError() << std::endl;
     success = false;
   } else {
-    window =
-        SDL_CreateWindow("SDL Tutorial Lazy Foo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                         SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("SDL Tutorial Lazy Foo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH,
+                              SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (window == nullptr) {
       std::cerr << "Windows could not be initialized: " << SDL_GetError() << std::endl;
       success = false;
@@ -63,8 +62,7 @@ SDL_Texture* loadTexture(const std::string& path)
   } else {
     newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
     if (newTexture == nullptr) {
-      std::cerr << "Unable to create texture from: " << path
-                << " caused by error: " << SDL_GetError();
+      std::cerr << "Unable to create texture from: " << path << " caused by error: " << SDL_GetError();
     }
     SDL_FreeSurface(loadedSurface);
   }
@@ -98,7 +96,7 @@ void close()
   SDL_Quit();
 }
 
-void lesson7()
+void lesson9()
 {
   if (!init()) {
     std::cerr << "Failed to initialize\n";
@@ -115,11 +113,24 @@ void lesson7()
             quit = true;
           }
         }
-        // Clear screen
-        SDL_RenderClear(renderer);
-        // Render texture to screen
+
+        // Top Left Viewport
+        // x, y, w, h
+        SDL_Rect top_left_viewport{0, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
+        SDL_RenderSetViewport(renderer, &top_left_viewport);
+        // Render copy to the screen
         SDL_RenderCopy(renderer, texture, nullptr, nullptr);
-        // Update screen
+
+        // Top Right Viewport
+        SDL_Rect top_right_viewport{SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
+        SDL_RenderSetViewport(renderer, &top_right_viewport);
+        SDL_RenderCopy(renderer, texture, nullptr, nullptr);
+
+        // Bottom Viewport
+        SDL_Rect bottom_viewport{0, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT / 2};
+        SDL_RenderSetViewport(renderer, &bottom_viewport);
+        SDL_RenderCopy(renderer, texture, nullptr, nullptr);
+
         SDL_RenderPresent(renderer);
       }
 
@@ -129,5 +140,5 @@ void lesson7()
   close();
 }
 
-} // namespace lesson7
+} // namespace lesson9
 } // namespace sdl_lazyfoo
