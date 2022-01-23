@@ -15,6 +15,7 @@ set(HEADERS
   lesson7/lesson7.hpp
   lesson8/lesson8.hpp
   lesson9/lesson9.hpp
+  lesson10/lesson10.hpp
 )
 
 set(SOURCES
@@ -27,6 +28,7 @@ set(SOURCES
   lesson7/src/lesson7.cpp
   lesson8/src/lesson8.cpp
   lesson9/src/lesson9.cpp
+  lesson10/src/lesson10.cpp
 )
 
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} main.cpp)
@@ -46,7 +48,8 @@ target_include_directories(
   lesson6
   lesson7
   lesson8
-  lesson9)
+  lesson9
+  lesson10)
 
 add_custom_command(TARGET sdl-lazyfoo POST_BUILD 
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/images/ ${CMAKE_SOURCE_DIR}/build/bin/images/)

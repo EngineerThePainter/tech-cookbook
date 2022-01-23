@@ -3,11 +3,11 @@
 
 #include "SDL2/SDL.h"
 #include "SDL_image.h"
-#include "lesson9.hpp"
+#include "lesson10.hpp"
 
 namespace sdl_lazyfoo
 {
-namespace lesson9
+namespace lesson10
 {
 namespace
 {
@@ -96,7 +96,7 @@ void close()
   SDL_Quit();
 }
 
-void lesson9()
+void lesson10()
 {
   if (!init()) {
     std::cerr << "Failed to initialize\n";
@@ -140,5 +140,5 @@ void lesson9()
   close();
 }
 
-} // namespace lesson9
+} // namespace lesson10
 } // namespace sdl_lazyfoo
