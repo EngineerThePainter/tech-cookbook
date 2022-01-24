@@ -1,9 +1,11 @@
 #include <iostream>
 #include <string>
 
-#include "SDL2/SDL.h"
-#include "SDL_image.h"
 #include "lesson10.hpp"
+#include "texture.hpp"
+
+#include <SDL2/SDL.h>
+#include <SDL_image.h>
 
 namespace sdl_lazyfoo
 {
@@ -13,10 +15,11 @@ namespace
 {
 
 const int SCREEN_WIDTH = 1280;
-const int SCREEN_HEIGHT = 960;
+const int SCREEN_HEIGHT = 700;
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
-SDL_Texture* texture = nullptr;
+Texture* background_texture;
+Texture* lad_texture;
 
 } // namespace
 
@@ -46,35 +49,28 @@ bool init()
           std::cerr << "SDL image could not initialize. Error: " << SDL_GetError() << std::endl;
           success = false;
         }
+        background_texture = new Texture(renderer);
+        lad_texture = new Texture(renderer);
+        if (background_texture == nullptr || lad_texture == nullptr) {
+          std::cerr << "Textures failed to create";
+          success = false;
+        }
       }
     }
   }
   return success;
 }
 
-SDL_Texture* loadTexture(const std::string& path)
-{
-  SDL_Texture* newTexture = nullptr;
-  SDL_Surface* loadedSurface = IMG_Load(path.c_str());
-
-  if (loadedSurface == nullptr) {
-    std::cerr << "Unable to load image " << path << " caused by error: " << IMG_GetError();
-  } else {
-    newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
-    if (newTexture == nullptr) {
-      std::cerr << "Unable to create texture from: " << path << " caused by error: " << SDL_GetError();
-    }
-    SDL_FreeSurface(loadedSurface);
-  }
-
-  return newTexture;
-}
-
 bool loadMedia()
 {
   bool success = true;
-  texture = loadTexture("images/texture.png");
-  if (texture == nullptr) {
+
+  if (!lad_texture->LoadFromFile("images/lad.png")) {
+    std::cerr << "Failed to load texture, error: " << std::endl;
+    success = false;
+  }
+
+  if (!background_texture->LoadFromFile("images/background.png")) {
     std::cerr << "Failed to load texture, error: " << std::endl;
     success = false;
   }
@@ -84,8 +80,8 @@ bool loadMedia()
 
 void close()
 {
-  SDL_DestroyTexture(texture);
-  texture = nullptr;
+  lad_texture->DeallocateTexture();
+  background_texture->DeallocateTexture();
 
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
@@ -113,24 +109,17 @@ void lesson10()
             quit = true;
           }
         }
+        // Clear screen
+        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        SDL_RenderClear(renderer);
 
-        // Top Left Viewport
-        // x, y, w, h
-        SDL_Rect top_left_viewport{0, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
-        SDL_RenderSetViewport(renderer, &top_left_viewport);
-        // Render copy to the screen
-        SDL_RenderCopy(renderer, texture, nullptr, nullptr);
+        // Render background texture to screen
+        background_texture->Render(0, 0);
 
-        // Top Right Viewport
-        SDL_Rect top_right_viewport{SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
-        SDL_RenderSetViewport(renderer, &top_right_viewport);
-        SDL_RenderCopy(renderer, texture, nullptr, nullptr);
+        // Render Foo' to the screen
+        lad_texture->Render(240, 190);
 
-        // Bottom Viewport
-        SDL_Rect bottom_viewport{0, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT / 2};
-        SDL_RenderSetViewport(renderer, &bottom_viewport);
-        SDL_RenderCopy(renderer, texture, nullptr, nullptr);
-
+        // Update screen
         SDL_RenderPresent(renderer);
       }
 
@@ -138,6 +127,8 @@ void lesson10()
     }
   }
   close();
+  delete background_texture;
+  delete lad_texture;
 }
 
 } // namespace lesson10

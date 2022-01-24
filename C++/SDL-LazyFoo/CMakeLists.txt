@@ -16,6 +16,7 @@ set(HEADERS
   lesson8/lesson8.hpp
   lesson9/lesson9.hpp
   lesson10/lesson10.hpp
+  lesson10/texture.hpp
 )
 
 set(SOURCES
@@ -29,6 +30,7 @@ set(SOURCES
   lesson8/src/lesson8.cpp
   lesson9/src/lesson9.cpp
   lesson10/src/lesson10.cpp
+  lesson10/src/texture.cpp
 )
 
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} main.cpp)

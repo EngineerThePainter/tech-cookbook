@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "lesson1/lesson1.hpp"
+#include "lesson10/lesson10.hpp"
 #include "lesson2/lesson2.hpp"
 #include "lesson3/lesson3.hpp"
 #include "lesson4/lesson4.hpp"
@@ -12,32 +13,35 @@
 
 int main(int argc, char* args[])
 {
-    // Hello SDL
-    // sdl_lazyfoo::lesson1();
+  // Hello SDL
+  // sdl_lazyfoo::lesson1();
 
-    // Getting an image on the screen
-    // sdl_lazyfoo::lesson2::lesson2();
+  // Getting an image on the screen
+  // sdl_lazyfoo::lesson2::lesson2();
 
-    // Event Driven Programming
-    // sdl_lazyfoo::lesson3::lesson3();
+  // Event Driven Programming
+  // sdl_lazyfoo::lesson3::lesson3();
 
-    // Key presses
-    // sdl_lazyfoo::lesson4::lesson4();
+  // Key presses
+  // sdl_lazyfoo::lesson4::lesson4();
 
-    // Optimized surface loading and Soft Stretchening
-    // sdl_lazyfoo::lesson5::lesson5();
+  // Optimized surface loading and Soft Stretchening
+  // sdl_lazyfoo::lesson5::lesson5();
 
-    // Extension libraries and loading other image formats
-    // sdl_lazyfoo::lesson6::lesson6();
+  // Extension libraries and loading other image formats
+  // sdl_lazyfoo::lesson6::lesson6();
 
-    // Texture Loading and rendering
-    // sdl_lazyfoo::lesson7::lesson7();
+  // Texture Loading and rendering
+  // sdl_lazyfoo::lesson7::lesson7();
 
-    // Geometry rendering
-    // sdl_lazyfoo::lesson8::lesson8();
+  // Geometry rendering
+  // sdl_lazyfoo::lesson8::lesson8();
 
-    // The viewport
-    sdl_lazyfoo::lesson9::lesson9();
+  // The viewport
+  // sdl_lazyfoo::lesson9::lesson9();
 
-    return 0;
+  // Color Keying
+  sdl_lazyfoo::lesson10::lesson10();
+
+  return 0;
 }
