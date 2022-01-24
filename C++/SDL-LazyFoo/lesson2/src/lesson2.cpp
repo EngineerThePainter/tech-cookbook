@@ -4,9 +4,12 @@
 
 #include "SDL2/SDL.h"
 
-namespace sdl_lazyfoo {
-namespace lesson2 {
-namespace {
+namespace sdl_lazyfoo
+{
+namespace lesson2
+{
+namespace
+{
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 SDL_Window* window = nullptr;
@@ -14,62 +17,66 @@ SDL_Surface* screen_surface = nullptr;
 SDL_Surface* lenna_surface = nullptr;
 } // namespace
 
-bool init() {
-    bool success = true;
+bool init()
+{
+  bool success = true;
 
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::cerr << "SDL could not initialize SDL Error: " << SDL_GetError() << std::endl;
-        success = false;
+  if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    std::cerr << "SDL could not initialize SDL Error: " << SDL_GetError() << std::endl;
+    success = false;
+  } else {
+    window =
+        SDL_CreateWindow("SDL Tutorial Lesson 2", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+                         SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    if (window == nullptr) {
+      std::cerr << "Windows could not be initialized: " << SDL_GetError() << std::endl;
+      success = false;
     } else {
-        window = SDL_CreateWindow("SDL Tutorial Lesson 2", SDL_WINDOWPOS_UNDEFINED,
-                                  SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT,
-                                  SDL_WINDOW_SHOWN);
-        if (window == nullptr) {
-            std::cerr << "Windows could not be initialized: " << SDL_GetError() << std::endl;
-            success = false;
-        } else {
-            screen_surface = SDL_GetWindowSurface(window);
-        }
+      screen_surface = SDL_GetWindowSurface(window);
     }
-    return success;
+  }
+  return success;
 }
 
-bool loadMedia() {
-    bool success = true;
-    /* Nore: This path MUST be set to the executable WORKING directory,
-    so copy the images directory into the build/bin if necessary*/
-    lenna_surface = SDL_LoadBMP("images/lenna.bmp");
-    if (lenna_surface == nullptr) {
-        std::cerr << "Unable to load image: " << SDL_GetError() << std::endl;
-        success = false;
-    }
-    return success;
+bool loadMedia()
+{
+  bool success = true;
+  /* Nore: This path MUST be set to the executable WORKING directory,
+  so copy the images directory into the build/bin if necessary*/
+  lenna_surface = SDL_LoadBMP("images/lenna.bmp");
+  if (lenna_surface == nullptr) {
+    std::cerr << "Unable to load image: " << SDL_GetError() << std::endl;
+    success = false;
+  }
+  return success;
 }
 
-void close() {
-    SDL_FreeSurface(lenna_surface);
-    lenna_surface = nullptr;
+void close()
+{
+  SDL_FreeSurface(lenna_surface);
+  lenna_surface = nullptr;
 
-    // screen_surface is destroyed together with the window
-    SDL_DestroyWindow(window);
-    window = nullptr;
+  // screen_surface is destroyed together with the window
+  SDL_DestroyWindow(window);
+  window = nullptr;
 
-    SDL_Quit();
+  SDL_Quit();
 }
 
-void lesson2() {
-    if (!init()) {
-        std::cerr << "Failed to initialize\n";
+void lesson2()
+{
+  if (!init()) {
+    std::cerr << "Failed to initialize\n";
+  } else {
+    if (!loadMedia()) {
+      std::cerr << "Failed to load media\n";
     } else {
-        if (!loadMedia()) {
-            std::cerr << "Failed to load media\n";
-        } else {
-            SDL_BlitSurface(lenna_surface, nullptr, screen_surface, nullptr);
-            SDL_UpdateWindowSurface(window);
-            SDL_Delay(2000);
-        }
+      SDL_BlitSurface(lenna_surface, nullptr, screen_surface, nullptr);
+      SDL_UpdateWindowSurface(window);
+      SDL_Delay(2000);
     }
-    close();
+  }
+  close();
 }
 
 } // namespace lesson2
