@@ -11,6 +11,8 @@
 #include "lesson8/lesson8.hpp"
 #include "lesson9/lesson9.hpp"
 
+#include <lesson11/lesson11.hpp>
+
 int main(int argc, char* args[])
 {
   // Hello SDL
@@ -41,7 +43,10 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson9::lesson9();
 
   // Color Keying
-  sdl_lazyfoo::lesson10::lesson10();
+  // sdl_lazyfoo::lesson10::lesson10();
+
+  // Clip rendering and sprite sheets
+  sdl_lazyfoo::lesson11::lesson11();
 
   return 0;
 }
