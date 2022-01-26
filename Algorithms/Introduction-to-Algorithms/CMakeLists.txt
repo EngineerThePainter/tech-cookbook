@@ -1,13 +1,17 @@
 cmake_minimum_required(VERSION 3.16.0)
 project(introduction-to-algorithms)
 
-set(HEADERS 
+set(HEADERS
+sorting_algorithm.hpp
 chapter2/chapter2.hpp
+chapter2/insertion_sort.hpp
 utils/time_tracker.hpp
 )
 
-set(SOURCES 
+set(SOURCES
+sorting_algorithm.cpp
 chapter2/src/chapter2.cpp
+chapter2/src/insertion_sort.cpp
 )
 
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} main.cpp)
