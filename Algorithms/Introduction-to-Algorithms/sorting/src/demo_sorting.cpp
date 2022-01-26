@@ -9,7 +9,7 @@ namespace sorting
 {
 void demo_sorting(SortingAlgorithm& algorithm)
 {
-  constexpr int nb_elements = 10000;
+  constexpr int nb_elements = 100000;
   int* best_case = new int[nb_elements];
   int* worst_case = new int[nb_elements];
   for (int i = 0; i < nb_elements; ++i) {
@@ -17,13 +17,13 @@ void demo_sorting(SortingAlgorithm& algorithm)
     worst_case[i] = nb_elements - i;
   }
   std::function<void(int*, int)> sort = [&](int* array, int nb_elements) { algorithm.Sort(array, nb_elements); };
-  std::cout << "Best Case: " << utils::runWithTimeMeasure(sort, best_case, nb_elements).count() << " microseconds"
+  std::cout << "Best Case: " << utils::runWithTimeMeasure(sort, best_case, nb_elements).count() << " milliseconds"
             << std::endl;
   std::cout << "Best case comparisons: " << algorithm.NumberOfComparisons() << ", moves: " << algorithm.NumberOfMoves()
             << std::endl;
 
   algorithm.ResetCounters();
-  std::cout << "Worst Case: " << utils::runWithTimeMeasure(sort, worst_case, nb_elements).count() << " microseconds"
+  std::cout << "Worst Case: " << utils::runWithTimeMeasure(sort, worst_case, nb_elements).count() << " milliseconds"
             << std::endl;
   std::cout << "Worst case comparisons: " << algorithm.NumberOfComparisons() << ", moves: " << algorithm.NumberOfMoves()
             << std::endl;
