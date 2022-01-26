@@ -1,11 +1,13 @@
-#include <functional>
 #include <iostream>
 
-#include "chapter2/chapter2.hpp"
-#include "utils/time_tracker.hpp"
+#include "demo_sorting.hpp"
+#include "insertion_sort.hpp"
 
-int main() {
+int main()
+{
   std::cout << "Introduction to Algorithms 3rd edition" << std::endl;
-  std::cout << utils::runWithTimeMeasure(chapters::test, 0, 0).count() << std::endl;
+
+  sorting::InsertionSort insertion_sort;
+  sorting::demo_sorting(insertion_sort);
   return 0;
 }
