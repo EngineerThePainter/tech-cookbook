@@ -9,4 +9,4 @@ In the beginning I was not using conan here. This file contains some trick for W
 ## Licensing
 
 The code here base on the lessons from the [LazyFoo](https://lazyfoo.net/tutorials/SDL/index.php) - however it's not copy-pasting the original codes, but rather 
-re-implementation of their lessons.
+re-implementation of their lessons. I used some of their images for educational purpose only to demonstrate some concepts more easily.
