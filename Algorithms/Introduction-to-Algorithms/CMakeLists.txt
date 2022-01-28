@@ -4,6 +4,7 @@ project(introduction-to-algorithms)
 set(HEADERS
 sorting/demo_sorting.hpp
 sorting/insertion_sort.hpp
+sorting/merge_sort.hpp
 sorting/sorting_algorithm.hpp
 utils/time_tracker.hpp
 )
@@ -11,6 +12,7 @@ utils/time_tracker.hpp
 set(SOURCES
 sorting/src/demo_sorting.cpp
 sorting/src/insertion_sort.cpp
+sorting/src/merge_sort.cpp
 sorting/src/sorting_algorithm.cpp
 )
 
