@@ -10,7 +10,7 @@ void InsertionSort::Sort(int* array_to_sort, int number_of_elements)
     int number_of_iterations = 0;
     while (i > -1 && array_to_sort[i] > key) {
       ++number_of_iterations;
-      ++number_of_moves_;
+      ++number_of_assignements_;
       array_to_sort[i + 1] = array_to_sort[i];
       i -= 1;
     }

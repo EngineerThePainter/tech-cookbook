@@ -10,12 +10,12 @@ public:
   virtual ~SortingAlgorithm() = default;
   virtual void Sort(int* array_to_sort, int number_of_elements) = 0;
   int NumberOfComparisons() const;
-  int NumberOfMoves() const;
+  int NumberOfAssignements() const;
   void ResetCounters();
 
 protected:
   int number_of_comparisons_ = 0;
-  int number_of_moves_ = 0;
+  int number_of_assignements_ = 0;
 };
 
 } // namespace sorting
