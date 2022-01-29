@@ -17,7 +17,7 @@ void MergeSort::Sort(int* A, int p, int r)
 }
 void MergeSort::Merge(int* A, int p, int q, int r)
 {
-  int n1 = q - p;
+  int n1 = q - p + 1;
   int n2 = r - q;
   int* L = new int[n1];
   int* R = new int[n2];
