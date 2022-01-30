@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.16.0)
 project(introduction-to-algorithms)
 
 set(HEADERS
+searching/binary_search.hpp
 sorting/demo_sorting.hpp
 sorting/insertion_sort.hpp
 sorting/merge_sort.hpp
@@ -10,6 +11,7 @@ utils/time_tracker.hpp
 )
 
 set(SOURCES
+searching/src/binary_search.cpp
 sorting/src/demo_sorting.cpp
 sorting/src/insertion_sort.cpp
 sorting/src/merge_sort.cpp
@@ -17,10 +19,6 @@ sorting/src/sorting_algorithm.cpp
 )
 
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} main.cpp)
-
-# target_link_libraries(${PROJECT_NAME}
-#   PUBLIC
-# )
 
 target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
 target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wall)
@@ -30,5 +28,6 @@ endif(UNIX)
 
 target_include_directories(${PROJECT_NAME} 
   PUBLIC
+  searching
   sorting
   utils)
