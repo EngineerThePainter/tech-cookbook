@@ -13,6 +13,7 @@
 
 #include <lesson11/lesson11.hpp>
 #include <lesson12/lesson12.hpp>
+#include <lesson13/lesson13.hpp>
 
 int main(int argc, char* args[])
 {
@@ -50,7 +51,10 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson11::lesson11();
 
   // Color modulation
-  sdl_lazyfoo::lesson12::lesson12();
+  // sdl_lazyfoo::lesson12::lesson12();
+
+  // Alpha blending
+  sdl_lazyfoo::lesson13::lesson13();
 
   return 0;
 }

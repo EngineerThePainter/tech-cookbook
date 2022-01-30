@@ -38,7 +38,8 @@ target_link_libraries(${PROJECT_NAME}
   CONAN_PKG::sdl
   CONAN_PKG::sdl_image
   lesson11
-  lesson12)
+  lesson12
+  lesson13)
 
 target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
 target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wall)
@@ -59,6 +60,7 @@ target_include_directories(
 
 add_subdirectory(lesson11)
 add_subdirectory(lesson12)
+add_subdirectory(lesson13)
 
 add_custom_command(TARGET sdl-lazyfoo POST_BUILD 
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/images/ ${CMAKE_SOURCE_DIR}/build/bin/images/)
