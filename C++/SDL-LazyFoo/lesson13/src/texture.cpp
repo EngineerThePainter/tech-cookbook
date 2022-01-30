@@ -72,6 +72,10 @@ void Texture::Render(const int x, const int y, SDL_Rect* clip)
 
 void Texture::SetColor(Uint8 red, Uint8 green, Uint8 blue) { SDL_SetTextureColorMod(texture_, red, green, blue); }
 
+void Texture::SetBlendMode(SDL_BlendMode mode) { SDL_SetTextureBlendMode(texture_, mode); }
+
+void Texture::SetAlpha(Uint8 alpha) { SDL_SetTextureAlphaMod(texture_, alpha); }
+
 int Texture::GetWidth() const { return width_; };
 int Texture::GetHeight() const { return height_; };
 

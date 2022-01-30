@@ -22,6 +22,8 @@ public:
   void Render(const int x, const int y, SDL_Rect* clip = nullptr);
   // Uint8 comes from SDL
   void SetColor(Uint8 red, Uint8 green, Uint8 blue);
+  void SetBlendMode(SDL_BlendMode mode);
+  void SetAlpha(Uint8 alpha);
 
   int GetWidth() const;
   int GetHeight() const;

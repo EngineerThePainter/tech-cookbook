@@ -14,11 +14,12 @@ namespace lesson13
 namespace
 {
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 499;
+const int SCREEN_HEIGHT = 332;
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
 Texture* texture;
+Texture* background_texture;
 
 } // namespace
 
@@ -49,7 +50,8 @@ bool init()
           success = false;
         }
         texture = new Texture(renderer);
-        if (texture == nullptr) {
+        background_texture = new Texture(renderer);
+        if (texture == nullptr || background_texture == nullptr) {
           std::cerr << "Textures failed to create";
           success = false;
         }
@@ -63,7 +65,14 @@ bool loadMedia()
 {
   bool success = true;
 
-  if (!texture->LoadFromFile("images/colors.png")) {
+  if (!texture->LoadFromFile("images/texture.png")) {
+    std::cerr << "Failed to load texture, error: " << std::endl;
+    success = false;
+  } else {
+    texture->SetBlendMode(SDL_BLENDMODE_BLEND);
+  }
+
+  if (!background_texture->LoadFromFile("images/png-image.png")) {
     std::cerr << "Failed to load texture, error: " << std::endl;
     success = false;
   }
@@ -74,6 +83,7 @@ bool loadMedia()
 void close()
 {
   texture->DeallocateTexture();
+  background_texture->DeallocateTexture();
 
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
@@ -96,52 +106,49 @@ void lesson13()
       bool quit = false;
       SDL_Event e;
 
-      Uint8 red = 255;
-      Uint8 green = 255;
-      Uint8 blue = 255;
+      Uint8 modulation = 255;
 
       while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
           if (e.type == SDL_QUIT) {
             quit = true;
           } else if (e.type == SDL_KEYDOWN) {
-            switch (e.key.keysym.sym) {
-            case SDLK_q:
-              red += modulation_value;
-              break;
-            case SDLK_w:
-              green += modulation_value;
-              break;
-            case SDLK_e:
-              blue += modulation_value;
-              break;
-            case SDLK_a:
-              red -= modulation_value;
-              break;
-            case SDLK_s:
-              green -= modulation_value;
-              break;
-            case SDLK_d:
-              blue -= modulation_value;
-              break;
+            // Increase alpha when w
+            if (e.key.keysym.sym == SDLK_w) {
+              if (modulation + 32 > 255) {
+                modulation = 255;
+              } else {
+                modulation += 32;
+              }
+            }
+
+            if (e.key.keysym.sym == SDLK_s) {
+              if (modulation - 32 < 0) {
+                modulation = 0;
+              } else {
+                modulation -= 32;
+              }
             }
           }
+          // Clear screen
+          SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+          SDL_RenderClear(renderer);
+
+          background_texture->Render(0, 0);
+
+          texture->SetAlpha(modulation);
+          texture->Render(0, 0);
+          // Update screen
+          SDL_RenderPresent(renderer);
         }
-        // Clear screen
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-        SDL_RenderClear(renderer);
 
-        texture->SetColor(red, green, blue);
-        texture->Render(0, 0);
-        // Update screen
-        SDL_RenderPresent(renderer);
+        SDL_Delay(1000);
       }
-
-      SDL_Delay(1000);
     }
+    close();
+    delete texture;
+    delete background_texture;
   }
-  close();
-  delete texture;
 }
 
 } // namespace lesson13
