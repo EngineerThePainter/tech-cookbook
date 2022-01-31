@@ -9,7 +9,7 @@ namespace sorting
 {
 void demo_sorting(SortingAlgorithm& algorithm)
 {
-  constexpr int nb_elements = 10000;
+  constexpr int nb_elements = 500000;
   int* best_case = new int[nb_elements];
   int* worst_case = new int[nb_elements];
   for (int i = 0; i < nb_elements; ++i) {

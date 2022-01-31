@@ -6,7 +6,8 @@ namespace searching
 
 struct SearchData {
   int searching_value;
-  int number_of_comparisons;
+  int number_of_comparisons{0};
+  int number_of_calls{0};
   int found_index = -1;
 };
 

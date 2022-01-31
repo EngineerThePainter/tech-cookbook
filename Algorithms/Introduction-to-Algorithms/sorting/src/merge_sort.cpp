@@ -1,6 +1,6 @@
 #include "merge_sort.hpp"
 
-#include <cmath>
+// #include <cmath>
 #include <iostream>
 
 namespace sorting
@@ -10,7 +10,8 @@ void MergeSort::Sort(int* array_to_sort, int number_of_elements) { Sort(array_to
 void MergeSort::Sort(int* A, int p, int r)
 {
   if (p < r) {
-    int q = std::floor((p + r) / 2);
+    // This is a floor operation
+    int q = (p + r) / 2;
     Sort(A, p, q);
     Sort(A, q + 1, r);
     Merge(A, p, q, r);
