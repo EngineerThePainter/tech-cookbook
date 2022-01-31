@@ -130,20 +130,19 @@ void lesson13()
               }
             }
           }
-          // Clear screen
-          SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-          SDL_RenderClear(renderer);
-
-          background_texture->Render(0, 0);
-
-          texture->SetAlpha(modulation);
-          texture->Render(0, 0);
-          // Update screen
-          SDL_RenderPresent(renderer);
         }
+        // Clear screen
+        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        SDL_RenderClear(renderer);
 
-        SDL_Delay(1000);
+        background_texture->Render(0, 0);
+
+        texture->SetAlpha(modulation);
+        texture->Render(0, 0);
+        // Update screen
+        SDL_RenderPresent(renderer);
       }
+      SDL_Delay(1000);
     }
     close();
     delete texture;

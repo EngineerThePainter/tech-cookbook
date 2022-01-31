@@ -55,10 +55,10 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson12::lesson12();
 
   // Alpha blending
-  // sdl_lazyfoo::lesson13::lesson13();
+  sdl_lazyfoo::lesson13::lesson13();
 
   // Animated sprites and VSync
-  sdl_lazyfoo::lesson14::lesson14();
+  // sdl_lazyfoo::lesson14::lesson14();
 
   return 0;
 }
