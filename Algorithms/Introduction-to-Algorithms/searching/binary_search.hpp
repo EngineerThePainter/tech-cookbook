@@ -4,8 +4,16 @@
 namespace searching
 {
 
-void binarySearch(int* A, int number_of_elements, int searching_value);
+struct SearchData {
+  int searching_value;
+  int number_of_comparisons;
+  int found_index = -1;
+};
 
-}
+void demoSearch();
+
+void binarySearch(int* A, int left_boundary, int right_boundary, SearchData& data);
+
+} // namespace searching
 
 #endif

@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "binary_search.hpp"
 #include "demo_sorting.hpp"
 #include "insertion_sort.hpp"
 #include "merge_sort.hpp"
@@ -15,5 +16,9 @@ int main()
   std::cout << "*** Merge sort\n";
   sorting::MergeSort merge_sort;
   sorting::demo_sorting(merge_sort);
+
+  std::cout << "*** Binary search\n";
+  searching::demoSearch();
+
   return 0;
 }
