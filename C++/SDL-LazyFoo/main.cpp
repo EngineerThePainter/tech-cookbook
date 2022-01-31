@@ -11,6 +11,11 @@
 #include "lesson8/lesson8.hpp"
 #include "lesson9/lesson9.hpp"
 
+#include <lesson11/lesson11.hpp>
+#include <lesson12/lesson12.hpp>
+#include <lesson13/lesson13.hpp>
+#include <lesson14/lesson14.hpp>
+
 int main(int argc, char* args[])
 {
   // Hello SDL
@@ -41,7 +46,19 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson9::lesson9();
 
   // Color Keying
-  sdl_lazyfoo::lesson10::lesson10();
+  // sdl_lazyfoo::lesson10::lesson10();
+
+  // Clip rendering and sprite sheets
+  // sdl_lazyfoo::lesson11::lesson11();
+
+  // Color modulation
+  // sdl_lazyfoo::lesson12::lesson12();
+
+  // Alpha blending
+  sdl_lazyfoo::lesson13::lesson13();
+
+  // Animated sprites and VSync
+  // sdl_lazyfoo::lesson14::lesson14();
 
   return 0;
 }

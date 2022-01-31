@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.19)
 project(sdl-lazyfoo)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()
+conan_basic_setup(TARGETS)
 
 set(HEADERS
   lesson1/lesson1.hpp
@@ -34,7 +34,13 @@ set(SOURCES
 )
 
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} main.cpp)
-target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS})
+target_link_libraries(${PROJECT_NAME} 
+  CONAN_PKG::sdl
+  CONAN_PKG::sdl_image
+  lesson11
+  lesson12
+  lesson13
+  lesson14)
 
 target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
 target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wall)
@@ -52,6 +58,11 @@ target_include_directories(
   lesson8
   lesson9
   lesson10)
+
+add_subdirectory(lesson11)
+add_subdirectory(lesson12)
+add_subdirectory(lesson13)
+add_subdirectory(lesson14)
 
 add_custom_command(TARGET sdl-lazyfoo POST_BUILD 
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/images/ ${CMAKE_SOURCE_DIR}/build/bin/images/)
