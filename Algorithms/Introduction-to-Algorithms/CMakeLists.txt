@@ -6,6 +6,7 @@ searching/binary_search.hpp
 sorting/demo_sorting.hpp
 sorting/insertion_sort.hpp
 sorting/merge_sort.hpp
+sorting/merge_sort_improved.hpp
 sorting/sorting_algorithm.hpp
 utils/time_tracker.hpp
 )
@@ -15,6 +16,7 @@ searching/src/binary_search.cpp
 sorting/src/demo_sorting.cpp
 sorting/src/insertion_sort.cpp
 sorting/src/merge_sort.cpp
+sorting/src/merge_sort_improved.cpp
 sorting/src/sorting_algorithm.cpp
 )
 
