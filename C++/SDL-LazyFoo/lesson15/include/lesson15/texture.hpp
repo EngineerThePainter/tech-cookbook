@@ -19,7 +19,8 @@ public:
 
   bool LoadFromFile(const std::string& path);
   void DeallocateTexture();
-  void Render(const int x, const int y, SDL_Rect* clip = nullptr);
+  void Render(const int x, const int y, SDL_Rect* clip = nullptr, double angle = 0.0, SDL_Point* center = nullptr,
+              SDL_RendererFlip flip = SDL_FLIP_NONE);
   // Uint8 comes from SDL
   void SetColor(Uint8 red, Uint8 green, Uint8 blue);
   void SetBlendMode(SDL_BlendMode mode);

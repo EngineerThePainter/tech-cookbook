@@ -56,7 +56,7 @@ void Texture::DeallocateTexture()
   }
 }
 
-void Texture::Render(const int x, const int y, SDL_Rect* clip)
+void Texture::Render(const int x, const int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip)
 {
   SDL_Rect renderQuad{x, y, width_, height_};
   // We are doing it to keep the size of rendered texture to the original - if not it will be scaled to the size of the
@@ -67,7 +67,7 @@ void Texture::Render(const int x, const int y, SDL_Rect* clip)
   }
 
   // Clip tells us which part of the texture we want to get
-  SDL_RenderCopy(renderer_, texture_, clip, &renderQuad);
+  SDL_RenderCopyEx(renderer_, texture_, clip, &renderQuad, angle, center, flip);
 }
 
 void Texture::SetColor(Uint8 red, Uint8 green, Uint8 blue) { SDL_SetTextureColorMod(texture_, red, green, blue); }

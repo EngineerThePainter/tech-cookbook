@@ -14,13 +14,11 @@ namespace lesson15
 namespace
 {
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 1280;
+const int SCREEN_HEIGHT = 960;
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
-Texture* texture;
-const int walking_animation_frames = 4;
-SDL_Rect sprite_clips[walking_animation_frames];
+Texture* texture = nullptr;
 
 } // namespace
 
@@ -70,29 +68,9 @@ bool loadMedia()
 {
   bool success = true;
 
-  if (!texture->LoadFromFile("images/anim.png")) {
+  if (!texture->LoadFromFile("images/arrow.png")) {
     std::cerr << "Failed to load texture, error: " << std::endl;
     success = false;
-  } else {
-    sprite_clips[0].x = 0;
-    sprite_clips[0].y = 0;
-    sprite_clips[0].w = 160;
-    sprite_clips[0].h = 400;
-
-    sprite_clips[1].x = 160;
-    sprite_clips[1].y = 0;
-    sprite_clips[1].w = 160;
-    sprite_clips[1].h = 400;
-
-    sprite_clips[2].x = 320;
-    sprite_clips[2].y = 0;
-    sprite_clips[2].w = 160;
-    sprite_clips[2].h = 400;
-
-    sprite_clips[3].x = 480;
-    sprite_clips[3].y = 0;
-    sprite_clips[3].w = 160;
-    sprite_clips[3].h = 400;
   }
 
   return success;
@@ -122,27 +100,42 @@ void lesson15()
       bool quit = false;
       SDL_Event e;
 
-      int frame = 0;
+      double degrees = 0.0;
+      SDL_RendererFlip flip_type = SDL_FLIP_NONE;
 
       while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
           if (e.type == SDL_QUIT) {
             quit = true;
           } else if (e.type == SDL_KEYDOWN) {
+            switch (e.key.keysym.sym) {
+            case SDLK_a:
+              degrees -= 60.0;
+              break;
+            case SDLK_d:
+              degrees += 60.0;
+              break;
+            case SDLK_q:
+              flip_type = SDL_FLIP_HORIZONTAL;
+              break;
+            case SDLK_w:
+              flip_type = SDL_FLIP_NONE;
+              break;
+            case SDLK_e:
+              flip_type = SDL_FLIP_VERTICAL;
+              break;
+            }
           }
         }
         // Clear screen
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
-        std::cerr << frame / 4 << std::endl;
-        SDL_Rect* current_clip = &sprite_clips[frame / 4];
-        texture->Render((SCREEN_WIDTH - current_clip->w) / 2, (SCREEN_HEIGHT - current_clip->h) / 2, current_clip);
+
+        texture->Render((SCREEN_WIDTH - texture->GetWidth()) / 2, (SCREEN_HEIGHT - texture->GetHeight()) / 2, nullptr,
+                        degrees, nullptr, flip_type);
+
         // Update screen
         SDL_RenderPresent(renderer);
-        ++frame;
-        if (frame / 4 >= walking_animation_frames) {
-          frame = 0;
-        }
       }
       // SDL_Delay(1000);
     }
