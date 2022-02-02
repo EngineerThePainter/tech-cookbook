@@ -5,6 +5,11 @@
 namespace sorting
 {
 
+namespace
+{
+constexpr int SIZE_BOUNDARY = 10;
+}
+
 void MergeSortImproved::Sort(int* array_to_sort, int number_of_elements) { Sort(array_to_sort, 1, number_of_elements); }
 
 void MergeSortImproved::Sort(int* A, int p, int r)
@@ -14,7 +19,11 @@ void MergeSortImproved::Sort(int* A, int p, int r)
     int q = (p + r) / 2;
     Sort(A, p, q);
     Sort(A, q + 1, r);
-    Merge(A, p, q, r);
+    if (r - p < SIZE_BOUNDARY) {
+      InsertionSort(A, p, r);
+    } else {
+      Merge(A, p, q, r);
+    }
   }
 }
 
@@ -63,4 +72,23 @@ void MergeSortImproved::Merge(int* A, int p, int q, int r)
   delete[] L;
   delete[] R;
 }
+
+void MergeSortImproved::InsertionSort(int* A, int left, int right)
+{
+  for (int j = left; j < right; ++j) {
+    int key = A[j];
+    int i = j - 1;
+    int number_of_iterations = 0;
+    while (i >= left - 1 && A[i] > key) {
+      ++number_of_iterations;
+      ++number_of_assignements_;
+      A[i + 1] = A[i];
+      i -= 1;
+    }
+    // Additional one, because to check if we should start while we need to make comparison
+    number_of_comparisons_ += number_of_iterations + 1;
+    A[i + 1] = key;
+  }
+}
+
 } // namespace sorting

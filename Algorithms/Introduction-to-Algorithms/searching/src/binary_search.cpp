@@ -10,7 +10,7 @@ namespace searching
 {
 void demoSearch()
 {
-  constexpr int nb_elements = 100000;
+  constexpr int nb_elements = 10000000;
   int* search_case = new int[nb_elements];
   for (int i = 0; i < nb_elements; ++i) {
     search_case[i] = i + 1;

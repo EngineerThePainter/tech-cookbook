@@ -2,8 +2,8 @@
 
 namespace sorting
 {
-int SortingAlgorithm::NumberOfComparisons() const { return number_of_comparisons_; }
-int SortingAlgorithm::NumberOfAssignements() const { return number_of_assignements_; }
+long long SortingAlgorithm::NumberOfComparisons() const { return number_of_comparisons_; }
+long long SortingAlgorithm::NumberOfAssignements() const { return number_of_assignements_; }
 void SortingAlgorithm::ResetCounters()
 {
   number_of_comparisons_ = 0;

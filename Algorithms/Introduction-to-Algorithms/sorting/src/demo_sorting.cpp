@@ -9,7 +9,7 @@ namespace sorting
 {
 void demo_sorting(SortingAlgorithm& algorithm)
 {
-  constexpr int nb_elements = 500000;
+  constexpr int nb_elements = 100000;
   int* best_case = new int[nb_elements];
   int* worst_case = new int[nb_elements];
   for (int i = 0; i < nb_elements; ++i) {
@@ -17,6 +17,7 @@ void demo_sorting(SortingAlgorithm& algorithm)
     worst_case[i] = nb_elements - i;
   }
   std::function<void(int*, int)> sort = [&](int* array, int nb_elements) { algorithm.Sort(array, nb_elements); };
+
   std::cout << "Best Case: " << utils::runWithTimeMeasure(sort, best_case, nb_elements).count() << " milliseconds"
             << std::endl;
   std::cout << "Best case comparisons: " << algorithm.NumberOfComparisons()
