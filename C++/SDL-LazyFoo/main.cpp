@@ -16,6 +16,7 @@
 #include <lesson13/lesson13.hpp>
 #include <lesson14/lesson14.hpp>
 #include <lesson15/lesson15.hpp>
+#include <lesson16/lesson16.hpp>
 
 int main(int argc, char* args[])
 {
@@ -62,7 +63,10 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson14::lesson14();
 
   // Rotation and Flipping
-  sdl_lazyfoo::lesson15::lesson15();
+  // sdl_lazyfoo::lesson15::lesson15();
+
+  // True Type Fonts
+  sdl_lazyfoo::lesson16::lesson16();
 
   return 0;
 }
