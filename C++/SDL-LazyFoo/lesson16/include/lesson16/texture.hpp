@@ -6,6 +6,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 
 namespace sdl_lazyfoo
 {
@@ -18,6 +19,7 @@ public:
   ~Texture();
 
   bool LoadFromFile(const std::string& path);
+  bool LoadTextFromfile(const std::string& path);
   bool LoadFromRenderedText(const std::string& texture_text, SDL_Color text_color);
   void DeallocateTexture();
   void Render(const int x, const int y, SDL_Rect* clip = nullptr, double angle = 0.0, SDL_Point* center = nullptr,

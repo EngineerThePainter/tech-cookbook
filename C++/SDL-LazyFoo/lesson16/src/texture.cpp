@@ -2,8 +2,6 @@
 
 #include <iostream>
 
-#include "SDL_ttf.h"
-
 namespace sdl_lazyfoo
 {
 namespace lesson16
@@ -21,6 +19,9 @@ Texture::~Texture()
   DeallocateTexture();
   if (texture_) {
     delete texture_;
+  }
+  if (font_) {
+    delete font_;
   }
 }
 
@@ -48,6 +49,15 @@ bool Texture::LoadFromFile(const std::string& path)
   return texture_ != nullptr;
 }
 
+bool Texture::LoadTextFromfile(const std::string& path)
+{
+  font_ = TTF_OpenFont(path.c_str(), 28);
+  if (font_ == nullptr) {
+    std::cerr << "Failed to load lazy font. Error: " << TTF_GetError() << std::endl;
+  }
+  return font_ != nullptr;
+}
+
 bool Texture::LoadFromRenderedText(const std::string& texture_text, SDL_Color text_color)
 {
   DeallocateTexture();
@@ -72,6 +82,10 @@ void Texture::DeallocateTexture()
   if (texture_ != nullptr) {
     SDL_DestroyTexture(texture_);
     texture_ = nullptr;
+
+    TTF_CloseFont(font_);
+    font_ = nullptr;
+
     width_ = 0;
     height_ = 0;
   }

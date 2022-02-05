@@ -19,6 +19,7 @@ const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 960;
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
+TTF_Font* font = nullptr;
 Texture* texture = nullptr;
 
 } // namespace
@@ -54,6 +55,12 @@ bool init()
           std::cerr << "SDL image could not initialize. Error: " << SDL_GetError() << std::endl;
           success = false;
         }
+
+        if (TTF_Init() == -1) {
+          std::cerr << "SDL TTF could not initialize. Error: " << TTF_GetError() << std::endl;
+          success = false;
+        }
+
         texture = new Texture(renderer);
         if (texture == nullptr) {
           std::cerr << "Textures failed to create";
@@ -69,9 +76,16 @@ bool loadMedia()
 {
   bool success = true;
 
-  if (!texture->LoadFromFile("images/arrow.png")) {
-    std::cerr << "Failed to load texture, error: " << std::endl;
+  if (!texture->LoadTextFromfile("images/lazy.ttf")) {
+    std::cerr << "Failed to load text, error: " << TTF_GetError() << std::endl;
     success = false;
+  } else {
+    // Render text
+    SDL_Color text_color{0, 0, 0};
+    if (!texture->LoadFromRenderedText("Fat Donut jumps over the fence", text_color)) {
+      std::cerr << "Failed to load texture from rendered text" << std::endl;
+      success = false;
+    }
   }
 
   return success;
@@ -86,6 +100,7 @@ void close()
   renderer = nullptr;
   window = nullptr;
 
+  TTF_Quit();
   IMG_Quit();
   SDL_Quit();
 }
