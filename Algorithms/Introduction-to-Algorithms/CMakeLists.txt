@@ -3,6 +3,7 @@ project(introduction-to-algorithms)
 
 set(HEADERS
 searching/binary_search.hpp
+sorting/bubble_sort.hpp
 sorting/demo_sorting.hpp
 sorting/insertion_sort.hpp
 sorting/merge_sort.hpp
@@ -13,6 +14,7 @@ utils/time_tracker.hpp
 
 set(SOURCES
 searching/src/binary_search.cpp
+sorting/src/bubble_sort.cpp
 sorting/src/demo_sorting.cpp
 sorting/src/insertion_sort.cpp
 sorting/src/merge_sort.cpp

@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "binary_search.hpp"
+#include "bubble_sort.hpp"
 #include "demo_sorting.hpp"
 #include "insertion_sort.hpp"
 #include "merge_sort.hpp"
@@ -14,6 +15,12 @@ int main()
   sorting::InsertionSort insertion_sort;
   sorting::demo_sorting(insertion_sort);
   std::cout << "*****************************" << std::endl;
+
+  std::cout << "*** Bubble sort\n";
+  sorting::BubbleSort bubble_sort;
+  sorting::demo_sorting(bubble_sort);
+  std::cout << "*****************************" << std::endl;
+
   std::cout << "*** Merge sort\n";
   sorting::MergeSort merge_sort;
   sorting::demo_sorting(merge_sort);
