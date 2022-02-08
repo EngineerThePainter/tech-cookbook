@@ -1,12 +1,12 @@
 #include <iostream>
 #include <string>
 
+#include "lesson17/button.hpp"
 #include "lesson17/lesson17.hpp"
 #include "lesson17/texture.hpp"
 
 #include <SDL2/SDL.h>
 #include <SDL_image.h>
-#include <SDL_ttf.h>
 
 namespace sdl_lazyfoo
 {
@@ -15,13 +15,12 @@ namespace lesson17
 namespace
 {
 
-const int SCREEN_WIDTH = 1280;
-const int SCREEN_HEIGHT = 960;
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
-TTF_Font* font = nullptr;
 Texture* texture = nullptr;
-
+Button buttons[TOTAL_BUTTONS];
 } // namespace
 
 bool init()
@@ -56,15 +55,14 @@ bool init()
           success = false;
         }
 
-        if (TTF_Init() == -1) {
-          std::cerr << "SDL TTF could not initialize. Error: " << TTF_GetError() << std::endl;
-          success = false;
-        }
-
         texture = new Texture(renderer);
         if (texture == nullptr) {
           std::cerr << "Textures failed to create";
           success = false;
+        }
+
+        for (size_t i = 0; i < TOTAL_BUTTONS; ++i) {
+          buttons[i].SetTexture(*texture);
         }
       }
     }
@@ -76,16 +74,15 @@ bool loadMedia()
 {
   bool success = true;
 
-  if (!texture->LoadTextFromfile("images/lazy.ttf")) {
-    std::cerr << "Failed to load text, error: " << TTF_GetError() << std::endl;
+  if (!texture->LoadFromFile("images/mouse.png")) {
+    std::cerr << "Failed to load texture, error: " << std::endl;
     success = false;
   } else {
-    // Render text
-    SDL_Color text_color{0, 0, 0};
-    if (!texture->LoadFromRenderedText("Fat Donut jumps over the fence", text_color)) {
-      std::cerr << "Failed to load texture from rendered text" << std::endl;
-      success = false;
-    }
+    // Set buttons in corners
+    buttons[0].SetPosition(0, 0);
+    buttons[1].SetPosition(SCREEN_WIDTH - BUTTON_WIDTH, 0);
+    buttons[2].SetPosition(0, SCREEN_HEIGHT - BUTTON_HEIGHT);
+    buttons[3].SetPosition(SCREEN_WIDTH - BUTTON_WIDTH, SCREEN_HEIGHT - BUTTON_HEIGHT);
   }
 
   return success;
@@ -100,7 +97,6 @@ void close()
   renderer = nullptr;
   window = nullptr;
 
-  TTF_Quit();
   IMG_Quit();
   SDL_Quit();
 }
@@ -116,39 +112,23 @@ void lesson17()
       bool quit = false;
       SDL_Event e;
 
-      double degrees = 0.0;
-      SDL_RendererFlip flip_type = SDL_FLIP_NONE;
-
       while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
           if (e.type == SDL_QUIT) {
             quit = true;
-          } else if (e.type == SDL_KEYDOWN) {
-            switch (e.key.keysym.sym) {
-            case SDLK_a:
-              degrees -= 60.0;
-              break;
-            case SDLK_d:
-              degrees += 60.0;
-              break;
-            case SDLK_q:
-              flip_type = SDL_FLIP_HORIZONTAL;
-              break;
-            case SDLK_w:
-              flip_type = SDL_FLIP_NONE;
-              break;
-            case SDLK_e:
-              flip_type = SDL_FLIP_VERTICAL;
-              break;
-            }
+          }
+
+          for (size_t i = 0; i < TOTAL_BUTTONS; ++i) {
+            buttons[i].HandleEvent(&e);
           }
         }
         // Clear screen
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
 
-        texture->Render((SCREEN_WIDTH - texture->GetWidth()) / 2, (SCREEN_HEIGHT - texture->GetHeight()) / 2, nullptr,
-                        degrees, nullptr, flip_type);
+        for (size_t i = 0; i < TOTAL_BUTTONS; ++i) {
+          buttons[i].Render();
+        }
 
         // Update screen
         SDL_RenderPresent(renderer);
