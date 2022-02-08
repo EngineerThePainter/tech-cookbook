@@ -18,7 +18,7 @@ Button::Button()
   }
 }
 
-void Button::SetTexture(const Texture& texture) { current_texture_ = std::make_unique<Texture>(texture); }
+void Button::SetTexture(Texture* texture) { current_texture_ = texture; }
 
 void Button::SetPosition(int x, int y)
 {

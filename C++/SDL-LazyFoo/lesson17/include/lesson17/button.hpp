@@ -13,7 +13,7 @@ namespace lesson17
 {
 
 const int BUTTON_WIDTH = 300;
-const int BUTTON_HEIGHT = 400;
+const int BUTTON_HEIGHT = 200;
 const int TOTAL_BUTTONS = 4;
 
 enum ButtonSprite {
@@ -29,7 +29,7 @@ class Button
 public:
   Button();
   ~Button() = default;
-  void SetTexture(const Texture& texture);
+  void SetTexture(Texture* texture);
   void SetPosition(int x, int y);
   void HandleEvent(SDL_Event* event);
   void Render();
@@ -38,7 +38,7 @@ private:
   SDL_Point position_;
   ButtonSprite current_sprite_;
   SDL_Rect sprite_clips_[ButtonSprite::BUTTON_SPRITE_TOTAL];
-  std::unique_ptr<Texture> current_texture_;
+  Texture* current_texture_ = nullptr;
 };
 
 } // namespace lesson17

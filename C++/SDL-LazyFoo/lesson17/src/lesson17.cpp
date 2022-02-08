@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include <string>
 
 #include "lesson17/button.hpp"
@@ -19,7 +20,7 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
-Texture* texture = nullptr;
+std::unique_ptr<Texture> texture;
 Button buttons[TOTAL_BUTTONS];
 } // namespace
 
@@ -55,14 +56,14 @@ bool init()
           success = false;
         }
 
-        texture = new Texture(renderer);
+        texture = std::make_unique<Texture>(renderer);
         if (texture == nullptr) {
           std::cerr << "Textures failed to create";
           success = false;
         }
 
         for (size_t i = 0; i < TOTAL_BUTTONS; ++i) {
-          buttons[i].SetTexture(*texture);
+          buttons[i].SetTexture(texture.get());
         }
       }
     }
@@ -74,7 +75,7 @@ bool loadMedia()
 {
   bool success = true;
 
-  if (!texture->LoadFromFile("images/mouse.png")) {
+  if (!texture->LoadFromFile("images/mouse_button.png")) {
     std::cerr << "Failed to load texture, error: " << std::endl;
     success = false;
   } else {
@@ -136,7 +137,6 @@ void lesson17()
       // SDL_Delay(1000);
     }
     close();
-    delete texture;
   }
 }
 
