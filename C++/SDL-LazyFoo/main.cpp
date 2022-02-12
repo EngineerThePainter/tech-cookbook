@@ -15,6 +15,10 @@
 #include <lesson12/lesson12.hpp>
 #include <lesson13/lesson13.hpp>
 #include <lesson14/lesson14.hpp>
+#include <lesson15/lesson15.hpp>
+#include <lesson16/lesson16.hpp>
+#include <lesson17/lesson17.hpp>
+#include <lesson18/lesson18.hpp>
 
 int main(int argc, char* args[])
 {
@@ -55,10 +59,21 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson12::lesson12();
 
   // Alpha blending
-  sdl_lazyfoo::lesson13::lesson13();
+  // sdl_lazyfoo::lesson13::lesson13();
 
   // Animated sprites and VSync
   // sdl_lazyfoo::lesson14::lesson14();
 
+  // Rotation and Flipping
+  // sdl_lazyfoo::lesson15::lesson15();
+
+  // True Type Fonts
+  // sdl_lazyfoo::lesson16::lesson16();
+
+  // Mouse events
+  // sdl_lazyfoo::lesson17::lesson17();
+
+  // Key states
+  sdl_lazyfoo::lesson18::lesson18();
   return 0;
 }
