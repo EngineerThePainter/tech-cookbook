@@ -4,6 +4,7 @@
 #include "bubble_sort.hpp"
 #include "demo_sorting.hpp"
 #include "insertion_sort.hpp"
+#include "maximum_subarray.hpp"
 #include "merge_sort.hpp"
 #include "merge_sort_improved.hpp"
 
@@ -33,6 +34,10 @@ int main()
 
   std::cout << "*** Binary search\n";
   searching::demoSearch();
+  std::cout << "*****************************" << std::endl;
+
+  std::cout << "*** Maximum subarray\n";
+  dac::demoMaximumSubarray();
   std::cout << "*****************************" << std::endl;
   return 0;
 }
