@@ -3,6 +3,9 @@
 
 #include <limits>
 
+// TODO: Brute force mechanism
+// Valid demo
+
 namespace dac
 {
 struct Max_Subarray {
