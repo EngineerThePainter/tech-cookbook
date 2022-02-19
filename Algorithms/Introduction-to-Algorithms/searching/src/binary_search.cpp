@@ -54,18 +54,22 @@ void demoSearch()
 
 void binarySearch(int* A, int left_boundary, int right_boundary, SearchData& data)
 {
-  if (left_boundary < right_boundary) {
+  if (left_boundary <= right_boundary) {
     // This is a floor operation
     int middle = (left_boundary + right_boundary) / 2;
-    ++data.number_of_comparisons;
-    ++data.number_of_calls;
-    if (data.searching_value > A[middle]) {
+
+    if (data.searching_value == A[middle]) {
+      ++data.number_of_comparisons;
+      data.found_index = middle;
+    } else if (data.searching_value > A[middle]) {
+      ++data.number_of_comparisons;
+      ++data.number_of_calls;
       binarySearch(A, middle + 1, right_boundary, data);
     } else {
-      binarySearch(A, left_boundary, middle, data);
+      ++data.number_of_comparisons;
+      ++data.number_of_calls;
+      binarySearch(A, left_boundary, middle - 1, data);
     }
-  } else {
-    data.found_index = left_boundary;
   }
 }
 } // namespace searching
