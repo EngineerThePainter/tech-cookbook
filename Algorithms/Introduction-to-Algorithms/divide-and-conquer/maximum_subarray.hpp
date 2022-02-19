@@ -18,6 +18,8 @@ void demoMaximumSubarray();
 
 Max_Subarray findMaximumSubarray(int* A, int low_index, int high_index);
 
+Max_Subarray findMaximumSubarrayBruteForce(int* A, int number_of_elements);
+
 } // namespace dac
 
 #endif
