@@ -7,18 +7,46 @@
 
 namespace matrix
 {
+namespace
+{
+int** initializeMatrixOfSize(int size)
+{
+  int** M = new int*[size];
+  for (int i = 0; i < size; ++i) {
+    for (int j = 0; j < size; ++j) {
+      M[i][j] = 0;
+    }
+  }
+  return M;
+}
+
+int** addMatrixes(int** A, int** B, int size)
+{
+  int** C = initializeMatrixOfSize(size);
+  for (int i = 0; i < size; ++i) {
+    for (int j = 0; j < size; ++j) {
+      C[i][j] = A[i][j] + B[i][j];
+    }
+  }
+  return C;
+}
+
+void deallocateMatrix(int** M, int size)
+{
+  for (int i = 0; i < size; ++i) {
+    delete[] M[i];
+  }
+  delete[] M;
+}
+
+} // namespace
+
 void demoMatrixMultiplication()
 {
-  const int size = 10;
-  int** A = new int*[size];
-  int** B = new int*[size];
-  int** BruteForceMatrix = new int*[size];
-
-  for (int i = 0; i < size; ++i) {
-    A[i] = new int[size];
-    B[i] = new int[size];
-    BruteForceMatrix[i] = new int[size];
-  }
+  const int size = 16; // using power of 2 for convienience of recursive approach
+  int** A = initializeMatrixOfSize(size);
+  int** B = initializeMatrixOfSize(size);
+  int** BruteForceMatrix = initializeMatrixOfSize(size);
 
   for (int i = 0; i < size; ++i) {
     for (int j = 0; j < size; ++j) {
@@ -39,14 +67,9 @@ void demoMatrixMultiplication()
   }
   std::cout << std::endl;
 
-  for (int i = 0; i < size; ++i) {
-    delete[] A[i];
-    delete[] B[i];
-    delete[] BruteForceMatrix[i];
-  }
-  delete[] A;
-  delete[] B;
-  delete[] BruteForceMatrix;
+  deallocateMatrix(A);
+  deallocateMatrix(B);
+  deallocateMatrix(BruteForceMatrix);
 }
 
 void squareMatrixMultiply(int** A, int** B, int n, int** C)
@@ -59,4 +82,62 @@ void squareMatrixMultiply(int** A, int** B, int n, int** C)
     }
   }
 }
+
+void squareMatrixMultiplyRecursive(int** A, int** B, int n, int** C)
+{
+  if (n == 1) {
+    C[0][0] = A[0][0] * B[0][0];
+  } else {
+    int new_n = n / 2;
+    int** A1 = initializeMatrixOfSize(new_n);
+    int** A2 = initializeMatrixOfSize(new_n);
+    int** A3 = initializeMatrixOfSize(new_n);
+    int** A4 = initializeMatrixOfSize(new_n);
+
+    int** B1 = initializeMatrixOfSize(new_n);
+    int** B2 = initializeMatrixOfSize(new_n);
+    int** B3 = initializeMatrixOfSize(new_n);
+    int** B4 = initializeMatrixOfSize(new_n);
+
+    int** C1 = initializeMatrixOfSize(new_n);
+    int** C2 = initializeMatrixOfSize(new_n);
+    int** C3 = initializeMatrixOfSize(new_n);
+    int** C4 = initializeMatrixOfSize(new_n);
+
+    for (int i = 0; i < new_n; ++i) {
+      for (int j = 0; j < new_n; ++j) {
+        A1[i][j] = A[i][j];
+        A2[i][j] = A[i][new_n + j];
+        A3[i][j] = A[new_n + i][j];
+        A4[i][j] = A[new_n + i][new_n + j];
+
+        B1[i][j] = B[i][j];
+        B2[i][j] = B[i][new_n + j];
+        B3[i][j] = B[new_n + i][j];
+        B4[i][j] = B[new_n + i][new_n + j];
+
+        C1[i][j] = C[i][j];
+        C2[i][j] = C[i][new_n + j];
+        C3[i][j] = C[new_n + i][j];
+        C4[i][j] = C[new_n + i][new_n + j];
+      }
+    }
+
+    deallocateMatrix(A1);
+    deallocateMatrix(A2);
+    deallocateMatrix(A3);
+    deallocateMatrix(A4);
+
+    deallocateMatrix(B1);
+    deallocateMatrix(B2);
+    deallocateMatrix(B3);
+    deallocateMatrix(B4);
+
+    deallocateMatrix(C1);
+    deallocateMatrix(C2);
+    deallocateMatrix(C3);
+    deallocateMatrix(C4);
+  }
+}
+
 } // namespace matrix

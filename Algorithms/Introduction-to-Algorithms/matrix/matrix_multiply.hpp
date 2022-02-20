@@ -16,6 +16,8 @@ void demoMatrixMultiplication();
  */
 void squareMatrixMultiply(int** A, int** B, int n, int** C);
 
+void squareMatrixMultiplyRecursive(int** A, int** B, int n, int** C);
+
 } // namespace matrix
 
 #endif
