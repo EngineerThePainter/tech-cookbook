@@ -40,9 +40,49 @@ void deallocateMatrix(int** M, int size)
   delete[] M;
 }
 
-} // namespace
+void printMatrix(int** M, unsigned int size)
+{
+  for (unsigned int i = 0; i < size; ++i) {
+    std::cout << "[";
+    for (unsigned int j = 0; j < size; ++j) {
+      std::cout << M[i][j] << " ";
+    }
+    std::cout << "]\n";
+  }
+}
 
-void demoMatrixMultiplication()
+void demoSimple()
+{
+  int** A = initializeMatrixOfSize(2);
+  int** B = initializeMatrixOfSize(2);
+  int** BruteForceMatrix = initializeMatrixOfSize(2);
+  int** RecursiveMatrix = initializeMatrixOfSize(2);
+
+  A[0][0] = 1;
+  A[0][1] = 3;
+  A[1][0] = 7;
+  A[1][1] = 5;
+
+  B[0][0] = 6;
+  B[0][1] = 8;
+  B[1][0] = 4;
+  B[1][1] = 2;
+
+  std::cout << "Normal multiplication\n";
+  squareMatrixMultiply(A, B, 2, BruteForceMatrix);
+  printMatrix(BruteForceMatrix, 2);
+
+  std::cout << "Recursive multiplication\n";
+  RecursiveMatrix = squareMatrixMultiplyRecursive(A, B, 2);
+  printMatrix(RecursiveMatrix, 2);
+
+  deallocateMatrix(A, 2);
+  deallocateMatrix(B, 2);
+  deallocateMatrix(BruteForceMatrix, 2);
+  deallocateMatrix(RecursiveMatrix, 2);
+}
+
+void demoTimed()
 {
   const int size = 16; // using power of 2 for convienience of recursive approach
   int** A = initializeMatrixOfSize(size);
@@ -82,6 +122,14 @@ void demoMatrixMultiplication()
   deallocateMatrix(B, size);
   deallocateMatrix(BruteForceMatrix, size);
   deallocateMatrix(RecursiveMatrix, size);
+}
+
+} // namespace
+
+void demoMatrixMultiplication()
+{
+  demoSimple();
+  demoTimed();
 }
 
 void squareMatrixMultiply(int** A, int** B, int n, int** C)

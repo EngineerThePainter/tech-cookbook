@@ -76,6 +76,7 @@ int main()
   maximumSubarray();
 
   matrixMultiplication();
+  std::cout << "***** Press any key to finish...\n";
   getchar();
   return 0;
 }
