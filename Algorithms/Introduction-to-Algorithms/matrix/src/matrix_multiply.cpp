@@ -9,6 +9,7 @@ namespace matrix
 {
 namespace
 {
+
 int** initializeMatrixOfSize(int size)
 {
   int** M = new int*[size];
@@ -30,6 +31,15 @@ int** addMatrixes(int** A, int** B, int size)
     }
   }
   return C;
+}
+
+void addMatrixes(int** A, int** B, int size, int** C)
+{
+  for (int i = 0; i < size; ++i) {
+    for (int j = 0; j < size; ++j) {
+      C[i][j] = A[i][j] + B[i][j];
+    }
+  }
 }
 
 void deallocateMatrix(int** M, int size)
@@ -84,7 +94,7 @@ void demoSimple()
 
 void demoTimed()
 {
-  const int size = 16; // using power of 2 for convienience of recursive approach
+  const int size = 32; // using power of 2 for convienience of recursive approach
   int** A = initializeMatrixOfSize(size);
   int** B = initializeMatrixOfSize(size);
   int** BruteForceMatrix = initializeMatrixOfSize(size);
@@ -103,20 +113,13 @@ void demoTimed()
   std::cout << "Straight Matrix Multiplication: "
             << utils::runWithTimeMeasure(straight_multiplication, A, B, size, BruteForceMatrix).count()
             << " milliseconds" << std::endl;
-  for (int i = 0; i < size; ++i) {
-    std::cout << BruteForceMatrix[0][i] << ": ";
-  }
-  std::cout << std::endl << std::endl;
 
-  RecursiveMatrix = squareMatrixMultiplyRecursive(A, B, size);
-  // std::cout << "Recursive Matrix Multiplication: "
-  //           << utils::runWithTimeMeasure(straight_multiplication, A, B, size, BruteForceMatrix).count()
-  //           << " milliseconds" << std::endl;
-  std::cout << "Results of recursive\n";
-  for (int i = 0; i < size; ++i) {
-    std::cout << RecursiveMatrix[0][i] << ": ";
-  }
-  std::cout << std::endl;
+  std::function<void(int**, int**, int, int**)> recursive_multiplication =
+      [&](int** A, int** B, int nb_elements, int** C) { squareMatrixMultiplyRecursive(A, B, nb_elements, C); };
+
+  std::cout << "Recursive Matrix Multiplication: "
+            << utils::runWithTimeMeasure(recursive_multiplication, A, B, size, RecursiveMatrix).count()
+            << " milliseconds" << std::endl;
 
   deallocateMatrix(A, size);
   deallocateMatrix(B, size);
@@ -143,6 +146,8 @@ void squareMatrixMultiply(int** A, int** B, int n, int** C)
   }
 }
 
+void squareMatrixMultiplyRecursive(int** A, int** B, int n, int** C) { C = squareMatrixMultiplyRecursive(A, B, n); }
+
 int** squareMatrixMultiplyRecursive(int** A, int** B, int n)
 {
   int** C = initializeMatrixOfSize(n);
@@ -150,15 +155,47 @@ int** squareMatrixMultiplyRecursive(int** A, int** B, int n)
     C[0][0] = A[0][0] * B[0][0];
   } else {
     int new_n = n / 2;
-    int** A1 = initializeMatrixOfSize(new_n);
-    int** A2 = initializeMatrixOfSize(new_n);
-    int** A3 = initializeMatrixOfSize(new_n);
-    int** A4 = initializeMatrixOfSize(new_n);
+    int** A1 = new int*[new_n];
+    int** A2 = new int*[new_n];
+    int** A3 = new int*[new_n];
+    int** A4 = new int*[new_n];
+    int** B1 = new int*[new_n];
+    int** B2 = new int*[new_n];
+    int** B3 = new int*[new_n];
+    int** B4 = new int*[new_n];
+    int** C1 = new int*[new_n];
+    int** C2 = new int*[new_n];
+    int** C3 = new int*[new_n];
+    int** C4 = new int*[new_n];
 
-    int** B1 = initializeMatrixOfSize(new_n);
-    int** B2 = initializeMatrixOfSize(new_n);
-    int** B3 = initializeMatrixOfSize(new_n);
-    int** B4 = initializeMatrixOfSize(new_n);
+    for (int i = 0; i < new_n; ++i) {
+      A1[i] = new int[new_n];
+      A2[i] = new int[new_n];
+      A3[i] = new int[new_n];
+      A4[i] = new int[new_n];
+      B1[i] = new int[new_n];
+      B2[i] = new int[new_n];
+      B3[i] = new int[new_n];
+      B4[i] = new int[new_n];
+      C1[i] = new int[new_n];
+      C2[i] = new int[new_n];
+      C3[i] = new int[new_n];
+      C4[i] = new int[new_n];
+      for (int j = 0; j < new_n; ++j) {
+        A1[i][j] = 0;
+        A2[i][j] = 0;
+        A3[i][j] = 0;
+        A4[i][j] = 0;
+        B1[i][j] = 0;
+        B2[i][j] = 0;
+        B3[i][j] = 0;
+        B4[i][j] = 0;
+        C1[i][j] = 0;
+        C2[i][j] = 0;
+        C3[i][j] = 0;
+        C4[i][j] = 0;
+      }
+    }
 
     for (int i = 0; i < new_n; ++i) {
       for (int j = 0; j < new_n; ++j) {
@@ -174,14 +211,10 @@ int** squareMatrixMultiplyRecursive(int** A, int** B, int n)
       }
     }
 
-    int** C1 =
-        addMatrixes(squareMatrixMultiplyRecursive(A1, B1, new_n), squareMatrixMultiplyRecursive(A2, B3, new_n), new_n);
-    int** C2 =
-        addMatrixes(squareMatrixMultiplyRecursive(A1, B2, new_n), squareMatrixMultiplyRecursive(A2, B4, new_n), new_n);
-    int** C3 =
-        addMatrixes(squareMatrixMultiplyRecursive(A3, B1, new_n), squareMatrixMultiplyRecursive(A4, B3, new_n), new_n);
-    int** C4 =
-        addMatrixes(squareMatrixMultiplyRecursive(A3, B2, new_n), squareMatrixMultiplyRecursive(A4, B4, new_n), new_n);
+    addMatrixes(squareMatrixMultiplyRecursive(A1, B1, new_n), squareMatrixMultiplyRecursive(A2, B3, new_n), new_n, C1);
+    addMatrixes(squareMatrixMultiplyRecursive(A1, B2, new_n), squareMatrixMultiplyRecursive(A2, B4, new_n), new_n, C2);
+    addMatrixes(squareMatrixMultiplyRecursive(A3, B1, new_n), squareMatrixMultiplyRecursive(A4, B3, new_n), new_n, C3);
+    addMatrixes(squareMatrixMultiplyRecursive(A3, B2, new_n), squareMatrixMultiplyRecursive(A4, B4, new_n), new_n, C4);
 
     for (int i = 0; i < new_n; ++i) {
       for (int j = 0; j < new_n; ++j) {
@@ -192,20 +225,32 @@ int** squareMatrixMultiplyRecursive(int** A, int** B, int n)
       }
     }
 
-    deallocateMatrix(A1, new_n);
-    deallocateMatrix(A2, new_n);
-    deallocateMatrix(A3, new_n);
-    deallocateMatrix(A4, new_n);
-
-    deallocateMatrix(B1, new_n);
-    deallocateMatrix(B2, new_n);
-    deallocateMatrix(B3, new_n);
-    deallocateMatrix(B4, new_n);
-
-    deallocateMatrix(C1, new_n);
-    deallocateMatrix(C2, new_n);
-    deallocateMatrix(C3, new_n);
-    deallocateMatrix(C4, new_n);
+    for (int i = 0; i < new_n; ++i) {
+      delete[] A1[i];
+      delete[] A2[i];
+      delete[] A3[i];
+      delete[] A4[i];
+      delete[] B1[i];
+      delete[] B2[i];
+      delete[] B3[i];
+      delete[] B4[i];
+      delete[] C1[i];
+      delete[] C2[i];
+      delete[] C3[i];
+      delete[] C4[i];
+    }
+    delete[] A1;
+    delete[] A2;
+    delete[] A3;
+    delete[] A4;
+    delete[] B1;
+    delete[] B2;
+    delete[] B3;
+    delete[] B4;
+    delete[] C1;
+    delete[] C2;
+    delete[] C3;
+    delete[] C4;
   }
   return C;
 }
