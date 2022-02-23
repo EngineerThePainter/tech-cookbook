@@ -20,6 +20,10 @@ void squareMatrixMultiplyRecursive(int** A, int** B, int n, int** C);
 
 int** squareMatrixMultiplyRecursive(int** A, int** B, int n);
 
+void strassenMultiplication(int** A, int** B, int n, int** C);
+
+int** strassenMultiplication(int** A, int** B, int n);
+
 } // namespace matrix
 
 #endif
