@@ -181,102 +181,106 @@ int** squareMatrixMultiplyRecursive(int** A, int** B, int n)
     C[0][0] = A[0][0] * B[0][0];
   } else {
     int new_n = n / 2;
-    int** A1 = new int*[new_n];
-    int** A2 = new int*[new_n];
-    int** A3 = new int*[new_n];
-    int** A4 = new int*[new_n];
-    int** B1 = new int*[new_n];
-    int** B2 = new int*[new_n];
-    int** B3 = new int*[new_n];
-    int** B4 = new int*[new_n];
-    int** C1 = new int*[new_n];
-    int** C2 = new int*[new_n];
-    int** C3 = new int*[new_n];
-    int** C4 = new int*[new_n];
+    int** A11 = new int*[new_n];
+    int** A12 = new int*[new_n];
+    int** A21 = new int*[new_n];
+    int** A22 = new int*[new_n];
+    int** B11 = new int*[new_n];
+    int** B12 = new int*[new_n];
+    int** B21 = new int*[new_n];
+    int** B22 = new int*[new_n];
+    int** C11 = new int*[new_n];
+    int** C12 = new int*[new_n];
+    int** C21 = new int*[new_n];
+    int** C22 = new int*[new_n];
 
     for (int i = 0; i < new_n; ++i) {
-      A1[i] = new int[new_n];
-      A2[i] = new int[new_n];
-      A3[i] = new int[new_n];
-      A4[i] = new int[new_n];
-      B1[i] = new int[new_n];
-      B2[i] = new int[new_n];
-      B3[i] = new int[new_n];
-      B4[i] = new int[new_n];
-      C1[i] = new int[new_n];
-      C2[i] = new int[new_n];
-      C3[i] = new int[new_n];
-      C4[i] = new int[new_n];
+      A11[i] = new int[new_n];
+      A12[i] = new int[new_n];
+      A21[i] = new int[new_n];
+      A22[i] = new int[new_n];
+      B11[i] = new int[new_n];
+      B12[i] = new int[new_n];
+      B21[i] = new int[new_n];
+      B22[i] = new int[new_n];
+      C11[i] = new int[new_n];
+      C12[i] = new int[new_n];
+      C21[i] = new int[new_n];
+      C22[i] = new int[new_n];
       for (int j = 0; j < new_n; ++j) {
-        A1[i][j] = 0;
-        A2[i][j] = 0;
-        A3[i][j] = 0;
-        A4[i][j] = 0;
-        B1[i][j] = 0;
-        B2[i][j] = 0;
-        B3[i][j] = 0;
-        B4[i][j] = 0;
-        C1[i][j] = 0;
-        C2[i][j] = 0;
-        C3[i][j] = 0;
-        C4[i][j] = 0;
+        A11[i][j] = 0;
+        A12[i][j] = 0;
+        A21[i][j] = 0;
+        A22[i][j] = 0;
+        B11[i][j] = 0;
+        B12[i][j] = 0;
+        B21[i][j] = 0;
+        B22[i][j] = 0;
+        C11[i][j] = 0;
+        C12[i][j] = 0;
+        C21[i][j] = 0;
+        C22[i][j] = 0;
       }
     }
 
     for (int i = 0; i < new_n; ++i) {
       for (int j = 0; j < new_n; ++j) {
-        A1[i][j] = A[i][j];
-        A2[i][j] = A[i][new_n + j];
-        A3[i][j] = A[new_n + i][j];
-        A4[i][j] = A[new_n + i][new_n + j];
+        A11[i][j] = A[i][j];
+        A12[i][j] = A[i][new_n + j];
+        A21[i][j] = A[new_n + i][j];
+        A22[i][j] = A[new_n + i][new_n + j];
 
-        B1[i][j] = B[i][j];
-        B2[i][j] = B[i][new_n + j];
-        B3[i][j] = B[new_n + i][j];
-        B4[i][j] = B[new_n + i][new_n + j];
+        B11[i][j] = B[i][j];
+        B12[i][j] = B[i][new_n + j];
+        B21[i][j] = B[new_n + i][j];
+        B22[i][j] = B[new_n + i][new_n + j];
       }
     }
 
-    addMatrixes(squareMatrixMultiplyRecursive(A1, B1, new_n), squareMatrixMultiplyRecursive(A2, B3, new_n), new_n, C1);
-    addMatrixes(squareMatrixMultiplyRecursive(A1, B2, new_n), squareMatrixMultiplyRecursive(A2, B4, new_n), new_n, C2);
-    addMatrixes(squareMatrixMultiplyRecursive(A3, B1, new_n), squareMatrixMultiplyRecursive(A4, B3, new_n), new_n, C3);
-    addMatrixes(squareMatrixMultiplyRecursive(A3, B2, new_n), squareMatrixMultiplyRecursive(A4, B4, new_n), new_n, C4);
+    addMatrixes(squareMatrixMultiplyRecursive(A11, B11, new_n), squareMatrixMultiplyRecursive(A12, B21, new_n), new_n,
+                C11);
+    addMatrixes(squareMatrixMultiplyRecursive(A11, B12, new_n), squareMatrixMultiplyRecursive(A12, B22, new_n), new_n,
+                C12);
+    addMatrixes(squareMatrixMultiplyRecursive(A21, B11, new_n), squareMatrixMultiplyRecursive(A22, B21, new_n), new_n,
+                C21);
+    addMatrixes(squareMatrixMultiplyRecursive(A21, B12, new_n), squareMatrixMultiplyRecursive(A22, B22, new_n), new_n,
+                C22);
 
     for (int i = 0; i < new_n; ++i) {
       for (int j = 0; j < new_n; ++j) {
-        C[i][j] = C1[i][j];
-        C[i][new_n + j] = C2[i][j];
-        C[new_n + i][j] = C3[i][j];
-        C[new_n + i][new_n + j] = C4[i][j];
+        C[i][j] = C11[i][j];
+        C[i][new_n + j] = C12[i][j];
+        C[new_n + i][j] = C21[i][j];
+        C[new_n + i][new_n + j] = C22[i][j];
       }
     }
 
     for (int i = 0; i < new_n; ++i) {
-      delete[] A1[i];
-      delete[] A2[i];
-      delete[] A3[i];
-      delete[] A4[i];
-      delete[] B1[i];
-      delete[] B2[i];
-      delete[] B3[i];
-      delete[] B4[i];
-      delete[] C1[i];
-      delete[] C2[i];
-      delete[] C3[i];
-      delete[] C4[i];
+      delete[] A11[i];
+      delete[] A12[i];
+      delete[] A21[i];
+      delete[] A22[i];
+      delete[] B11[i];
+      delete[] B12[i];
+      delete[] B21[i];
+      delete[] B22[i];
+      delete[] C11[i];
+      delete[] C12[i];
+      delete[] C21[i];
+      delete[] C22[i];
     }
-    delete[] A1;
-    delete[] A2;
-    delete[] A3;
-    delete[] A4;
-    delete[] B1;
-    delete[] B2;
-    delete[] B3;
-    delete[] B4;
-    delete[] C1;
-    delete[] C2;
-    delete[] C3;
-    delete[] C4;
+    delete[] A11;
+    delete[] A12;
+    delete[] A21;
+    delete[] A22;
+    delete[] B11;
+    delete[] B12;
+    delete[] B21;
+    delete[] B22;
+    delete[] C11;
+    delete[] C12;
+    delete[] C21;
+    delete[] C22;
   }
   return C;
 }
@@ -290,14 +294,14 @@ int** strassenMultiplication(int** A, int** B, int n)
     C[0][0] = A[0][0] * B[0][0];
   } else {
     int new_n = n / 2;
-    int** A1 = new int*[new_n];
-    int** A2 = new int*[new_n];
-    int** A3 = new int*[new_n];
-    int** A4 = new int*[new_n];
-    int** B1 = new int*[new_n];
-    int** B2 = new int*[new_n];
-    int** B3 = new int*[new_n];
-    int** B4 = new int*[new_n];
+    int** A11 = new int*[new_n];
+    int** A12 = new int*[new_n];
+    int** A21 = new int*[new_n];
+    int** A22 = new int*[new_n];
+    int** B11 = new int*[new_n];
+    int** B12 = new int*[new_n];
+    int** B21 = new int*[new_n];
+    int** B22 = new int*[new_n];
     int** S1 = new int*[new_n];
     int** S2 = new int*[new_n];
     int** S3 = new int*[new_n];
@@ -310,14 +314,14 @@ int** strassenMultiplication(int** A, int** B, int n)
     int** S10 = new int*[new_n];
 
     for (int i = 0; i < new_n; ++i) {
-      A1[i] = new int[new_n];
-      A2[i] = new int[new_n];
-      A3[i] = new int[new_n];
-      A4[i] = new int[new_n];
-      B1[i] = new int[new_n];
-      B2[i] = new int[new_n];
-      B3[i] = new int[new_n];
-      B4[i] = new int[new_n];
+      A11[i] = new int[new_n];
+      A12[i] = new int[new_n];
+      A21[i] = new int[new_n];
+      A22[i] = new int[new_n];
+      B11[i] = new int[new_n];
+      B12[i] = new int[new_n];
+      B21[i] = new int[new_n];
+      B22[i] = new int[new_n];
       S1[i] = new int[new_n];
       S2[i] = new int[new_n];
       S3[i] = new int[new_n];
@@ -329,14 +333,14 @@ int** strassenMultiplication(int** A, int** B, int n)
       S9[i] = new int[new_n];
       S10[i] = new int[new_n];
       for (int j = 0; j < new_n; ++j) {
-        A1[i][j] = 0;
-        A2[i][j] = 0;
-        A3[i][j] = 0;
-        A4[i][j] = 0;
-        B1[i][j] = 0;
-        B2[i][j] = 0;
-        B3[i][j] = 0;
-        B4[i][j] = 0;
+        A11[i][j] = 0;
+        A12[i][j] = 0;
+        A21[i][j] = 0;
+        A22[i][j] = 0;
+        B11[i][j] = 0;
+        B12[i][j] = 0;
+        B21[i][j] = 0;
+        B22[i][j] = 0;
         S1[i][j] = 0;
         S2[i][j] = 0;
         S3[i][j] = 0;
@@ -352,37 +356,37 @@ int** strassenMultiplication(int** A, int** B, int n)
 
     for (int i = 0; i < new_n; ++i) {
       for (int j = 0; j < new_n; ++j) {
-        A1[i][j] = A[i][j];
-        A2[i][j] = A[i][new_n + j];
-        A3[i][j] = A[new_n + i][j];
-        A4[i][j] = A[new_n + i][new_n + j];
+        A11[i][j] = A[i][j];
+        A12[i][j] = A[i][new_n + j];
+        A21[i][j] = A[new_n + i][j];
+        A22[i][j] = A[new_n + i][new_n + j];
 
-        B1[i][j] = B[i][j];
-        B2[i][j] = B[i][new_n + j];
-        B3[i][j] = B[new_n + i][j];
-        B4[i][j] = B[new_n + i][new_n + j];
+        B11[i][j] = B[i][j];
+        B12[i][j] = B[i][new_n + j];
+        B21[i][j] = B[new_n + i][j];
+        B22[i][j] = B[new_n + i][new_n + j];
       }
     }
 
     for (int i = 0; i < new_n; ++i) {
       for (int j = 0; j < new_n; ++j) {
-        S1[i][j] = B2[i][j] - B4[i][j];
-        S2[i][j] = A1[i][j] + A2[i][j];
-        S3[i][j] = A3[i][j] + A4[i][j];
-        S4[i][j] = B3[i][j] - B1[i][j];
-        S5[i][j] = A1[i][j] + A4[i][j];
-        S6[i][j] = B1[i][j] + B4[i][j];
-        S7[i][j] = A2[i][j] - A4[i][j];
-        S8[i][j] = B3[i][j] + B4[i][j];
-        S9[i][j] = A1[i][j] - A3[i][j];
-        S10[i][j] = B1[i][j] + B2[i][j];
+        S1[i][j] = B12[i][j] - B22[i][j];
+        S2[i][j] = A11[i][j] + A12[i][j];
+        S3[i][j] = A21[i][j] + A22[i][j];
+        S4[i][j] = B21[i][j] - B11[i][j];
+        S5[i][j] = A11[i][j] + A22[i][j];
+        S6[i][j] = B11[i][j] + B22[i][j];
+        S7[i][j] = A12[i][j] - A22[i][j];
+        S8[i][j] = B21[i][j] + B22[i][j];
+        S9[i][j] = A11[i][j] - A21[i][j];
+        S10[i][j] = B11[i][j] + B12[i][j];
       }
     }
 
-    int** P1 = strassenMultiplication(A1, S1, new_n);
-    int** P2 = strassenMultiplication(S2, B4, new_n);
-    int** P3 = strassenMultiplication(S3, B1, new_n);
-    int** P4 = strassenMultiplication(A4, S4, new_n);
+    int** P1 = strassenMultiplication(A11, S1, new_n);
+    int** P2 = strassenMultiplication(S2, B22, new_n);
+    int** P3 = strassenMultiplication(S3, B11, new_n);
+    int** P4 = strassenMultiplication(A22, S4, new_n);
     int** P5 = strassenMultiplication(S5, S6, new_n);
     int** P6 = strassenMultiplication(S7, S8, new_n);
     int** P7 = strassenMultiplication(S9, S10, new_n);
@@ -397,14 +401,14 @@ int** strassenMultiplication(int** A, int** B, int n)
     }
 
     for (int i = 0; i < new_n; ++i) {
-      delete[] A1[i];
-      delete[] A2[i];
-      delete[] A3[i];
-      delete[] A4[i];
-      delete[] B1[i];
-      delete[] B2[i];
-      delete[] B3[i];
-      delete[] B4[i];
+      delete[] A11[i];
+      delete[] A12[i];
+      delete[] A21[i];
+      delete[] A22[i];
+      delete[] B11[i];
+      delete[] B12[i];
+      delete[] B21[i];
+      delete[] B22[i];
       delete[] S1[i];
       delete[] S2[i];
       delete[] S3[i];
@@ -423,14 +427,14 @@ int** strassenMultiplication(int** A, int** B, int n)
       delete[] P6[i];
       delete[] P7[i];
     }
-    delete[] A1;
-    delete[] A2;
-    delete[] A3;
-    delete[] A4;
-    delete[] B1;
-    delete[] B2;
-    delete[] B3;
-    delete[] B4;
+    delete[] A11;
+    delete[] A12;
+    delete[] A21;
+    delete[] A22;
+    delete[] B11;
+    delete[] B12;
+    delete[] B21;
+    delete[] B22;
     delete[] S1;
     delete[] S2;
     delete[] S3;
