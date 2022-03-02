@@ -74,4 +74,4 @@ add_subdirectory(lesson17)
 add_subdirectory(lesson18)
 
 add_custom_command(TARGET sdl-lazyfoo POST_BUILD 
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/images/ ${CMAKE_SOURCE_DIR}/build/bin/images/)
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/images/ ${CMAKE_BINARY_DIR}/bin/images/)
