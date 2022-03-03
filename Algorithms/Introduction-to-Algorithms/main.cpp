@@ -67,16 +67,14 @@ int main()
   std::cout << "***** Introduction to Algorithms 3rd edition" << std::endl << std::endl;
 
   insertionSort();
-  bubbleSort();
-  mergeSort();
-  mergeSortImproved();
+  //bubbleSort();
+  //mergeSort();
+  //mergeSortImproved();
 
-  binarySearch();
+  //binarySearch();
 
-  maximumSubarray();
+  //maximumSubarray();
 
-  matrixMultiplication();
-  std::cout << "***** Press any key to finish...\n";
-  getchar();
+  //matrixMultiplication();
   return 0;
 }

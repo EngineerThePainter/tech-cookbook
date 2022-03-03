@@ -109,7 +109,7 @@ void demoSimple()
 
 void demoTimed()
 {
-  const int size = 512; // using power of 2 for convienience of recursive approach
+  const int size = 16; // using power of 2 for convienience of recursive approach
   int** A = initializeMatrixOfSize(size);
   int** B = initializeMatrixOfSize(size);
   int** BruteForceMatrix = initializeMatrixOfSize(size);
