@@ -9,6 +9,17 @@
       "installRoot": "${projectDir}\\out\\install\\${name}",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
+      "addressSanitizerEnabled": false
+    },
+    {
+      "name": "x64-Release",
+      "generator": "Ninja",
+      "configurationType": "Release",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\out\\release\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\release\\install\\${name}",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
       "addressSanitizerEnabled": true
     }
   ]

@@ -70,6 +70,17 @@ void printMatrix(int** M, unsigned int size)
   }
 }
 
+void printMatrix(int* M, unsigned int size)
+{
+  for (unsigned int i = 0; i < size; ++i) {
+    std::cout << "[";
+    for (unsigned int j = 0; j < size; ++j) {
+      std::cout << M[size * i + j] << " ";
+    }
+    std::cout << "]\n";
+  }
+}
+
 void demoSimple()
 {
   int** A = initializeMatrixOfSize(2);
@@ -105,6 +116,47 @@ void demoSimple()
   deallocateMatrix(BruteForceMatrix, 2);
   deallocateMatrix(RecursiveMatrix, 2);
   deallocateMatrix(StrassenMatrix, 2);
+}
+
+void demoSimpleLinear()
+{
+  int* A = new int[4];
+  int* B = new int[4];
+  int* BruteForceMatrix = new int[4];
+  int* RecursiveMatrix = new int[4];
+  int* StrassenMatrix = new int[4];
+  for (int i = 0; i < 4; ++i) {
+    BruteForceMatrix[i] = 0;
+    RecursiveMatrix[i] = 0;
+    StrassenMatrix[i] = 0;
+  }
+
+  A[0] = 1;
+  A[1] = 3;
+  A[2] = 7;
+  A[3] = 5;
+
+  B[0] = 6;
+  B[1] = 8;
+  B[2] = 4;
+  B[3] = 2;
+
+  std::cout << "Normal multiplication\n";
+  squareMatrixMultiply(A, B, 2, BruteForceMatrix);
+  printMatrix(BruteForceMatrix, 2);
+
+  // std::cout << "Recursive multiplication\n";
+  // RecursiveMatrix = squareMatrixMultiplyRecursive(A, B, 2);
+  // printMatrix(RecursiveMatrix, 2);
+
+  // std::cout << "Strassen multiplication\n";
+  // RecursiveMatrix = strassenMultiplication(A, B, 2);
+  // printMatrix(RecursiveMatrix, 2);
+  delete[] A;
+  delete[] B;
+  delete[] BruteForceMatrix;
+  delete[] RecursiveMatrix;
+  delete[] StrassenMatrix;
 }
 
 void demoTimed()
@@ -161,12 +213,25 @@ void demoMatrixMultiplication()
   demoTimed();
 }
 
+void demoMatrixMultiplicationLinearMatrixes() { demoSimpleLinear(); }
+
 void squareMatrixMultiply(int** A, int** B, int n, int** C)
 {
   for (int i = 0; i < n; ++i) {
     for (int j = 0; j < n; ++j) {
       for (int k = 0; k < n; ++k) {
         C[i][j] += A[i][k] * B[k][j];
+      }
+    }
+  }
+}
+
+void squareMatrixMultiply(int* A, int* B, int n, int* C)
+{
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < n; ++j) {
+      for (int k = 0; k < n; ++k) {
+        C[n * i + j] += A[n * i + k] * B[n * k + j];
       }
     }
   }

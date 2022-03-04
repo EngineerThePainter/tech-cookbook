@@ -33,8 +33,9 @@ target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wall)
 # if (UNIX)
 #   target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wextra)
 # endif(UNIX)
-target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -fsanitizer=memory)
-target_link_options(${CMAKE_PROJECT_NAME} PRIVATE -fsanitizer=memory)
+#target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -fsanitizer=memory)
+
+#target_link_options(${CMAKE_PROJECT_NAME} PRIVATE -fsanitizer=memory)
 
 
 target_include_directories(${PROJECT_NAME} 

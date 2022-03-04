@@ -59,22 +59,24 @@ void matrixMultiplication()
 {
   std::cout << "*** Matrix multiplication\n";
   matrix::demoMatrixMultiplication();
+  std::cout << "******\n";
+  matrix::demoMatrixMultiplicationLinearMatrixes();
   std::cout << "*****************************" << std::endl;
 }
 
 int main()
 {
   std::cout << "***** Introduction to Algorithms 3rd edition" << std::endl << std::endl;
-
   insertionSort();
-  //bubbleSort();
-  //mergeSort();
-  //mergeSortImproved();
+  bubbleSort();
+  mergeSort();
+  mergeSortImproved();
 
-  //binarySearch();
+  binarySearch();
 
-  //maximumSubarray();
+  maximumSubarray();
 
-  //matrixMultiplication();
+  matrixMultiplication();
+  getchar();
   return 0;
 }
