@@ -33,11 +33,31 @@ int** addMatrixes(int** A, int** B, int size)
   return C;
 }
 
+int* addMatrixes(int* A, int* B, int size)
+{
+  int* C = new int[size * size];
+  for (int i = 0; i < size; ++i) {
+    for (int j = 0; j < size; ++j) {
+      C[size * i + j] = A[size * i + j] + B[size * i + j];
+    }
+  }
+  return C;
+}
+
 void addMatrixes(int** A, int** B, int size, int** C)
 {
   for (int i = 0; i < size; ++i) {
     for (int j = 0; j < size; ++j) {
       C[i][j] = A[i][j] + B[i][j];
+    }
+  }
+}
+
+void addMatrixes(int* A, int* B, int size, int* C)
+{
+  for (int i = 0; i < size; ++i) {
+    for (int j = 0; j < size; ++j) {
+      C[size * i + j] = A[size * i + j] + B[size * i + j];
     }
   }
 }
@@ -145,9 +165,9 @@ void demoSimpleLinear()
   squareMatrixMultiply(A, B, 2, BruteForceMatrix);
   printMatrix(BruteForceMatrix, 2);
 
-  // std::cout << "Recursive multiplication\n";
-  // RecursiveMatrix = squareMatrixMultiplyRecursive(A, B, 2);
-  // printMatrix(RecursiveMatrix, 2);
+  std::cout << "Recursive multiplication\n";
+  RecursiveMatrix = squareMatrixMultiplyRecursive(A, B, 2);
+  printMatrix(RecursiveMatrix, 2);
 
   // std::cout << "Strassen multiplication\n";
   // RecursiveMatrix = strassenMultiplication(A, B, 2);
@@ -334,6 +354,92 @@ int** squareMatrixMultiplyRecursive(int** A, int** B, int n)
       delete[] C21[i];
       delete[] C22[i];
     }
+    delete[] A11;
+    delete[] A12;
+    delete[] A21;
+    delete[] A22;
+    delete[] B11;
+    delete[] B12;
+    delete[] B21;
+    delete[] B22;
+    delete[] C11;
+    delete[] C12;
+    delete[] C21;
+    delete[] C22;
+  }
+  return C;
+}
+
+void squareMatrixMultiplyRecursive(int* A, int* B, int n, int* C) { C = squareMatrixMultiplyRecursive(A, B, n); }
+
+int* squareMatrixMultiplyRecursive(int* A, int* B, int n)
+{
+  int* C = new int[n * n];
+  if (n == 1) {
+    C[0] = A[0] * B[0];
+  } else {
+    int new_n = n / 2;
+    int new_size = new_n * new_n;
+    int* A11 = new int[new_size];
+    int* A12 = new int[new_size];
+    int* A21 = new int[new_size];
+    int* A22 = new int[new_size];
+    int* B11 = new int[new_size];
+    int* B12 = new int[new_size];
+    int* B21 = new int[new_size];
+    int* B22 = new int[new_size];
+    int* C11 = new int[new_size];
+    int* C12 = new int[new_size];
+    int* C21 = new int[new_size];
+    int* C22 = new int[new_size];
+
+    for (int i = 0; i < new_size; ++i) {
+      A11[i] = 0;
+      A12[i] = 0;
+      A21[i] = 0;
+      A22[i] = 0;
+      B11[i] = 0;
+      B12[i] = 0;
+      B21[i] = 0;
+      B22[i] = 0;
+      C11[i] = 0;
+      C12[i] = 0;
+      C21[i] = 0;
+      C22[i] = 0;
+    }
+
+    for (int i = 0; i < new_n; ++i) {
+      for (int j = 0; j < new_n; ++j) {
+        A11[i * new_n + j] = A[new_n * i + j];
+        A12[i * new_n + j] = A[new_n * i + new_n + j];
+        A21[i * new_n + j] = A[new_n * (new_n + i) + j];
+        A22[i * new_n + j] = A[new_n * (new_n + i) + new_n + j];
+
+        B11[i * new_n + j] = B[new_n * i + j];
+        B12[i * new_n + j] = B[new_n * i + new_n + j];
+        B21[i * new_n + j] = B[new_n * (new_n + i) + j];
+        B22[i * new_n + j] = B[new_n * (new_n + i) + new_n + j];
+      }
+    }
+
+    addMatrixes(squareMatrixMultiplyRecursive(A11, B11, new_n), squareMatrixMultiplyRecursive(A12, B21, new_n), new_n,
+                C11);
+    addMatrixes(squareMatrixMultiplyRecursive(A11, B12, new_n), squareMatrixMultiplyRecursive(A12, B22, new_n), new_n,
+                C12);
+    addMatrixes(squareMatrixMultiplyRecursive(A21, B11, new_n), squareMatrixMultiplyRecursive(A22, B21, new_n), new_n,
+                C21);
+    addMatrixes(squareMatrixMultiplyRecursive(A21, B12, new_n), squareMatrixMultiplyRecursive(A22, B22, new_n), new_n,
+                C22);
+
+    for (int i = 0; i < new_n; ++i) {
+      for (int j = 0; j < new_n; ++j) {
+        C[new_n * i + j] = C11[new_n * i + j];
+        C[new_n * i + new_n + j] = C12[new_n * i + j];
+        C[new_n * (new_n + i) + j] = C21[new_n * i + j];
+        C[new_n * (new_n + i) + new_n + j] = C22[new_n * i + j];
+      }
+    }
+
     delete[] A11;
     delete[] A12;
     delete[] A21;
