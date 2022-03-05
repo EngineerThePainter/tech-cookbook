@@ -20,7 +20,7 @@
       "installRoot": "${projectDir}\\out\\release\\install\\${name}",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "addressSanitizerEnabled": true
+      "addressSanitizerEnabled": false
     }
   ]
 }

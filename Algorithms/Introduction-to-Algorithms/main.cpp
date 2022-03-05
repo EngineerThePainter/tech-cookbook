@@ -59,8 +59,6 @@ void matrixMultiplication()
 {
   std::cout << "*** Matrix multiplication\n";
   matrix::demoMatrixMultiplication();
-  std::cout << "******\n";
-  matrix::demoMatrixMultiplicationLinearMatrixes();
   std::cout << "*****************************" << std::endl;
 }
 
@@ -77,6 +75,7 @@ int main()
   maximumSubarray();
 
   matrixMultiplication();
+
   getchar();
   return 0;
 }
