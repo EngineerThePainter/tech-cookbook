@@ -374,7 +374,8 @@ void squareMatrixMultiplyRecursive(int* A, int* B, int n, int* C) { C = squareMa
 
 int* squareMatrixMultiplyRecursive(int* A, int* B, int n)
 {
-  int* C = new int[n * n];
+  int squared_n = n * n;
+  int* C = new int[squared_n];
   if (n == 1) {
     C[0] = A[0] * B[0];
   } else {
@@ -410,15 +411,19 @@ int* squareMatrixMultiplyRecursive(int* A, int* B, int n)
 
     for (int i = 0; i < new_n; ++i) {
       for (int j = 0; j < new_n; ++j) {
-        A11[i * new_n + j] = A[new_n * i + j];
-        A12[i * new_n + j] = A[new_n * i + new_n + j];
-        A21[i * new_n + j] = A[new_n * (new_n + i) + j];
-        A22[i * new_n + j] = A[new_n * (new_n + i) + new_n + j];
+        unsigned int up_left_quarter = (n * i) + j;
+        unsigned int up_right_quarter = (n * i) + j + new_n;
+        unsigned int down_left_quarter = (n * n / 2) + (n * i + j);
+        unsigned int down_right_quarter = (n * n / 2) + (n * i) + (j + new_n);
+        A11[i * new_n + j] = A[up_left_quarter];
+        A12[i * new_n + j] = A[up_right_quarter];
+        A21[i * new_n + j] = A[down_left_quarter];
+        A22[i * new_n + j] = A[down_right_quarter];
 
-        B11[i * new_n + j] = B[new_n * i + j];
-        B12[i * new_n + j] = B[new_n * i + new_n + j];
-        B21[i * new_n + j] = B[new_n * (new_n + i) + j];
-        B22[i * new_n + j] = B[new_n * (new_n + i) + new_n + j];
+        B11[i * new_n + j] = B[up_left_quarter];
+        B12[i * new_n + j] = B[up_right_quarter];
+        B21[i * new_n + j] = B[down_left_quarter];
+        B22[i * new_n + j] = B[down_right_quarter];
       }
     }
 
@@ -433,10 +438,14 @@ int* squareMatrixMultiplyRecursive(int* A, int* B, int n)
 
     for (int i = 0; i < new_n; ++i) {
       for (int j = 0; j < new_n; ++j) {
-        C[new_n * i + j] = C11[new_n * i + j];
-        C[new_n * i + new_n + j] = C12[new_n * i + j];
-        C[new_n * (new_n + i) + j] = C21[new_n * i + j];
-        C[new_n * (new_n + i) + new_n + j] = C22[new_n * i + j];
+        unsigned int up_left_quarter = (n * i) + j;
+        unsigned int up_right_quarter = (n * i) + j + new_n;
+        unsigned int down_left_quarter = (n * n / 2) + (n * i + j);
+        unsigned int down_right_quarter = (n * n / 2) + (n * i) + (j + new_n);
+        C[up_left_quarter] = C11[new_n * i + j];
+        C[up_right_quarter] = C12[new_n * i + j];
+        C[down_left_quarter] = C21[new_n * i + j];
+        C[down_right_quarter] = C22[new_n * i + j];
       }
     }
 
