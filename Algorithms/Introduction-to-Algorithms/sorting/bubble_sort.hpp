@@ -9,7 +9,7 @@ class BubbleSort : public SortingAlgorithm
 {
 public:
   ~BubbleSort() = default;
-  void Sort(int* array_to_sort, int number_of_elements) override;
+  void Sort(std::vector<int>& array_to_sort) override;
 };
 } // namespace sorting
 

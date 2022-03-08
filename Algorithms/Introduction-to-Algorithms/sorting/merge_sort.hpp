@@ -9,11 +9,11 @@ class MergeSort : public SortingAlgorithm
 {
 public:
   ~MergeSort() = default;
-  void Sort(int* array_to_sort, int number_of_elements) override;
+  void Sort(std::vector<int>& array_to_sort) override;
 
 private:
-  void Sort(int* A, int p, int r);
-  void Merge(int* A, int p, int q, int r);
+  void Sort(std::vector<int>& A, int p, int r);
+  void Merge(std::vector<int>& A, int p, int q, int r);
 };
 } // namespace sorting
 

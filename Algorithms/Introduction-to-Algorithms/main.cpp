@@ -70,12 +70,11 @@ int main()
   mergeSort();
   mergeSortImproved();
 
-  binarySearch();
+  //binarySearch();
 
-  maximumSubarray();
+  //maximumSubarray();
 
-  matrixMultiplication();
-
+  //matrixMultiplication();
   getchar();
   return 0;
 }

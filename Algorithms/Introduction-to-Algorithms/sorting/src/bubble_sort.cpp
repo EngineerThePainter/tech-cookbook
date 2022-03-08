@@ -2,10 +2,10 @@
 
 namespace sorting
 {
-void BubbleSort::Sort(int* array_to_sort, int number_of_elements)
+void BubbleSort::Sort(std::vector<int>& array_to_sort)
 {
-  for (int i = 0; i < number_of_elements; ++i) {
-    for (int j = number_of_elements - 1; j >= i + 1; --j) {
+  for (int i = 0; i < array_to_sort.size(); ++i) {
+    for (int j = array_to_sort.size() - 1; j >= i + 1; --j) {
       ++number_of_comparisons_;
       if (array_to_sort[j] < array_to_sort[j - 1]) {
         int temp = array_to_sort[j];

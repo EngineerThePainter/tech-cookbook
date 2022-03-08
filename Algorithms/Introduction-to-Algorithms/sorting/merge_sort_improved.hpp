@@ -10,12 +10,12 @@ class MergeSortImproved : public SortingAlgorithm
 {
 public:
   ~MergeSortImproved() = default;
-  void Sort(int* array_to_sort, int number_of_elements) override;
+  void Sort(std::vector<int>& array_to_sort) override;
 
 private:
-  void Sort(int* A, int p, int r);
-  void Merge(int* A, int p, int q, int r);
-  void InsertionSort(int* A, int left, int right);
+  void Sort(std::vector<int>& A, int p, int r);
+  void Merge(std::vector<int>& A, int p, int q, int r);
+  void InsertionSort(std::vector<int>& A, int left, int right);
 };
 } // namespace sorting
 

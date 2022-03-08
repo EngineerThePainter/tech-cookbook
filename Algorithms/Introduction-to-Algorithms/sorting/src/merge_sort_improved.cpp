@@ -10,9 +10,12 @@ namespace
 constexpr int SIZE_BOUNDARY = 10;
 }
 
-void MergeSortImproved::Sort(int* array_to_sort, int number_of_elements) { Sort(array_to_sort, 1, number_of_elements); }
+void MergeSortImproved::Sort(std::vector<int>& array_to_sort)
+{
+  Sort(array_to_sort, 1, array_to_sort.size());
+}
 
-void MergeSortImproved::Sort(int* A, int p, int r)
+void MergeSortImproved::Sort(std::vector<int>& A, int p, int r)
 {
   if (p < r) {
     // This is a floor operation
@@ -27,13 +30,15 @@ void MergeSortImproved::Sort(int* A, int p, int r)
   }
 }
 
-void MergeSortImproved::Merge(int* A, int p, int q, int r)
+void MergeSortImproved::Merge(std::vector<int>& A, int p, int q, int r)
 {
   int n1 = q - p + 1;
   int n2 = r - q;
 
-  int* L = new int[n1];
-  int* R = new int[n2];
+  std::vector<int> L;
+  L.resize(n1);
+  std::vector<int> R;
+  R.resize(n2);
   for (int i = 0; i < n1; ++i) {
     L[i] = A[p + i - 1];
   }
@@ -68,12 +73,9 @@ void MergeSortImproved::Merge(int* A, int p, int q, int r)
       ++j;
     }
   }
-
-  delete[] L;
-  delete[] R;
 }
 
-void MergeSortImproved::InsertionSort(int* A, int left, int right)
+void MergeSortImproved::InsertionSort(std::vector<int>& A, int left, int right)
 {
   for (int j = left; j < right; ++j) {
     int key = A[j];

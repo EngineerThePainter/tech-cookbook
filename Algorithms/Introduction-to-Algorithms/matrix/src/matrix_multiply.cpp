@@ -158,15 +158,17 @@ void demoTimed()
     }
   }
 
-  std::function<void(int*, int*, int, int*)> straight_multiplication =
-      [&](int* A, int* B, int nb_elements, int* C) { squareMatrixMultiply(A, B, nb_elements, C); };
+  std::function<void(int*, int*, int, int*)> straight_multiplication = [&](int* A, int* B, int nb_elements, int* C) {
+    squareMatrixMultiply(A, B, nb_elements, C);
+  };
 
   std::cout << "Straight Matrix Multiplication: "
             << utils::runWithTimeMeasure(straight_multiplication, A, B, size, BruteForceMatrix).count()
             << " milliseconds" << std::endl;
 
-  std::function<void(int*, int*, int, int*)> recursive_multiplication =
-      [&](int* A, int* B, int nb_elements, int* C) { squareMatrixMultiplyRecursive(A, B, nb_elements, C); };
+  std::function<void(int*, int*, int, int*)> recursive_multiplication = [&](int* A, int* B, int nb_elements, int* C) {
+    squareMatrixMultiplyRecursive(A, B, nb_elements, C);
+  };
 
   // The result will be generally worse due to overhead of matrix initializations, but in general
   // it is still the same computational effort
@@ -174,8 +176,9 @@ void demoTimed()
             << utils::runWithTimeMeasure(recursive_multiplication, A, B, size, RecursiveMatrix).count()
             << " milliseconds" << std::endl;
 
-  std::function<void(int*, int*, int, int*)> strassen_multiplication =
-      [&](int* A, int* B, int nb_elements, int* C) { strassenMultiplication(A, B, nb_elements, C); };
+  std::function<void(int*, int*, int, int*)> strassen_multiplication = [&](int* A, int* B, int nb_elements, int* C) {
+    strassenMultiplication(A, B, nb_elements, C);
+  };
 
   std::cout << "Strassen Matrix Multiplication: "
             << utils::runWithTimeMeasure(strassen_multiplication, A, B, size, StrassenMatrix).count() << " milliseconds"
@@ -304,7 +307,8 @@ int* squareMatrixMultiplyRecursive(int* A, int* B, int n)
 
 void strassenMultiplication(int* A, int* B, int n, int* C) { C = strassenMultiplication(A, B, n); }
 
-int* strassenMultiplication(int* A, int* B, int n) {
+int* strassenMultiplication(int* A, int* B, int n)
+{
   int* C = new int[n * n];
   if (n == 1) {
     C[0] = A[0] * B[0];
