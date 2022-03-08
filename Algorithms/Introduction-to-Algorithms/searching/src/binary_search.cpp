@@ -11,11 +11,12 @@ namespace searching
 void demoSearch()
 {
   constexpr int nb_elements = 10000000;
-  int* search_case = new int[nb_elements];
+  std::vector<int> search_case{};
+  search_case.resize(nb_elements);
   for (int i = 0; i < nb_elements; ++i) {
     search_case[i] = i + 1;
   }
-  std::function<void(int*, int, int, SearchData&)> search = [&](int* A, int left_boundary, int right_boundary,
+  std::function<void(std::vector<int>&, int, int, SearchData&)> search = [&](std::vector<int>& A, int left_boundary, int right_boundary,
                                                                 SearchData& data) {
     binarySearch(A, left_boundary, right_boundary, data);
   };
@@ -49,10 +50,9 @@ void demoSearch()
   std::cout << "Last value case index: " << last_value_data.found_index << std::endl;
   std::cout << "Last value number of calls " << last_value_data.number_of_calls << std::endl;
   std::cout << std::endl;
-  delete[] search_case;
 }
 
-void binarySearch(int* A, int left_boundary, int right_boundary, SearchData& data)
+void binarySearch(std::vector<int>& A, int left_boundary, int right_boundary, SearchData& data)
 {
   if (left_boundary <= right_boundary) {
     // This is a floor operation

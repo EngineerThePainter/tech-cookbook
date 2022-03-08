@@ -70,7 +70,7 @@ int main()
   mergeSort();
   mergeSortImproved();
 
-  //binarySearch();
+  binarySearch();
 
   //maximumSubarray();
 
