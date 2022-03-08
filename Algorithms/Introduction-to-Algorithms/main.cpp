@@ -74,7 +74,7 @@ int main()
 
   maximumSubarray();
 
-  //matrixMultiplication();
+  matrixMultiplication();
   getchar();
   return 0;
 }

@@ -10,87 +10,31 @@ namespace matrix
 namespace
 {
 
-int** initializeMatrixOfSize(int size)
+std::vector<int> addMatrixes(const std::vector<int>& A, const std::vector<int>& B)
 {
-  int** M = new int*[size];
-  for (int i = 0; i < size; ++i) {
-    M[i] = new int[size];
-    for (int j = 0; j < size; ++j) {
-      M[i][j] = 0;
-    }
-  }
-  return M;
-}
-
-int** addMatrixes(int** A, int** B, int size)
-{
-  int** C = initializeMatrixOfSize(size);
-  for (int i = 0; i < size; ++i) {
-    for (int j = 0; j < size; ++j) {
-      C[i][j] = A[i][j] + B[i][j];
-    }
+  std::vector<int> C{};
+  C.resize(A.size());
+  for (int i = 0; i < A.size(); ++i) {
+    C[i] = A[i] + B[i];
   }
   return C;
 }
 
-int* addMatrixes(int* A, int* B, int size)
+void addMatrixes(const std::vector<int>& A, const std::vector<int>& B, std::vector<int>& C)
 {
-  int* C = new int[size * size];
-  for (int i = 0; i < size; ++i) {
-    for (int j = 0; j < size; ++j) {
-      C[size * i + j] = A[size * i + j] + B[size * i + j];
-    }
-  }
-  return C;
-}
-
-void addMatrixes(int** A, int** B, int size, int** C)
-{
-  for (int i = 0; i < size; ++i) {
-    for (int j = 0; j < size; ++j) {
-      C[i][j] = A[i][j] + B[i][j];
-    }
+  for (int i = 0; i < A.size(); ++i) {
+    C[i] = A[i] + B[i];
   }
 }
 
-void addMatrixes(int* A, int* B, int size, int* C)
+void substractMatrixes(const std::vector<int>& A, const std::vector<int>& B, std::vector<int>& C)
 {
-  for (int i = 0; i < size; ++i) {
-    for (int j = 0; j < size; ++j) {
-      C[size * i + j] = A[size * i + j] + B[size * i + j];
-    }
+  for (int i = 0; i < A.size(); ++i) {
+    C[i] = A[i] - B[i];
   }
 }
 
-void substractMatrixes(int** A, int** B, int size, int** C)
-{
-  for (int i = 0; i < size; ++i) {
-    for (int j = 0; j < size; ++j) {
-      C[i][j] = A[i][j] - B[i][j];
-    }
-  }
-}
-
-void deallocateMatrix(int** M, int size)
-{
-  for (int i = 0; i < size; ++i) {
-    delete[] M[i];
-  }
-  delete[] M;
-}
-
-void printMatrix(int** M, unsigned int size)
-{
-  for (unsigned int i = 0; i < size; ++i) {
-    std::cout << "[";
-    for (unsigned int j = 0; j < size; ++j) {
-      std::cout << M[i][j] << " ";
-    }
-    std::cout << "]\n";
-  }
-}
-
-void printMatrix(int* M, unsigned int size)
+void printMatrix(const std::vector<int>& M, unsigned int size)
 {
   for (unsigned int i = 0; i < size; ++i) {
     std::cout << "[";
@@ -103,29 +47,14 @@ void printMatrix(int* M, unsigned int size)
 
 void demoSimple()
 {
-  int* A = new int[4];
-  int* B = new int[4];
-  int* BruteForceMatrix = new int[4];
-  int* RecursiveMatrix = new int[4];
-  int* StrassenMatrix = new int[4];
-  for (int i = 0; i < 4; ++i) {
-    BruteForceMatrix[i] = 0;
-    RecursiveMatrix[i] = 0;
-    StrassenMatrix[i] = 0;
-  }
-
-  A[0] = 1;
-  A[1] = 3;
-  A[2] = 7;
-  A[3] = 5;
-
-  B[0] = 6;
-  B[1] = 8;
-  B[2] = 4;
-  B[3] = 2;
+  std::vector<int> A = {1, 3, 7, 5};
+  std::vector<int> B = {6, 8, 4, 2};
+  std::vector<int> BruteForceMatrix (4);
+  std::vector<int> RecursiveMatrix (4);
+  std::vector<int> StrassenMatrix (4);
 
   std::cout << "Normal multiplication\n";
-  squareMatrixMultiply(A, B, 2, BruteForceMatrix);
+  squareMatrixMultiply(A, B, BruteForceMatrix, 2);
   printMatrix(BruteForceMatrix, 2);
 
   std::cout << "Recursive multiplication\n";
@@ -135,60 +64,45 @@ void demoSimple()
   std::cout << "Strassen multiplication\n";
   StrassenMatrix = strassenMultiplication(A, B, 2);
   printMatrix(StrassenMatrix, 2);
-  delete[] A;
-  delete[] B;
-  delete[] BruteForceMatrix;
-  delete[] RecursiveMatrix;
-  delete[] StrassenMatrix;
 }
 
 void demoTimed()
 {
   const int size = 128; // using power of 2 for convienience of recursive approach
-  int* A = new int[size * size];
-  int* B = new int[size * size];
-  int* BruteForceMatrix = new int[size * size];
-  int* RecursiveMatrix = new int[size * size];
-  int* StrassenMatrix = new int[size * size];
+  std::vector<int> A(size * size, 1);
+  std::vector<int> B(size * size, 2);
+  std::vector<int> BruteForceMatrix(size * size);
+  std::vector<int> RecursiveMatrix(size * size);
+  std::vector<int> StrassenMatrix(size * size);
 
-  for (int i = 0; i < size; ++i) {
-    for (int j = 0; j < size; ++j) {
-      A[size * i + j] = 1;
-      B[size * i + j] = 2;
-    }
-  }
-
-  std::function<void(int*, int*, int, int*)> straight_multiplication = [&](int* A, int* B, int nb_elements, int* C) {
-    squareMatrixMultiply(A, B, nb_elements, C);
-  };
+  std::function<void(const std::vector<int>&, const std::vector<int>&, std::vector<int>&, const int)>
+      straight_multiplication = [&](const std::vector<int>& A, const std::vector<int>& B, std::vector<int>& C, const int n) {
+        squareMatrixMultiply(A, B, C, n);
+      };
 
   std::cout << "Straight Matrix Multiplication: "
-            << utils::runWithTimeMeasure(straight_multiplication, A, B, size, BruteForceMatrix).count()
+            << utils::runWithTimeMeasure(straight_multiplication, A, B, BruteForceMatrix, size).count()
             << " milliseconds" << std::endl;
 
-  std::function<void(int*, int*, int, int*)> recursive_multiplication = [&](int* A, int* B, int nb_elements, int* C) {
-    squareMatrixMultiplyRecursive(A, B, nb_elements, C);
-  };
+  std::function<void(const std::vector<int>&, const std::vector<int>&, std::vector<int>&, const int)>
+      recursive_multiplication = [&](const std::vector<int>& A, const std::vector<int>& B, std::vector<int>& C, const int n) {
+        squareMatrixMultiplyRecursive(A, B, C, n);
+      };
 
   // The result will be generally worse due to overhead of matrix initializations, but in general
   // it is still the same computational effort
   std::cout << "Recursive Matrix Multiplication: "
-            << utils::runWithTimeMeasure(recursive_multiplication, A, B, size, RecursiveMatrix).count()
+            << utils::runWithTimeMeasure(recursive_multiplication, A, B, RecursiveMatrix, size).count()
             << " milliseconds" << std::endl;
 
-  std::function<void(int*, int*, int, int*)> strassen_multiplication = [&](int* A, int* B, int nb_elements, int* C) {
-    strassenMultiplication(A, B, nb_elements, C);
-  };
+  std::function<void(const std::vector<int>&, const std::vector<int>&, std::vector<int>&, const int)>
+      strassen_multiplication = [&](const std::vector<int>& A, const std::vector<int>& B, std::vector<int>& C, const int n) {
+        strassenMultiplication(A, B, C, n);
+      };
 
   std::cout << "Strassen Matrix Multiplication: "
-            << utils::runWithTimeMeasure(strassen_multiplication, A, B, size, StrassenMatrix).count() << " milliseconds"
+            << utils::runWithTimeMeasure(strassen_multiplication, A, B, StrassenMatrix, size).count() << " milliseconds"
             << std::endl;
-
-  delete[] A;
-  delete[] B;
-  delete[] BruteForceMatrix;
-  delete[] RecursiveMatrix;
-  delete[] StrassenMatrix;
 }
 
 } // namespace
@@ -199,7 +113,7 @@ void demoMatrixMultiplication()
   demoTimed();
 }
 
-void squareMatrixMultiply(int* A, int* B, int n, int* C)
+void squareMatrixMultiply(const std::vector<int>& A, const std::vector<int>& B, std::vector<int>& C, const int n)
 {
   for (int i = 0; i < n; ++i) {
     for (int j = 0; j < n; ++j) {
@@ -210,44 +124,33 @@ void squareMatrixMultiply(int* A, int* B, int n, int* C)
   }
 }
 
-void squareMatrixMultiplyRecursive(int* A, int* B, int n, int* C) { C = squareMatrixMultiplyRecursive(A, B, n); }
+void squareMatrixMultiplyRecursive(const std::vector<int>& A, const std::vector<int>& B, std::vector<int>& C,
+                                   const int n)
+{
+  C = squareMatrixMultiplyRecursive(A, B, n);
+}
 
-int* squareMatrixMultiplyRecursive(int* A, int* B, int n)
+std::vector<int> squareMatrixMultiplyRecursive(const std::vector<int>& A, const std::vector<int>& B, const int n)
 {
   int squared_n = n * n;
-  int* C = new int[squared_n];
+  std::vector<int> C(squared_n);
   if (n == 1) {
     C[0] = A[0] * B[0];
   } else {
     int new_n = n / 2;
     int new_size = new_n * new_n;
-    int* A11 = new int[new_size];
-    int* A12 = new int[new_size];
-    int* A21 = new int[new_size];
-    int* A22 = new int[new_size];
-    int* B11 = new int[new_size];
-    int* B12 = new int[new_size];
-    int* B21 = new int[new_size];
-    int* B22 = new int[new_size];
-    int* C11 = new int[new_size];
-    int* C12 = new int[new_size];
-    int* C21 = new int[new_size];
-    int* C22 = new int[new_size];
-
-    for (int i = 0; i < new_size; ++i) {
-      A11[i] = 0;
-      A12[i] = 0;
-      A21[i] = 0;
-      A22[i] = 0;
-      B11[i] = 0;
-      B12[i] = 0;
-      B21[i] = 0;
-      B22[i] = 0;
-      C11[i] = 0;
-      C12[i] = 0;
-      C21[i] = 0;
-      C22[i] = 0;
-    }
+    std::vector<int> A11(new_size, 0);
+    std::vector<int> A12(new_size, 0);
+    std::vector<int> A21(new_size, 0);
+    std::vector<int> A22(new_size, 0);
+    std::vector<int> B11(new_size, 0);
+    std::vector<int> B12(new_size, 0);
+    std::vector<int> B21(new_size, 0);
+    std::vector<int> B22(new_size, 0);
+    std::vector<int> C11(new_size, 0);
+    std::vector<int> C12(new_size, 0);
+    std::vector<int> C21(new_size, 0);
+    std::vector<int> C22(new_size, 0);
 
     for (int i = 0; i < new_n; ++i) {
       for (int j = 0; j < new_n; ++j) {
@@ -267,14 +170,10 @@ int* squareMatrixMultiplyRecursive(int* A, int* B, int n)
       }
     }
 
-    addMatrixes(squareMatrixMultiplyRecursive(A11, B11, new_n), squareMatrixMultiplyRecursive(A12, B21, new_n), new_n,
-                C11);
-    addMatrixes(squareMatrixMultiplyRecursive(A11, B12, new_n), squareMatrixMultiplyRecursive(A12, B22, new_n), new_n,
-                C12);
-    addMatrixes(squareMatrixMultiplyRecursive(A21, B11, new_n), squareMatrixMultiplyRecursive(A22, B21, new_n), new_n,
-                C21);
-    addMatrixes(squareMatrixMultiplyRecursive(A21, B12, new_n), squareMatrixMultiplyRecursive(A22, B22, new_n), new_n,
-                C22);
+    addMatrixes(squareMatrixMultiplyRecursive(A11, B11, new_n), squareMatrixMultiplyRecursive(A12, B21, new_n), C11);
+    addMatrixes(squareMatrixMultiplyRecursive(A11, B12, new_n), squareMatrixMultiplyRecursive(A12, B22, new_n), C12);
+    addMatrixes(squareMatrixMultiplyRecursive(A21, B11, new_n), squareMatrixMultiplyRecursive(A22, B21, new_n), C21);
+    addMatrixes(squareMatrixMultiplyRecursive(A21, B12, new_n), squareMatrixMultiplyRecursive(A22, B22, new_n), C22);
 
     for (int i = 0; i < new_n; ++i) {
       for (int j = 0; j < new_n; ++j) {
@@ -288,72 +187,41 @@ int* squareMatrixMultiplyRecursive(int* A, int* B, int n)
         C[down_right_quarter] = C22[new_n * i + j];
       }
     }
-
-    delete[] A11;
-    delete[] A12;
-    delete[] A21;
-    delete[] A22;
-    delete[] B11;
-    delete[] B12;
-    delete[] B21;
-    delete[] B22;
-    delete[] C11;
-    delete[] C12;
-    delete[] C21;
-    delete[] C22;
   }
   return C;
 }
 
-void strassenMultiplication(int* A, int* B, int n, int* C) { C = strassenMultiplication(A, B, n); }
-
-int* strassenMultiplication(int* A, int* B, int n)
+void strassenMultiplication(const std::vector<int>& A, const std::vector<int>& B, std::vector<int>& C, const int n)
 {
-  int* C = new int[n * n];
+  C = strassenMultiplication(A, B, n);
+}
+
+std::vector<int> strassenMultiplication(const std::vector<int>& A, const std::vector<int>& B, const int n)
+{
+  std::vector<int> C(n * n, 0);
   if (n == 1) {
     C[0] = A[0] * B[0];
   } else {
     int new_n = n / 2;
     int new_size = new_n * new_n;
-    int* A11 = new int[new_size];
-    int* A12 = new int[new_size];
-    int* A21 = new int[new_size];
-    int* A22 = new int[new_size];
-    int* B11 = new int[new_size];
-    int* B12 = new int[new_size];
-    int* B21 = new int[new_size];
-    int* B22 = new int[new_size];
-    int* S1 = new int[new_size];
-    int* S2 = new int[new_size];
-    int* S3 = new int[new_size];
-    int* S4 = new int[new_size];
-    int* S5 = new int[new_size];
-    int* S6 = new int[new_size];
-    int* S7 = new int[new_size];
-    int* S8 = new int[new_size];
-    int* S9 = new int[new_size];
-    int* S10 = new int[new_size];
-
-    for (int i = 0; i < new_size; ++i) {
-      A11[i] = 0;
-      A12[i] = 0;
-      A21[i] = 0;
-      A22[i] = 0;
-      B11[i] = 0;
-      B12[i] = 0;
-      B21[i] = 0;
-      B22[i] = 0;
-      S1[i] = 0;
-      S2[i] = 0;
-      S3[i] = 0;
-      S4[i] = 0;
-      S5[i] = 0;
-      S6[i] = 0;
-      S7[i] = 0;
-      S8[i] = 0;
-      S9[i] = 0;
-      S10[i] = 0;
-    }
+    std::vector<int> A11(new_size, 0);
+    std::vector<int> A12(new_size, 0);
+    std::vector<int> A21(new_size, 0);
+    std::vector<int> A22(new_size, 0);
+    std::vector<int> B11(new_size, 0);
+    std::vector<int> B12(new_size, 0);
+    std::vector<int> B21(new_size, 0);
+    std::vector<int> B22(new_size, 0);
+    std::vector<int> S1(new_size, 0);
+    std::vector<int> S2(new_size, 0);
+    std::vector<int> S3(new_size, 0);
+    std::vector<int> S4(new_size, 0);
+    std::vector<int> S5(new_size, 0);
+    std::vector<int> S6(new_size, 0);
+    std::vector<int> S7(new_size, 0);
+    std::vector<int> S8(new_size, 0);
+    std::vector<int> S9(new_size, 0);
+    std::vector<int> S10(new_size, 0);
 
     for (int i = 0; i < new_n; ++i) {
       for (int j = 0; j < new_n; ++j) {
@@ -388,13 +256,13 @@ int* strassenMultiplication(int* A, int* B, int n)
       }
     }
 
-    int* P1 = strassenMultiplication(A11, S1, new_n);
-    int* P2 = strassenMultiplication(S2, B22, new_n);
-    int* P3 = strassenMultiplication(S3, B11, new_n);
-    int* P4 = strassenMultiplication(A22, S4, new_n);
-    int* P5 = strassenMultiplication(S5, S6, new_n);
-    int* P6 = strassenMultiplication(S7, S8, new_n);
-    int* P7 = strassenMultiplication(S9, S10, new_n);
+    std::vector<int> P1 = strassenMultiplication(A11, S1, new_n);
+    std::vector<int> P2 = strassenMultiplication(S2, B22, new_n);
+    std::vector<int> P3 = strassenMultiplication(S3, B11, new_n);
+    std::vector<int> P4 = strassenMultiplication(A22, S4, new_n);
+    std::vector<int> P5 = strassenMultiplication(S5, S6, new_n);
+    std::vector<int> P6 = strassenMultiplication(S7, S8, new_n);
+    std::vector<int> P7 = strassenMultiplication(S9, S10, new_n);
 
     for (int i = 0; i < new_n; ++i) {
       for (int j = 0; j < new_n; ++j) {
@@ -408,32 +276,6 @@ int* strassenMultiplication(int* A, int* B, int n)
         C[down_right_quarter] = P5[new_n * i + j] + P1[new_n * i + j] - P3[new_n * i + j] - P7[new_n * i + j];
       }
     }
-
-    delete[] A11;
-    delete[] A12;
-    delete[] A21;
-    delete[] A22;
-    delete[] B11;
-    delete[] B12;
-    delete[] B21;
-    delete[] B22;
-    delete[] S1;
-    delete[] S2;
-    delete[] S3;
-    delete[] S4;
-    delete[] S5;
-    delete[] S6;
-    delete[] S7;
-    delete[] S8;
-    delete[] S9;
-    delete[] S10;
-    delete[] P1;
-    delete[] P2;
-    delete[] P3;
-    delete[] P4;
-    delete[] P5;
-    delete[] P6;
-    delete[] P7;
   }
   return C;
 }
