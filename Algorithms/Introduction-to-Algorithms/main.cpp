@@ -72,7 +72,7 @@ int main()
 
   binarySearch();
 
-  //maximumSubarray();
+  maximumSubarray();
 
   //matrixMultiplication();
   getchar();

@@ -2,9 +2,7 @@
 #define DAC_MAXIMUM_SUBARRAY
 
 #include <limits>
-
-// TODO: Brute force mechanism
-// Valid demo
+#include <vector>
 
 namespace dac
 {
@@ -16,9 +14,9 @@ struct Max_Subarray {
 
 void demoMaximumSubarray();
 
-Max_Subarray findMaximumSubarray(int* A, int low_index, int high_index);
+Max_Subarray findMaximumSubarray(std::vector<int>& A, int low_index, int high_index);
 
-Max_Subarray findMaximumSubarrayBruteForce(int* A, int number_of_elements);
+Max_Subarray findMaximumSubarrayBruteForce(std::vector<int>& A);
 
 } // namespace dac
 

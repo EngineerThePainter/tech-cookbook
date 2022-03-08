@@ -7,7 +7,7 @@ namespace dac
 {
 namespace
 {
-Max_Subarray findMaximumCrossingSubarray(int* A, int low_index, int mid_index, int high_index)
+Max_Subarray findMaximumCrossingSubarray(std::vector<int>& A, int low_index, int mid_index, int high_index)
 {
   Max_Subarray subarray;
   int left_sum = -std::numeric_limits<int>::infinity();
@@ -34,10 +34,10 @@ Max_Subarray findMaximumCrossingSubarray(int* A, int low_index, int mid_index, i
 } // namespace
 void demoMaximumSubarray()
 {
-  int test[16] = {-5, -22, 15, -4, 7, 13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12};
+  std::vector<int> test = {-5, -22, 15, -4, 7, 13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12};
 
   std::cout << "Brute force\n";
-  auto subarray_brute_force = findMaximumSubarrayBruteForce(test, 16);
+  auto subarray_brute_force = findMaximumSubarrayBruteForce(test);
   std::cout << "" << subarray_brute_force.low_index << " : " << subarray_brute_force.high_index << " : "
             << subarray_brute_force.sum << std::endl;
 
@@ -47,7 +47,7 @@ void demoMaximumSubarray()
   std::cout << "" << subarray.low_index << " : " << subarray.high_index << " : " << subarray.sum << std::endl;
 }
 
-Max_Subarray findMaximumSubarray(int* A, int low_index, int high_index)
+Max_Subarray findMaximumSubarray(std::vector<int>& A, int low_index, int high_index)
 {
   if (high_index == low_index) {
     return {low_index, high_index, A[low_index]};
@@ -65,13 +65,13 @@ Max_Subarray findMaximumSubarray(int* A, int low_index, int high_index)
   }
 }
 
-Max_Subarray findMaximumSubarrayBruteForce(int* A, int number_of_elements)
+Max_Subarray findMaximumSubarrayBruteForce(std::vector<int>& A)
 {
   Max_Subarray max_subarray;
 
-  for (int i = 0; i < number_of_elements; ++i) {
+  for (int i = 0; i < A.size(); ++i) {
     int sum = 0;
-    for (int j = i; j < number_of_elements; ++j) {
+    for (int j = i; j < A.size(); ++j) {
       sum += A[j];
       if (sum > max_subarray.sum) {
         max_subarray.sum = sum;
