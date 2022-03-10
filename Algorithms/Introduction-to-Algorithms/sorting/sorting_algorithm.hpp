@@ -1,6 +1,8 @@
 #ifndef SORTING_ALGORITHM_HPP
 #define SORTING_ALGORITHM_HPP
 
+#include <vector>
+
 namespace sorting
 {
 
@@ -8,7 +10,7 @@ class SortingAlgorithm
 {
 public:
   virtual ~SortingAlgorithm() = default;
-  virtual void Sort(int* array_to_sort, int number_of_elements) = 0;
+  virtual void Sort(std::vector<int>& array_to_sort) = 0;
   long long NumberOfComparisons() const;
   long long NumberOfAssignements() const;
   void ResetCounters();

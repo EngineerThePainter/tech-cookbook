@@ -1,6 +1,8 @@
 #ifndef SEARCHING_BINARY_SEARCH
 #define SEARCHING_BINARY_SEARCH
 
+#include <vector>
+
 namespace searching
 {
 
@@ -13,7 +15,7 @@ struct SearchData {
 
 void demoSearch();
 
-void binarySearch(int* A, int left_boundary, int right_boundary, SearchData& data);
+void binarySearch(std::vector<int>& A, int left_boundary, int right_boundary, SearchData& data);
 
 } // namespace searching
 

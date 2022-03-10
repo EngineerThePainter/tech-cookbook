@@ -2,9 +2,9 @@
 
 namespace sorting
 {
-void InsertionSort::Sort(int* array_to_sort, int number_of_elements)
+void InsertionSort::Sort(std::vector<int>& array_to_sort)
 {
-  for (int j = 1; j < number_of_elements; ++j) {
+  for (int j = 1; j < array_to_sort.size(); ++j) {
     int key = array_to_sort[j];
     int i = j - 1;
     int number_of_iterations = 0;
