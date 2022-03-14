@@ -6,6 +6,7 @@
 #include <string>
 #include <string_view>
 #include <tuple>
+#include <variant>
 
 // From cpp reference
 void demo_status(const std::filesystem::path &p, std::filesystem::file_status s)
@@ -112,6 +113,57 @@ void Any()
   std::cout << std::endl;
 }
 
+template <typename... Args>
+void printer(Args &&...args)
+{
+  (std::cout << ... << args) << '\n';
+}
+
+void FoldExpression()
+{
+  std::cout << "*** Fold expressions\n";
+  printer(1, 2, 3, "Text");
+  std::cout << std::endl;
+}
+
+template <typename T>
+auto get_value(T t)
+{
+  if constexpr (std::is_pointer_v<T>)
+    return *t; // deduces return type to int for T = int*
+  else
+    return t; // deduces return type to int for T = int
+}
+
+void ConstexprIf()
+{
+  std::cout << "*** Constexpr if\n";
+  std::unique_ptr<int> x = std::make_unique<int>(42);
+  std::cout << get_value(x.get()) << std::endl;
+  std::cout << std::endl;
+}
+
+void Variant()
+{
+  std::cout << "*** Variant\n";
+  std::variant<int, double> var;
+  var = 42;
+  std::cout << "Variant value " << std::get<int>(var) << std::endl;
+  var = 42.4242;
+  try
+  {
+    std::cout << "Variant int value when it's double " << std::get<int>(var) << std::endl;
+  }
+  catch (const std::bad_variant_access &ex)
+  {
+    std::cout << ex.what() << '\n';
+  }
+
+  std::cout << "Variant double value " << std::get<double>(var) << std::endl;
+
+  std::cout << std::endl;
+}
+
 int main()
 {
   std::cout << "********** C++ 17 **********\n";
@@ -123,4 +175,7 @@ int main()
   Searchers();
   Invoke();
   Any();
+  FoldExpression();
+  ConstexprIf();
+  Variant();
 }
