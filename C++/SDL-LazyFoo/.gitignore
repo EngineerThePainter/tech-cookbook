@@ -8,3 +8,5 @@ SDL2-2.0.20/README-SDL.txt
 SDL2-2.0.20/README.txt
 SDL2-2.0.20/WhatsNew.txt
 SDL2-2.0.20/COPYING.txt
+.vs/*
+out/*
