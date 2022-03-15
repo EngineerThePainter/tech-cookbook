@@ -3,6 +3,7 @@ project(introduction-to-algorithms)
 
 set(HEADERS
 divide-and-conquer/maximum_subarray.hpp
+heap/heap.hpp
 matrix/matrix_multiply.hpp
 searching/binary_search.hpp
 sorting/bubble_sort.hpp
@@ -24,7 +25,7 @@ sorting/src/insertion_sort.cpp
 sorting/src/merge_sort.cpp
 sorting/src/merge_sort_improved.cpp
 sorting/src/sorting_algorithm.cpp
-)
+heap/src/heap.cpp)
 
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} main.cpp)
 
@@ -41,6 +42,7 @@ target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wall)
 target_include_directories(${PROJECT_NAME} 
   PUBLIC
   divide-and-conquer
+  heap
   matrix
   searching
   sorting
