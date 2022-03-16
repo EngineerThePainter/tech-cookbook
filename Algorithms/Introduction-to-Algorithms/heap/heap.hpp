@@ -1,41 +1,66 @@
 #ifndef HEAP_HEAP_HPP
 #define HEAP_HEAP_HPP
 
+#include <iostream>
 #include <vector>
 
 namespace heap
 {
-inline int ParentIndex(const int i) { return i / 2; }
-inline int LeftIndex(const int i) { return 2 * i; }
-inline int RightIndex(const int i) { return LeftIndex(i) + 1; }
+inline int Parent(const int i) { return i / 2; }
+inline int Left(const int i) { return i == 0 ? 1 : (i * 2) + 1; }
+inline int Right(const int i) { return Left(i) + 1; }
 
-template <typename T> struct Heap {
-  std::vector<T> data;
-  int heap_size = 0;
+template <typename T> class Heap
+{
+public:
+  Heap(const std::vector<T> data) : data_(std::move(data)), heap_size(0) {}
 
-  static MaxHeapify(Heap<T>& heap, const int i)
+  std::vector<T>& Data() { return data_; }
+  int& HeapSize() { return heap_size; }
+  void PrintHeap()
   {
-    const int left = LeftIndex(i);
-    const int right = RightIndex(i);
-    int largest = -1;
-    if (left <= heap.heap_size && heap.data[left] > heap.data[i]) {
-      largest = left;
-    } else {
-      largest = i;
-    }
-
-    if (right <= heap.heap_size && heap.data[right] > heap.data[i]) {
-      largest = right;
-    }
-
-    if (largest != i) {
-      T temp = heap.data[i];
-      heap.data[i] = heap.data[largest];
-      heap.data[largest] = temp;
-      MaxHeapify(heap, largest);
+    for (const auto& d : data_) {
+      std::cout << d << std::endl;
     }
   }
+
+private:
+  std::vector<T> data_;
+  int heap_size;
 };
+
+template <typename T> void MaxHeapify(Heap<T>& heap, const int i)
+{
+  const int left_index = Left(i);
+  const int right_index = Right(i);
+  int largest = -1;
+
+  if (left_index < heap.HeapSize() && heap.Data()[left_index] > heap.Data()[i]) {
+    largest = left_index;
+  } else {
+    largest = i;
+  }
+
+  if (right_index < heap.HeapSize() && heap.Data()[right_index] > heap.Data()[largest]) {
+    largest = right_index;
+  }
+
+  if (largest != i) {
+    T temp = heap.Data()[i];
+    heap.Data()[i] = heap.Data()[largest];
+    heap.Data()[largest] = temp;
+    MaxHeapify(heap, largest);
+  }
+}
+
+template <typename T> void BuildMaxHeap(Heap<T>& heap)
+{
+  heap.HeapSize() = heap.Data().size();
+  for (int i = heap.Data().size() - 1; i >= 0; --i) {
+    MaxHeapify(heap, i);
+  }
+}
+
 } // namespace heap
 
 #endif // !HEAP_HEAP_HPP

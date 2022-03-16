@@ -68,7 +68,7 @@ void demoSimple()
 
 void demoTimed()
 {
-  const int size = 128; // using power of 2 for convienience of recursive approach
+  const int size = 32; // using power of 2 for convienience of recursive approach
   std::vector<int> A(size * size, 1);
   std::vector<int> B(size * size, 2);
   std::vector<int> BruteForceMatrix(size * size);

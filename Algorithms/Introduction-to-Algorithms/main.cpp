@@ -3,6 +3,8 @@
 #include "binary_search.hpp"
 #include "bubble_sort.hpp"
 #include "demo_sorting.hpp"
+#include "heap.hpp"
+#include "heap_sort.hpp"
 #include "insertion_sort.hpp"
 #include "matrix_multiply.hpp"
 #include "maximum_subarray.hpp"
@@ -41,6 +43,15 @@ void mergeSortImproved()
   std::cout << "*****************************" << std::endl;
 }
 
+void heapSort()
+{
+  std::cout << "*** Heap sort\n";
+  sorting::MergeSortImproved merge_sort_improved;
+  sorting::demo_sorting(merge_sort_improved);
+  std::cout << "*****************************" << std::endl;
+}
+
+
 void binarySearch()
 {
   std::cout << "*** Binary search\n";
@@ -62,6 +73,18 @@ void matrixMultiplication()
   std::cout << "*****************************" << std::endl;
 }
 
+void heapUsage()
+{
+  std::cout << "*** Heaps\n";
+  std::vector<int> v{1, 2, 3, 4, 5};
+  heap::Heap<int> h(v);
+  h.PrintHeap();
+  std::cout << "Build max heap\n";
+  heap::BuildMaxHeap<int>(h);
+  h.PrintHeap();
+  std::cout << "*****************************" << std::endl;
+}
+
 int main()
 {
   std::cout << "***** Introduction to Algorithms 3rd edition" << std::endl << std::endl;
@@ -69,12 +92,16 @@ int main()
   bubbleSort();
   mergeSort();
   mergeSortImproved();
+  heapSort();
 
   binarySearch();
 
   maximumSubarray();
 
   matrixMultiplication();
+
+  //heapUsage();
+
   getchar();
   return 0;
 }
