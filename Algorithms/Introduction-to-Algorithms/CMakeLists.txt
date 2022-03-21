@@ -12,6 +12,8 @@ sorting/heap_sort.hpp
 sorting/insertion_sort.hpp
 sorting/merge_sort.hpp
 sorting/merge_sort_improved.hpp
+sorting/quicksort.hpp
+sorting/randomized_quicksort.hpp
 sorting/sorting_algorithm.hpp
 utils/time_tracker.hpp
 )
@@ -26,6 +28,8 @@ sorting/src/heap_sort.cpp
 sorting/src/insertion_sort.cpp
 sorting/src/merge_sort.cpp
 sorting/src/merge_sort_improved.cpp
+sorting/src/quicksort.cpp
+sorting/src/randomized_quicksort.cpp
 sorting/src/sorting_algorithm.cpp)
 
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} main.cpp)

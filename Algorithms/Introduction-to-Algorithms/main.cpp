@@ -10,6 +10,8 @@
 #include "maximum_subarray.hpp"
 #include "merge_sort.hpp"
 #include "merge_sort_improved.hpp"
+#include "quicksort.hpp"
+#include "randomized_quicksort.hpp"
 
 void insertionSort()
 {
@@ -51,6 +53,34 @@ void heapSort()
   std::cout << "*****************************" << std::endl;
 }
 
+void quickSort()
+{
+  std::cout << "*** Quick sort\n";
+  sorting::QuickSort quick_sort;
+  sorting::demo_sorting(quick_sort);
+  std::cout << "*****************************" << std::endl;
+}
+
+void randomizedQuickSort() {
+  std::cout << "*** Randomized Quick sort\n";
+  sorting::RandomizedQuickSort randomized_quick_sort;
+  sorting::demo_sorting(randomized_quick_sort);
+  std::cout << "*****************************" << std::endl;
+}
+
+void sortingAlgorithms()
+{
+  std::cout << "***** Sorting algorithms\n";
+  insertionSort();
+  bubbleSort();
+  mergeSort();
+  mergeSortImproved();
+  heapSort();
+  quickSort();
+  randomizedQuickSort();
+  std::cout << "**********\n";
+}
+
 void binarySearch()
 {
   std::cout << "*** Binary search\n";
@@ -87,11 +117,7 @@ void heapUsage()
 int main()
 {
   std::cout << "***** Introduction to Algorithms 3rd edition" << std::endl << std::endl;
-  insertionSort();
-  bubbleSort();
-  mergeSort();
-  mergeSortImproved();
-  heapSort();
+  sortingAlgorithms();
 
   binarySearch();
 
