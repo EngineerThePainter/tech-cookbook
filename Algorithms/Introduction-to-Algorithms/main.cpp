@@ -61,7 +61,8 @@ void quickSort()
   std::cout << "*****************************" << std::endl;
 }
 
-void randomizedQuickSort() {
+void randomizedQuickSort()
+{
   std::cout << "*** Randomized Quick sort\n";
   sorting::RandomizedQuickSort randomized_quick_sort;
   sorting::demo_sorting(randomized_quick_sort);
@@ -76,6 +77,7 @@ void sortingAlgorithms()
   mergeSort();
   mergeSortImproved();
   heapSort();
+  /* Do not run it on big data as the "best case" causes stack overflow*/
   quickSort();
   randomizedQuickSort();
   std::cout << "**********\n";
