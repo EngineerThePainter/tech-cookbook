@@ -46,11 +46,10 @@ void mergeSortImproved()
 void heapSort()
 {
   std::cout << "*** Heap sort\n";
-  sorting::MergeSortImproved merge_sort_improved;
-  sorting::demo_sorting(merge_sort_improved);
+  sorting::HeapSort heap_sort;
+  sorting::demo_sorting(heap_sort);
   std::cout << "*****************************" << std::endl;
 }
-
 
 void binarySearch()
 {
@@ -100,7 +99,7 @@ int main()
 
   matrixMultiplication();
 
-  //heapUsage();
+  // heapUsage();
 
   getchar();
   return 0;
