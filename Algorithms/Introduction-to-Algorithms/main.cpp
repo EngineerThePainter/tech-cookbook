@@ -2,6 +2,7 @@
 
 #include "binary_search.hpp"
 #include "bubble_sort.hpp"
+#include "counting_sort.hpp"
 #include "demo_sorting.hpp"
 #include "heap.hpp"
 #include "heap_sort.hpp"
@@ -69,6 +70,13 @@ void randomizedQuickSort()
   std::cout << "*****************************" << std::endl;
 }
 
+void countingSort() {
+  std::cout << "*** Counting sort\n";
+  sorting::CountingSort counting_sort;
+  sorting::demo_sorting(counting_sort);
+  std::cout << "*****************************" << std::endl;
+}
+
 void sortingAlgorithms()
 {
   std::cout << "***** Sorting algorithms\n";
@@ -80,6 +88,7 @@ void sortingAlgorithms()
   /* Do not run it on big data as the "best case" causes stack overflow*/
   quickSort();
   randomizedQuickSort();
+  countingSort();
   std::cout << "**********\n";
 }
 

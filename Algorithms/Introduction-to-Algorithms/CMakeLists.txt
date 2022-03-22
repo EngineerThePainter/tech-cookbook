@@ -7,6 +7,7 @@ heap/heap.hpp
 matrix/matrix_multiply.hpp
 searching/binary_search.hpp
 sorting/bubble_sort.hpp
+sorting/counting_sort.hpp
 sorting/demo_sorting.hpp
 sorting/heap_sort.hpp
 sorting/insertion_sort.hpp
@@ -23,6 +24,7 @@ divide-and-conquer/src/maximum_subarray.cpp
 matrix/src/matrix_multiply.cpp
 searching/src/binary_search.cpp
 sorting/src/bubble_sort.cpp
+sorting/src/counting_sort.cpp
 sorting/src/demo_sorting.cpp
 sorting/src/heap_sort.cpp
 sorting/src/insertion_sort.cpp

@@ -12,7 +12,7 @@ namespace sorting
 {
 void demo_sorting(SortingAlgorithm& algorithm)
 {
-  constexpr int nb_elements = 10000;
+  constexpr int nb_elements = 1000;
   std::vector<int> best_case{};
   best_case.resize(nb_elements);
   std::vector<int> worst_case{};
