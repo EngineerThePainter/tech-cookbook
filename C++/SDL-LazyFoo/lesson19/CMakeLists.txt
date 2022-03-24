@@ -1,12 +1,10 @@
 project(lesson19)
 
 set(HEADERS 
-include/lesson19/button.hpp
 include/lesson19/lesson19.hpp
 include/lesson19/texture.hpp)
 
 set(SOURCES
-src/button.cpp
 src/lesson19.cpp
 src/texture.cpp)
 

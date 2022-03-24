@@ -19,6 +19,7 @@
 #include <lesson16/lesson16.hpp>
 #include <lesson17/lesson17.hpp>
 #include <lesson18/lesson18.hpp>
+#include <lesson19/lesson19.hpp>
 
 int main(int argc, char* args[])
 {
@@ -74,6 +75,10 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson17::lesson17();
 
   // Key states
-  sdl_lazyfoo::lesson18::lesson18();
+  // sdl_lazyfoo::lesson18::lesson18();
+
+  // Gamepads and Joysticks
+  sdl_lazyfoo::lesson19::lesson19();
+
   return 0;
 }
