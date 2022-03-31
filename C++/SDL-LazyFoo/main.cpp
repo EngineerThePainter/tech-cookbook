@@ -21,6 +21,7 @@
 #include <lesson18/lesson18.hpp>
 #include <lesson19/lesson19.hpp>
 #include <lesson20/lesson20.hpp>
+#include <lesson22/lesson22.hpp>
 
 int main(int argc, char* args[])
 {
@@ -83,5 +84,10 @@ int main(int argc, char* args[])
 
   // Force feedback - couldn't confirm if its working - any of my controllers was not working with it.
   // sdl_lazyfoo::lesson20::lesson20();
+
+  // Sound effects and music - postponed for now
+
+  // Timing
+  sdl_lazyfoo::lesson22::lesson22();
   return 0;
 }

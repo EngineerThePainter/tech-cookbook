@@ -1,26 +1,30 @@
+#include <cstdio>
 #include <iostream>
+#include <memory>
+#include <sstream>
 #include <string>
 
-#include "lesson16/lesson16.hpp"
-#include "lesson16/texture.hpp"
+#include "lesson22/lesson22.hpp"
+#include "lesson22/texture.hpp"
 
 #include <SDL2/SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 namespace sdl_lazyfoo
 {
-namespace lesson16
+namespace lesson22
 {
 namespace
 {
 
-const int SCREEN_WIDTH = 1280;
-const int SCREEN_HEIGHT = 960;
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
+
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
-Texture* texture = nullptr;
 
+std::unique_ptr<Texture> texture;
 } // namespace
 
 bool init()
@@ -60,7 +64,7 @@ bool init()
           success = false;
         }
 
-        texture = new Texture(renderer);
+        texture = std::make_unique<Texture>(renderer);
         if (texture == nullptr) {
           std::cerr << "Textures failed to create";
           success = false;
@@ -78,13 +82,6 @@ bool loadMedia()
   if (!texture->LoadTextFromfile("images/lazy.ttf")) {
     std::cerr << "Failed to load text, error: " << TTF_GetError() << std::endl;
     success = false;
-  } else {
-    // Render text
-    SDL_Color text_color{0, 0, 0};
-    if (!texture->LoadFromRenderedText("Fat Donut jumps over the fence", text_color)) {
-      std::cerr << "Failed to load texture from rendered text" << std::endl;
-      success = false;
-    }
   }
 
   return success;
@@ -95,8 +92,9 @@ void close()
   texture->DeallocateTexture();
 
   SDL_DestroyRenderer(renderer);
-  SDL_DestroyWindow(window);
   renderer = nullptr;
+
+  SDL_DestroyWindow(window);
   window = nullptr;
 
   TTF_Quit();
@@ -104,7 +102,7 @@ void close()
   SDL_Quit();
 }
 
-void lesson16()
+void lesson22()
 {
   if (!init()) {
     std::cerr << "Failed to initialize\n";
@@ -112,52 +110,36 @@ void lesson16()
     if (!loadMedia()) {
       std::cerr << "Failed to load media\n";
     } else {
+      // Main loop flag
       bool quit = false;
       SDL_Event e;
+      SDL_Color text_color = {0, 0, 0, 255};
 
-      double degrees = 0.0;
-      SDL_RendererFlip flip_type = SDL_FLIP_NONE;
+      Uint32 start_time = 0;
+      std::stringstream time_text;
 
       while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
           if (e.type == SDL_QUIT) {
             quit = true;
-          } else if (e.type == SDL_KEYDOWN) {
-            switch (e.key.keysym.sym) {
-            case SDLK_a:
-              degrees -= 60.0;
-              break;
-            case SDLK_d:
-              degrees += 60.0;
-              break;
-            case SDLK_q:
-              flip_type = SDL_FLIP_HORIZONTAL;
-              break;
-            case SDLK_w:
-              flip_type = SDL_FLIP_NONE;
-              break;
-            case SDLK_e:
-              flip_type = SDL_FLIP_VERTICAL;
-              break;
-            }
+          } else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN) {
+            start_time = SDL_GetTicks();
           }
         }
-        // Clear screen
+
+        time_text.str("");
+        time_text << "Milliseconds since start time " << SDL_GetTicks() - start_time;
+        texture->LoadFromRenderedText(time_text.str(), text_color);
+
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
-
-        texture->Render((SCREEN_WIDTH - texture->GetWidth()) / 2, (SCREEN_HEIGHT - texture->GetHeight()) / 2, nullptr,
-                        degrees, nullptr, flip_type);
-
-        // Update screen
+        texture->Render(0, (SCREEN_HEIGHT) / 2);
         SDL_RenderPresent(renderer);
+        // SDL_Delay(1000);
       }
-      // SDL_Delay(1000);
+      close();
     }
-    close();
-    delete texture;
   }
 }
-
-} // namespace lesson16
+} // namespace lesson22
 } // namespace sdl_lazyfoo
