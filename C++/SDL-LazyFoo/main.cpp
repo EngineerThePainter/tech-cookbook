@@ -22,6 +22,7 @@
 #include <lesson19/lesson19.hpp>
 #include <lesson20/lesson20.hpp>
 #include <lesson22/lesson22.hpp>
+#include <lesson23/lesson23.hpp>
 
 int main(int argc, char* args[])
 {
@@ -88,6 +89,10 @@ int main(int argc, char* args[])
   // Sound effects and music - postponed for now
 
   // Timing
-  sdl_lazyfoo::lesson22::lesson22();
+  // sdl_lazyfoo::lesson22::lesson22();
+
+  // Advanced timing
+  sdl_lazyfoo::lesson23::lesson23();
+
   return 0;
 }
