@@ -23,6 +23,7 @@
 #include <lesson20/lesson20.hpp>
 #include <lesson22/lesson22.hpp>
 #include <lesson23/lesson23.hpp>
+#include <lesson24/lesson24.hpp>
 
 int main(int argc, char* args[])
 {
@@ -92,7 +93,10 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson22::lesson22();
 
   // Advanced timing
-  sdl_lazyfoo::lesson23::lesson23();
+  // sdl_lazyfoo::lesson23::lesson23();
+
+  // Calculating frame rate
+  sdl_lazyfoo::lesson24::lesson24();
 
   return 0;
 }

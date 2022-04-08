@@ -49,7 +49,8 @@ target_link_libraries(${PROJECT_NAME}
   lesson19
   lesson20
   lesson22
-  lesson23)
+  lesson23
+  lesson24)
 
 target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
 target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wall)
@@ -80,6 +81,7 @@ add_subdirectory(lesson19)
 add_subdirectory(lesson20)
 add_subdirectory(lesson22)
 add_subdirectory(lesson23)
+add_subdirectory(lesson24)
 
 add_custom_command(TARGET sdl-lazyfoo POST_BUILD 
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/images/ ${CMAKE_BINARY_DIR}/bin/images/)
