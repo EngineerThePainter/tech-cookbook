@@ -10,27 +10,10 @@ namespace matrix
 namespace
 {
 
-std::vector<int> addMatrixes(const std::vector<int>& A, const std::vector<int>& B)
-{
-  std::vector<int> C{};
-  C.resize(A.size());
-  for (int i = 0; i < A.size(); ++i) {
-    C[i] = A[i] + B[i];
-  }
-  return C;
-}
-
 void addMatrixes(const std::vector<int>& A, const std::vector<int>& B, std::vector<int>& C)
 {
   for (int i = 0; i < A.size(); ++i) {
     C[i] = A[i] + B[i];
-  }
-}
-
-void substractMatrixes(const std::vector<int>& A, const std::vector<int>& B, std::vector<int>& C)
-{
-  for (int i = 0; i < A.size(); ++i) {
-    C[i] = A[i] - B[i];
   }
 }
 
@@ -49,9 +32,9 @@ void demoSimple()
 {
   std::vector<int> A = {1, 3, 7, 5};
   std::vector<int> B = {6, 8, 4, 2};
-  std::vector<int> BruteForceMatrix (4);
-  std::vector<int> RecursiveMatrix (4);
-  std::vector<int> StrassenMatrix (4);
+  std::vector<int> BruteForceMatrix(4);
+  std::vector<int> RecursiveMatrix(4);
+  std::vector<int> StrassenMatrix(4);
 
   std::cout << "Normal multiplication\n";
   squareMatrixMultiply(A, B, BruteForceMatrix, 2);
@@ -76,18 +59,16 @@ void demoTimed()
   std::vector<int> StrassenMatrix(size * size);
 
   std::function<void(const std::vector<int>&, const std::vector<int>&, std::vector<int>&, const int)>
-      straight_multiplication = [&](const std::vector<int>& A, const std::vector<int>& B, std::vector<int>& C, const int n) {
-        squareMatrixMultiply(A, B, C, n);
-      };
+      straight_multiplication = [&](const std::vector<int>& A, const std::vector<int>& B, std::vector<int>& C,
+                                    const int n) { squareMatrixMultiply(A, B, C, n); };
 
   std::cout << "Straight Matrix Multiplication: "
             << utils::runWithTimeMeasure(straight_multiplication, A, B, BruteForceMatrix, size).count()
             << " milliseconds" << std::endl;
 
   std::function<void(const std::vector<int>&, const std::vector<int>&, std::vector<int>&, const int)>
-      recursive_multiplication = [&](const std::vector<int>& A, const std::vector<int>& B, std::vector<int>& C, const int n) {
-        squareMatrixMultiplyRecursive(A, B, C, n);
-      };
+      recursive_multiplication = [&](const std::vector<int>& A, const std::vector<int>& B, std::vector<int>& C,
+                                     const int n) { squareMatrixMultiplyRecursive(A, B, C, n); };
 
   // The result will be generally worse due to overhead of matrix initializations, but in general
   // it is still the same computational effort
@@ -96,9 +77,8 @@ void demoTimed()
             << " milliseconds" << std::endl;
 
   std::function<void(const std::vector<int>&, const std::vector<int>&, std::vector<int>&, const int)>
-      strassen_multiplication = [&](const std::vector<int>& A, const std::vector<int>& B, std::vector<int>& C, const int n) {
-        strassenMultiplication(A, B, C, n);
-      };
+      strassen_multiplication = [&](const std::vector<int>& A, const std::vector<int>& B, std::vector<int>& C,
+                                    const int n) { strassenMultiplication(A, B, C, n); };
 
   std::cout << "Strassen Matrix Multiplication: "
             << utils::runWithTimeMeasure(strassen_multiplication, A, B, StrassenMatrix, size).count() << " milliseconds"

@@ -1,3 +1,4 @@
+#include <exception>
 #include <iostream>
 
 #include "binary_search.hpp"
@@ -11,8 +12,10 @@
 #include "maximum_subarray.hpp"
 #include "merge_sort.hpp"
 #include "merge_sort_improved.hpp"
+#include "queue.hpp"
 #include "quicksort.hpp"
 #include "randomized_quicksort.hpp"
+#include "stack.hpp"
 
 void insertionSort()
 {
@@ -70,7 +73,8 @@ void randomizedQuickSort()
   std::cout << "*****************************" << std::endl;
 }
 
-void countingSort() {
+void countingSort()
+{
   std::cout << "*** Counting sort\n";
   sorting::CountingSort counting_sort;
   sorting::demo_sorting(counting_sort);
@@ -125,6 +129,49 @@ void heapUsage()
   std::cout << "*****************************" << std::endl;
 }
 
+void stackUsage()
+{
+  std::cout << "*** Stack\n";
+  data_structures::Stack stack(5);
+  try {
+    stack.pop();
+  } catch (const std::exception& e) {
+    std::cerr << e.what() << '\n';
+  }
+
+  stack.push(1);
+  stack.push(2);
+  stack.push(3);
+  stack.push(4);
+  stack.push(5);
+
+  try {
+    stack.push(6);
+  } catch (const std::exception& e) {
+    std::cerr << e.what() << '\n';
+  }
+
+  std::cout << stack.pop() << std::endl;
+  std::cout << stack.pop() << std::endl;
+  std::cout << stack.pop() << std::endl;
+
+  std::cout << "*****************************" << std::endl;
+}
+
+void queueUsage()
+{
+  std::cout << "*** Queue\n";
+  data_structures::Queue queue(3);
+  queue.enqueue(1);
+  queue.enqueue(2);
+  queue.enqueue(3);
+  queue.printQueue();
+  queue.enqueue(4);
+  queue.printQueue();
+  std::cout << queue.dequeue() << std::endl;
+  std::cout << "*****************************" << std::endl;
+}
+
 int main()
 {
   std::cout << "***** Introduction to Algorithms 3rd edition" << std::endl << std::endl;
@@ -136,7 +183,11 @@ int main()
 
   matrixMultiplication();
 
-  // heapUsage();
+  heapUsage();
+
+  stackUsage();
+
+  queueUsage();
 
   getchar();
   return 0;

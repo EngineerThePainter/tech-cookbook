@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.16.0)
 project(introduction-to-algorithms)
 
 set(HEADERS
+data-structures/queue.hpp
+data-structures/stack.hpp
 divide-and-conquer/maximum_subarray.hpp
 heap/heap.hpp
 matrix/matrix_multiply.hpp
@@ -20,6 +22,8 @@ utils/time_tracker.hpp
 )
 
 set(SOURCES
+data-structures/src/queue.cpp
+data-structures/src/stack.cpp
 divide-and-conquer/src/maximum_subarray.cpp
 matrix/src/matrix_multiply.cpp
 searching/src/binary_search.cpp
@@ -48,6 +52,7 @@ target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wall)
 
 target_include_directories(${PROJECT_NAME} 
   PUBLIC
+  data-structures
   divide-and-conquer
   heap
   matrix
