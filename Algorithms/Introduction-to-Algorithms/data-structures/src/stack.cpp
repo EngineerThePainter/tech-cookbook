@@ -19,9 +19,11 @@ int Stack::pop()
 {
   if (empty()) {
     throw std::length_error("Stack is empty");
+  } else {
+    top_ -= 1;
+    return data_[top_];
   }
-  top_ -= 1;
-  return data_[top_ + 1];
+  
 }
 
 void Stack::push(int x)
@@ -30,7 +32,7 @@ void Stack::push(int x)
     throw std::length_error("Stack is full");
   }
   top_ += 1;
-  data_[top_] = x;
+  data_[top_-1] = x;
 }
 
 void Stack::printStack()

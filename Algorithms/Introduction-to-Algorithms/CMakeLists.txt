@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.16.0)
 project(introduction-to-algorithms)
 
 set(HEADERS
+data-structures/linked_list.hpp
 data-structures/queue.hpp
 data-structures/stack.hpp
 divide-and-conquer/maximum_subarray.hpp
@@ -22,6 +23,7 @@ utils/time_tracker.hpp
 )
 
 set(SOURCES
+data-structures/src/linked_list.cpp
 data-structures/src/queue.cpp
 data-structures/src/stack.cpp
 divide-and-conquer/src/maximum_subarray.cpp
@@ -42,12 +44,6 @@ add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} main.cpp)
 
 target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
 target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wall)
-# if (UNIX)
-#   target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wextra)
-# endif(UNIX)
-#target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -fsanitizer=memory)
-
-#target_link_options(${CMAKE_PROJECT_NAME} PRIVATE -fsanitizer=memory)
 
 
 target_include_directories(${PROJECT_NAME} 

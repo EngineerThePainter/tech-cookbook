@@ -8,6 +8,7 @@
 #include "heap.hpp"
 #include "heap_sort.hpp"
 #include "insertion_sort.hpp"
+#include "linked_list.hpp"
 #include "matrix_multiply.hpp"
 #include "maximum_subarray.hpp"
 #include "merge_sort.hpp"
@@ -172,6 +173,23 @@ void queueUsage()
   std::cout << "*****************************" << std::endl;
 }
 
+void linkedListUsage()
+{
+  std::cout << "*** Linked List\n";
+  data_structures::LinkedList list;
+  for (int i = 1; i <= 1000; ++i) {
+    list.insert({i, i * 100});
+  }
+  list.printList();
+  auto elem = list.search(3);
+  list.remove(std::move(elem));
+  list.printList();
+  if (elem == nullptr) {
+    std::cout << "Elem was removed\n";
+  }
+  std::cout << "*****************************" << std::endl;
+}
+
 int main()
 {
   std::cout << "***** Introduction to Algorithms 3rd edition" << std::endl << std::endl;
@@ -188,6 +206,8 @@ int main()
   stackUsage();
 
   queueUsage();
+
+  linkedListUsage();
 
   getchar();
   return 0;
