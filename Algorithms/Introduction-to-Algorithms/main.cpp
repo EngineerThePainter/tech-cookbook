@@ -19,6 +19,16 @@
 #include "randomized_quicksort.hpp"
 #include "stack.hpp"
 
+#ifdef _DEBUG
+#if _WIN32
+#define WIN_MEMORY_LEAK_CHECKER
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+#include <stdlib.h>
+#endif // _WIN32
+#endif // _DEBUG
+
+
 void insertionSort()
 {
   std::cout << "*** Insertion sort\n";
@@ -227,6 +237,10 @@ int main()
   linkedListUsage();
 
   bstUsage();
+
+#ifdef WIN_MEMORY_LEAK_CHECKER
+  _CrtDumpMemoryLeaks();
+#endif // WIN_MEMORY_LEAK_CHECKER
 
   getchar();
   return 0;
