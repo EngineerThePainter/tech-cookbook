@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "binary_search.hpp"
+#include "bst.hpp"
 #include "bubble_sort.hpp"
 #include "counting_sort.hpp"
 #include "demo_sorting.hpp"
@@ -182,11 +183,27 @@ void linkedListUsage()
   }
   list.printList();
   auto elem = list.search(3);
-  list.remove(std::move(elem));
+  list.remove(elem);
   list.printList();
   if (elem == nullptr) {
     std::cout << "Elem was removed\n";
   }
+  std::cout << "*****************************" << std::endl;
+}
+
+void bstUsage()
+{
+  std::cout << "*** BST\n";
+  data_structures::BST bst;
+  bst.insert(2, 20);
+  bst.insert(1, 10);
+  bst.insert(3, 30);
+  bst.insert(10, 100);
+  bst.insert(4, 40);
+  bst.inorderTreeWalk();
+  auto elem = bst.search(3);
+  bst.remove(elem);
+  bst.inorderTreeWalk();
   std::cout << "*****************************" << std::endl;
 }
 
@@ -208,6 +225,8 @@ int main()
   queueUsage();
 
   linkedListUsage();
+
+  bstUsage();
 
   getchar();
   return 0;

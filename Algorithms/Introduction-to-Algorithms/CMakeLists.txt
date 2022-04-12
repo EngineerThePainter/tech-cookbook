@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.16.0)
 project(introduction-to-algorithms)
 
 set(HEADERS
+data-structures/bst.hpp
 data-structures/linked_list.hpp
 data-structures/queue.hpp
 data-structures/stack.hpp
@@ -23,6 +24,7 @@ utils/time_tracker.hpp
 )
 
 set(SOURCES
+data-structures/src/bst.cpp
 data-structures/src/linked_list.cpp
 data-structures/src/queue.cpp
 data-structures/src/stack.cpp
