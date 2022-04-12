@@ -4,11 +4,11 @@
 
 namespace data_structures
 {
-TreeElem* BST::search(const int key) { return search(root_.get(), key); }
+std::shared_ptr<TreeElem> BST::search(const int key) { return search(root_, key); }
 
-TreeElem* BST::searchIteratively(const int key)
+std::shared_ptr<TreeElem> BST::searchIteratively(const int key)
 {
-  auto node = root_.get();
+  auto node = root_;
   while (node != nullptr && key != node->key) {
     if (key < node->key) {
       node = node->left;
@@ -21,9 +21,9 @@ TreeElem* BST::searchIteratively(const int key)
 
 void BST::insert(const int key, const int data)
 {
-  TreeElem* elem = new TreeElem(key, data);
-  TreeElem* y = nullptr;
-  TreeElem* x = root_.get();
+  std::shared_ptr<TreeElem> elem = std::make_shared<TreeElem>(key, data);
+  std::shared_ptr<TreeElem> y = nullptr;
+  std::shared_ptr<TreeElem> x = root_;
   while (x != nullptr) {
     y = x;
     if (elem->key < x->key) {
@@ -32,38 +32,39 @@ void BST::insert(const int key, const int data)
       x = x->right;
     }
   }
-  elem->parent = y;
+  elem->parent = y.get();
   if (y == nullptr) {
-    root_ = std::unique_ptr<TreeElem>(std::move(elem));
+    root_ = std::move(elem);
   } else if (elem->key < y->key) {
-    y->left = elem;
+    y->left = std::move(elem);
   } else {
-    y->right = elem;
+    y->right = std::move(elem);
   }
 }
 
-void BST::remove(TreeElem* elem)
+void BST::remove(std::shared_ptr<TreeElem> elem)
 {
   if (elem->left == nullptr) {
     transplant(elem, elem->right);
   } else if (elem->right == nullptr) {
     transplant(elem, elem->left);
   } else {
-    TreeElem* y = minimum(elem->right);
-    if (y->parent != elem) {
+    std::shared_ptr<TreeElem> y = minimum(elem->right);
+    if (y->parent != elem.get()) {
       transplant(y, y->right);
-      y->right = elem->right;
-      y->right->parent = y;
+      y->right = std::move(elem->right);
+      y->right->parent = y.get();
     }
     transplant(elem, y);
-    y->left = elem->left;
-    y->left->parent = y;
+    y->left = std::move(elem->left);
+    y->left->parent = y.get();
   }
+  elem.reset();
 }
 
-void BST::inorderTreeWalk() { inorderTreeWalk(root_.get()); }
+void BST::inorderTreeWalk() { inorderTreeWalk(root_); }
 
-void BST::inorderTreeWalk(TreeElem* node)
+void BST::inorderTreeWalk(std::shared_ptr<TreeElem> node)
 {
   if (node != nullptr) {
     inorderTreeWalk(node->left);
@@ -72,7 +73,7 @@ void BST::inorderTreeWalk(TreeElem* node)
   }
 }
 
-TreeElem* BST::minimum(TreeElem* node)
+std::shared_ptr<TreeElem> BST::minimum(std::shared_ptr<TreeElem> node)
 {
   while (node->left != nullptr) {
     node = node->left;
@@ -80,7 +81,7 @@ TreeElem* BST::minimum(TreeElem* node)
   return node;
 }
 
-TreeElem* BST::maximum(TreeElem* node)
+std::shared_ptr<TreeElem> BST::maximum(std::shared_ptr<TreeElem> node)
 {
   while (node->right != nullptr) {
     node = node->right;
@@ -88,34 +89,34 @@ TreeElem* BST::maximum(TreeElem* node)
   return node;
 }
 
-TreeElem* BST::successor(TreeElem* node)
+std::shared_ptr<TreeElem> BST::successor(std::shared_ptr<TreeElem> node)
 {
   if (node->right != nullptr) {
     return minimum(node->right);
   }
-  TreeElem* y = node->parent;
+  std::shared_ptr<TreeElem> y = std::shared_ptr<TreeElem>(node->parent);
   while (y != nullptr && node != y->right) {
     node = y;
-    y = y->parent;
+    y = std::shared_ptr<TreeElem>(y->parent);
   }
   return y;
 }
 
-void BST::transplant(TreeElem* toRemove, TreeElem* toPut)
+void BST::transplant(std::shared_ptr<TreeElem> toRemove, std::shared_ptr<TreeElem> toPut)
 {
   if (toRemove->parent == nullptr) {
-    root_.reset(toPut);
+    root_ = std::move(toPut);
   } else if (toRemove == toRemove->parent->left) {
-    toRemove->parent->left = toPut;
+    toRemove->parent->left = std::move(toPut);
   } else {
-    toRemove->parent->right = toPut;
+    toRemove->parent->right = std::move(toPut);
   }
   if (toPut != nullptr) {
     toPut->parent = toRemove->parent;
   }
 }
 
-TreeElem* BST::search(TreeElem* elem, const int key)
+std::shared_ptr<TreeElem> BST::search(std::shared_ptr<TreeElem> elem, const int key)
 {
   if (elem == nullptr || key == elem->key) {
     return elem;
