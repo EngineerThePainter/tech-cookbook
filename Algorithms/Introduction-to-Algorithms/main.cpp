@@ -177,8 +177,8 @@ void linkedListUsage()
 {
   std::cout << "*** Linked List\n";
   data_structures::LinkedList list;
-  for (int i = 1; i <= 1000; ++i) {
-    list.insert({i, i * 100});
+  for (int i = 1; i <= 10; ++i) {
+    list.insert(i, i * 100);
   }
   list.printList();
   auto elem = list.search(3);

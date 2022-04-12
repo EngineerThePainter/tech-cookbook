@@ -10,15 +10,15 @@ struct ListElem {
   const int key;
   const int data_;
   std::shared_ptr<ListElem> next = nullptr;
-  std::shared_ptr<ListElem> prev = nullptr;
+  ListElem* prev = nullptr;
 };
 
 class LinkedList
 {
 public:
   std::shared_ptr<ListElem> search(const int key);
-  void insert(ListElem&& elem);
-  void remove (std::shared_ptr<ListElem> elem);
+  void insert(const int key, const int data);
+  void remove(std::shared_ptr<ListElem> elem);
   void printList();
 
 private:

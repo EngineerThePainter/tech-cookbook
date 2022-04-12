@@ -12,15 +12,15 @@ std::shared_ptr<ListElem> LinkedList::search(const int key)
   }
   return x;
 }
-void LinkedList::insert(ListElem&& elem)
+void LinkedList::insert(const int key, const int data)
 {
-  auto item = std::make_shared<ListElem>(elem);
-  item->next = head_;
+  auto item = std::make_shared<ListElem>(key, data);
+
   if (head_ != nullptr) {
-    head_->prev = item;
+    head_->prev = item.get();
   }
-  head_ = item;
-  item->prev = nullptr;
+  item->next = std::move(head_);
+  head_ = std::move(item);
 }
 
 void LinkedList::remove(std::shared_ptr<ListElem> elem)
