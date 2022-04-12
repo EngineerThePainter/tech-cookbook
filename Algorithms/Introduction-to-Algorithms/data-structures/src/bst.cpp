@@ -44,7 +44,7 @@ void BST::insert(const int key, const int data)
 
 void BST::remove(TreeElem* elem)
 {
-  if (elem->left != nullptr) {
+  if (elem->left == nullptr) {
     transplant(elem, elem->right);
   } else if (elem->right == nullptr) {
     transplant(elem, elem->left);
