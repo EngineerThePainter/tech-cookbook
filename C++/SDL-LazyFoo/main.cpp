@@ -25,6 +25,7 @@
 #include <lesson23/lesson23.hpp>
 #include <lesson24/lesson24.hpp>
 #include <lesson25/lesson25.hpp>
+#include <lesson26/lesson26.hpp>
 
 int main(int argc, char* args[])
 {
@@ -100,7 +101,10 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson24::lesson24();
 
   // Capping frame rate
-  sdl_lazyfoo::lesson25::lesson25();
+  // sdl_lazyfoo::lesson25::lesson25();
+
+  // Motion
+  sdl_lazyfoo::lesson26::lesson26();
 
   return 0;
 }
