@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 
+#include "lesson26/dot.hpp"
 #include "lesson26/lesson26.hpp"
 #include "lesson26/texture.hpp"
 #include "lesson26/timer.hpp"
@@ -21,8 +22,6 @@ namespace
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
-const int SCREEN_FPS = 60;
-const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
@@ -50,7 +49,7 @@ bool init()
       success = false;
     } else {
       // Disabled V-Sync to do it manually
-      renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+      renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
       if (renderer == nullptr) {
         std::cerr << "Renderer could not be created. Error: " << SDL_GetError() << std::endl;
         success = false;
@@ -83,7 +82,7 @@ bool loadMedia()
 {
   bool success = true;
 
-  if (!texture->LoadTextFromfile("images/lazy.ttf")) {
+  if (!texture->LoadFromFile("images/dot.png")) {
     std::cerr << "Failed to load text, error: " << TTF_GetError() << std::endl;
     success = false;
   }
@@ -119,43 +118,27 @@ void lesson26()
       SDL_Event e;
       SDL_Color text_color = {0, 0, 0, 255};
 
-      Timer fps_counter;
-      Timer cap_timer;
-      std::stringstream time_text;
-
-      int counted_frames = 0;
-      fps_counter.Start();
+      Dot dot(*texture);
 
       while (!quit) {
-        cap_timer.Start();
 
         while (SDL_PollEvent(&e) != 0) {
           if (e.type == SDL_QUIT) {
             quit = true;
           }
+
+          dot.handleEvent(e);
         }
 
-        float average_fps = counted_frames / (fps_counter.GetTicks() / 1000.0f);
-        if (average_fps > 2000000) {
-          average_fps = 0;
-        }
-
-        time_text.str("");
-        time_text << "Average fps per second (with cap)" << average_fps;
-        texture->LoadFromRenderedText(time_text.str(), text_color);
+        dot.move();
 
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
-        texture->Render(0, (SCREEN_HEIGHT) / 2);
+        dot.render();
         SDL_RenderPresent(renderer);
-        ++counted_frames;
 
         // We are introducing here waiting mechanism that will block rendering frame for a time required to keep correct
         // FPS without that it would be not bounded by any way.
-        int frame_ticks = cap_timer.GetTicks();
-        if (frame_ticks < SCREEN_TICKS_PER_FRAME) {
-          SDL_Delay(SCREEN_TICKS_PER_FRAME - frame_ticks);
-        }
       }
       close();
     }

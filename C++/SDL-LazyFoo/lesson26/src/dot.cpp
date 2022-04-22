@@ -54,5 +54,7 @@ void Dot::move()
   }
 }
 
+void Dot::render() { dot_texture.Render(x_, y_); }
+
 } // namespace lesson26
 } // namespace sdl_lazyfoo
