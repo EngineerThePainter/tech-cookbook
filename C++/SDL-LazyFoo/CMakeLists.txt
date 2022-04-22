@@ -45,7 +45,14 @@ target_link_libraries(${PROJECT_NAME}
   lesson15
   lesson16
   lesson17
-  lesson18)
+  lesson18
+  lesson19
+  lesson20
+  lesson22
+  lesson23
+  lesson24
+  lesson25
+  lesson26)
 
 target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
 target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wall)
@@ -72,6 +79,16 @@ add_subdirectory(lesson15)
 add_subdirectory(lesson16)
 add_subdirectory(lesson17)
 add_subdirectory(lesson18)
+add_subdirectory(lesson19)
+add_subdirectory(lesson20)
+add_subdirectory(lesson22)
+add_subdirectory(lesson23)
+add_subdirectory(lesson24)
+add_subdirectory(lesson25)
+add_subdirectory(lesson26)
 
 add_custom_command(TARGET sdl-lazyfoo POST_BUILD 
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/images/ ${CMAKE_SOURCE_DIR}/build/bin/images/)
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/images/ ${CMAKE_BINARY_DIR}/bin/images/)
+
+add_custom_command(TARGET sdl-lazyfoo POST_BUILD 
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/sounds/ ${CMAKE_BINARY_DIR}/bin/sounds/)

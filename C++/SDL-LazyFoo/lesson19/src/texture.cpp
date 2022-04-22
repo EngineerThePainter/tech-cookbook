@@ -1,10 +1,10 @@
-#include "lesson16/texture.hpp"
+#include "lesson19/texture.hpp"
 
 #include <iostream>
 
 namespace sdl_lazyfoo
 {
-namespace lesson16
+namespace lesson19
 {
 
 Texture::Texture(SDL_Renderer* renderer) : renderer_(renderer)
@@ -19,9 +19,6 @@ Texture::~Texture()
   DeallocateTexture();
   if (texture_) {
     delete texture_;
-  }
-  if (font_) {
-    delete font_;
   }
 }
 
@@ -49,41 +46,11 @@ bool Texture::LoadFromFile(const std::string& path)
   return texture_ != nullptr;
 }
 
-bool Texture::LoadTextFromfile(const std::string& path)
-{
-  font_ = TTF_OpenFont(path.c_str(), 28);
-  if (font_ == nullptr) {
-    std::cerr << "Failed to load lazy font. Error: " << TTF_GetError() << std::endl;
-  }
-  return font_ != nullptr;
-}
-
-bool Texture::LoadFromRenderedText(const std::string& texture_text, SDL_Color text_color)
-{
-  SDL_Surface* text_surface = TTF_RenderText_Solid(font_, texture_text.c_str(), text_color);
-  if (text_surface == nullptr) {
-    std::cerr << "Unable to render text surface: " << TTF_GetError() << std::endl;
-  } else {
-    texture_ = SDL_CreateTextureFromSurface(renderer_, text_surface);
-    if (texture_ == nullptr) {
-      std::cerr << "Unable to create texture from text. Error: " << SDL_GetError() << std::endl;
-    } else {
-      width_ = text_surface->w;
-      height_ = text_surface->h;
-    }
-    SDL_FreeSurface(text_surface);
-  }
-  return texture_ != nullptr;
-}
-
 void Texture::DeallocateTexture()
 {
   if (texture_ != nullptr) {
     SDL_DestroyTexture(texture_);
     texture_ = nullptr;
-
-    TTF_CloseFont(font_);
-    font_ = nullptr;
 
     width_ = 0;
     height_ = 0;
@@ -113,6 +80,6 @@ void Texture::SetAlpha(Uint8 alpha) { SDL_SetTextureAlphaMod(texture_, alpha); }
 int Texture::GetWidth() const { return width_; };
 int Texture::GetHeight() const { return height_; };
 
-} // namespace lesson16
+} // namespace lesson19
 
 } // namespace sdl_lazyfoo

@@ -1,10 +1,10 @@
-#include "lesson16/texture.hpp"
+#include "lesson24/texture.hpp"
 
 #include <iostream>
 
 namespace sdl_lazyfoo
 {
-namespace lesson16
+namespace lesson24
 {
 
 Texture::Texture(SDL_Renderer* renderer) : renderer_(renderer)
@@ -62,7 +62,7 @@ bool Texture::LoadFromRenderedText(const std::string& texture_text, SDL_Color te
 {
   SDL_Surface* text_surface = TTF_RenderText_Solid(font_, texture_text.c_str(), text_color);
   if (text_surface == nullptr) {
-    std::cerr << "Unable to render text surface: " << TTF_GetError() << std::endl;
+    std::cerr << "22 Unable to render text surface: " << TTF_GetError() << std::endl;
   } else {
     texture_ = SDL_CreateTextureFromSurface(renderer_, text_surface);
     if (texture_ == nullptr) {
@@ -112,7 +112,6 @@ void Texture::SetAlpha(Uint8 alpha) { SDL_SetTextureAlphaMod(texture_, alpha); }
 
 int Texture::GetWidth() const { return width_; };
 int Texture::GetHeight() const { return height_; };
-
-} // namespace lesson16
+} // namespace lesson24
 
 } // namespace sdl_lazyfoo

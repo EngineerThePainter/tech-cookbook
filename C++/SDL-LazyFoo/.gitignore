@@ -1,5 +1,7 @@
+.vs/*
 .vscode/*
 build/*
+out/*
 SDL2-2.0.20/docs/*
 SDL2-2.0.20/include/*
 SDL2-2.0.20/lib/*
@@ -10,3 +12,4 @@ SDL2-2.0.20/WhatsNew.txt
 SDL2-2.0.20/COPYING.txt
 .vs/*
 out/*
+sounds/*
