@@ -1,11 +1,13 @@
 project(lesson26)
 
 set(HEADERS 
+include/lesson26/dot.hpp
 include/lesson26/lesson26.hpp
 include/lesson26/texture.hpp
 include/lesson26/timer.hpp)
 
 set(SOURCES
+src/dot.cpp
 src/lesson26.cpp
 src/texture.cpp
 src/timer.cpp)
