@@ -66,8 +66,22 @@ void RBTree::leftRotate(std::shared_ptr<RBNode> node)
 }
 
 void RBTree::rightRotate(std::shared_ptr<RBNode> node)
-{
-
+{ auto switch_node = node->left_;
+  node->left_ = switch_node->right_;
+  if (switch_node->right_ != nullptr) {
+    switch_node->right_->parent_ = node.get();
+  }
+  switch_node->parent_ = node->parent_;
+  if (node->parent_ == nullptr) {
+    root_ = switch_node;
+    // Does these two conditions can remain as they are?
+  } else if (node == node->parent_->right_) {
+    node->parent_->right_= switch_node;
+  } else {
+    node->parent_->left_ = switch_node;
+  }
+  node->right_ = node;
+  node->parent_ = switch_node.get();
 }
 
 std::shared_ptr<RBNode> RBTree::search(std::shared_ptr<RBNode> node, const int key)
