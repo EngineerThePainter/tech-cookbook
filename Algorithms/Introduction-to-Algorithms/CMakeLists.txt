@@ -5,6 +5,7 @@ set(HEADERS
 data-structures/bst.hpp
 data-structures/linked_list.hpp
 data-structures/queue.hpp
+data-structures/rb_tree.hpp
 data-structures/stack.hpp
 divide-and-conquer/maximum_subarray.hpp
 heap/heap.hpp
@@ -27,6 +28,7 @@ set(SOURCES
 data-structures/src/bst.cpp
 data-structures/src/linked_list.cpp
 data-structures/src/queue.cpp
+data-structures/src/rb_tree.cpp
 data-structures/src/stack.cpp
 divide-and-conquer/src/maximum_subarray.cpp
 matrix/src/matrix_multiply.cpp
