@@ -25,6 +25,8 @@ public:
   static std::shared_ptr<RBNode> minimum(std::shared_ptr<RBNode> node);
   static std::shared_ptr<RBNode> maximum(std::shared_ptr<RBNode> node);
   std::shared_ptr<RBNode> successor(std::shared_ptr<RBNode> node);
+  void leftRotate(std::shared_ptr<RBNode> node);
+  void rightRotate(std::shared_ptr<RBNode> node);
 
 private:
   void inorderTreeWalk(std::shared_ptr<RBNode> node);

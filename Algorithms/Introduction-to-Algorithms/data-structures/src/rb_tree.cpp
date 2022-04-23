@@ -4,10 +4,7 @@
 
 namespace data_structures
 {
-std::shared_ptr<RBNode> RBTree::search(const int key)
-{
-  return search(root_, key);
-}
+std::shared_ptr<RBNode> RBTree::search(const int key) { return search(root_, key); }
 
 void RBTree::inorderTreeWalk() { inorderTreeWalk(root_); }
 
@@ -20,7 +17,8 @@ void RBTree::inorderTreeWalk(std::shared_ptr<RBNode> node)
   }
 }
 
-std::shared_ptr<RBNode> RBTree::minimum(std::shared_ptr<RBNode> node) {
+std::shared_ptr<RBNode> RBTree::minimum(std::shared_ptr<RBNode> node)
+{
   while (node->left_ != nullptr) {
     node = node->left_;
   }
@@ -35,7 +33,8 @@ std::shared_ptr<RBNode> RBTree::maximum(std::shared_ptr<RBNode> node)
   return node;
 }
 
-std::shared_ptr<RBNode> RBTree::successor(std::shared_ptr<RBNode> node) {
+std::shared_ptr<RBNode> RBTree::successor(std::shared_ptr<RBNode> node)
+{
   if (node->right_ != nullptr) {
     return minimum(node->right_);
   }
@@ -47,7 +46,32 @@ std::shared_ptr<RBNode> RBTree::successor(std::shared_ptr<RBNode> node) {
   return y;
 }
 
-std::shared_ptr<RBNode> RBTree::search(std::shared_ptr<RBNode> node, const int key) {
+void RBTree::leftRotate(std::shared_ptr<RBNode> node)
+{
+  auto switch_node = node->right_;
+  node->right_ = switch_node->left_;
+  if (switch_node->left_ != nullptr) {
+    switch_node->left_->parent_ = node.get();
+  }
+  switch_node->parent_ = node->parent_;
+  if (node->parent_ == nullptr) {
+    root_ = switch_node;
+  } else if (node == node->parent_->left_) {
+    node->parent_->left_ = switch_node;
+  } else {
+    node->parent_->right_ = switch_node;
+  }
+  node->left_ = node;
+  node->parent_ = switch_node.get();
+}
+
+void RBTree::rightRotate(std::shared_ptr<RBNode> node)
+{
+
+}
+
+std::shared_ptr<RBNode> RBTree::search(std::shared_ptr<RBNode> node, const int key)
+{
   if (node == nullptr || key == node->key_) {
     return node;
   }
@@ -57,4 +81,4 @@ std::shared_ptr<RBNode> RBTree::search(std::shared_ptr<RBNode> node, const int k
     return search(node->right_, key);
   }
 }
-}
+} // namespace data_structures
