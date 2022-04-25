@@ -27,9 +27,11 @@ public:
   std::shared_ptr<RBNode> successor(std::shared_ptr<RBNode> node);
   void leftRotate(std::shared_ptr<RBNode> node);
   void rightRotate(std::shared_ptr<RBNode> node);
+  void insert(const int key, const int data);
 
 private:
   void inorderTreeWalk(std::shared_ptr<RBNode> node);
+  void insertFixup(std::shared_ptr<RBNode> node);
   std::shared_ptr<RBNode> search(std::shared_ptr<RBNode> elem, const int key);
 
   std::shared_ptr<RBNode> root_ = nullptr;

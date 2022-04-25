@@ -17,6 +17,7 @@
 #include "queue.hpp"
 #include "quicksort.hpp"
 #include "randomized_quicksort.hpp"
+#include "rb_tree.hpp"
 #include "stack.hpp"
 
 #ifdef _DEBUG
@@ -27,7 +28,6 @@
 #include <stdlib.h>
 #endif // _WIN32
 #endif // _DEBUG
-
 
 void insertionSort()
 {
@@ -217,6 +217,19 @@ void bstUsage()
   std::cout << "*****************************" << std::endl;
 }
 
+void rbTreeUsage()
+{
+  std::cout << "*** Red-Black Trees\n";
+  data_structures::RBTree rbTree;
+  rbTree.insert(2, 20);
+  rbTree.insert(1, 10);
+  rbTree.insert(3, 30);
+  // rbTree.insert(10, 100);
+  rbTree.insert(4, 40);
+  rbTree.inorderTreeWalk();
+  std::cout << "*****************************" << std::endl;
+}
+
 int main()
 {
   std::cout << "***** Introduction to Algorithms 3rd edition" << std::endl << std::endl;
@@ -237,6 +250,8 @@ int main()
   linkedListUsage();
 
   bstUsage();
+
+  rbTreeUsage();
 
 #ifdef WIN_MEMORY_LEAK_CHECKER
   _CrtDumpMemoryLeaks();
