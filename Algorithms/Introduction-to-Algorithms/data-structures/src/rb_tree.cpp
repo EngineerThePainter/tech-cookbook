@@ -4,21 +4,27 @@
 
 namespace data_structures
 {
-std::shared_ptr<RBNode> RBTree::search(const int key) { return search(root_, key); }
+
+RBTree::~RBTree() { delete root_; }
+
+RBNode* RBTree::search(const int key) { return search(root_, key); }
 
 void RBTree::inorderTreeWalk() { inorderTreeWalk(root_); }
 
-void RBTree::inorderTreeWalk(std::shared_ptr<RBNode> node)
+void RBTree::inorderTreeWalk(RBNode* node)
 {
   if (node != nullptr) {
     inorderTreeWalk(node->left_);
-    std::cout << node->key_ << " : " << node->data_ << " : " << (node->color_ == NodeColor::BLACK ? "B" : "R")
-              << std::endl;
+    std::cout << node->key_ << " : " << node->data_ << " : " << (node->color_ == NodeColor::BLACK ? "B" : "R");
+    if (node->parent_ != nullptr) {
+      std::cout << node->parent_->key_;
+    }
+    std::cout << std::endl;
     inorderTreeWalk(node->right_);
   }
 }
 
-std::shared_ptr<RBNode> RBTree::minimum(std::shared_ptr<RBNode> node)
+RBNode* RBTree::minimum(RBNode* node)
 {
   while (node->left_ != nullptr) {
     node = node->left_;
@@ -26,7 +32,7 @@ std::shared_ptr<RBNode> RBTree::minimum(std::shared_ptr<RBNode> node)
   return node;
 }
 
-std::shared_ptr<RBNode> RBTree::maximum(std::shared_ptr<RBNode> node)
+RBNode* RBTree::maximum(RBNode* node)
 {
   while (node->right_ != nullptr) {
     node = node->right_;
@@ -34,25 +40,25 @@ std::shared_ptr<RBNode> RBTree::maximum(std::shared_ptr<RBNode> node)
   return node;
 }
 
-std::shared_ptr<RBNode> RBTree::successor(std::shared_ptr<RBNode> node)
+RBNode* RBTree::successor(RBNode* node)
 {
   if (node->right_ != nullptr) {
     return minimum(node->right_);
   }
-  std::shared_ptr<RBNode> y = std::shared_ptr<RBNode>(node->parent_);
+  RBNode* y = node->parent_;
   while (y != nullptr && node != y->right_) {
     node = y;
-    y = std::shared_ptr<RBNode>(y->parent_);
+    y = y->parent_;
   }
   return y;
 }
 
-void RBTree::leftRotate(std::shared_ptr<RBNode> node)
+void RBTree::leftRotate(RBNode* node)
 {
   auto switch_node = node->right_;
   node->right_ = switch_node->left_;
   if (switch_node->left_ != nullptr) {
-    switch_node->left_->parent_ = node.get();
+    switch_node->left_->parent_ = node;
   }
   switch_node->parent_ = node->parent_;
   if (node->parent_ == nullptr) {
@@ -63,15 +69,15 @@ void RBTree::leftRotate(std::shared_ptr<RBNode> node)
     node->parent_->right_ = switch_node;
   }
   node->left_ = node;
-  node->parent_ = switch_node.get();
+  node->parent_ = switch_node;
 }
 
-void RBTree::rightRotate(std::shared_ptr<RBNode> node)
+void RBTree::rightRotate(RBNode* node)
 {
   auto switch_node = node->left_;
   node->left_ = switch_node->right_;
   if (switch_node->right_ != nullptr) {
-    switch_node->right_->parent_ = node.get();
+    switch_node->right_->parent_ = node;
   }
   switch_node->parent_ = node->parent_;
   if (node->parent_ == nullptr) {
@@ -83,10 +89,10 @@ void RBTree::rightRotate(std::shared_ptr<RBNode> node)
     node->parent_->left_ = switch_node;
   }
   node->right_ = node;
-  node->parent_ = switch_node.get();
+  node->parent_ = switch_node;
 }
 
-std::shared_ptr<RBNode> RBTree::search(std::shared_ptr<RBNode> node, const int key)
+RBNode* RBTree::search(RBNode* node, const int key)
 {
   if (node == nullptr || key == node->key_) {
     return node;
@@ -101,9 +107,9 @@ std::shared_ptr<RBNode> RBTree::search(std::shared_ptr<RBNode> node, const int k
 void RBTree::insert(const int key, const int data)
 {
   std::cout << "insert\n";
-  std::shared_ptr<RBNode> z = std::make_shared<RBNode>(key, data);
-  std::shared_ptr<RBNode> y = nullptr;
-  std::shared_ptr<RBNode> x = root_;
+  RBNode* z = new RBNode(key, data);
+  RBNode* y = nullptr;
+  RBNode* x = root_;
   while (x != nullptr) {
     y = x;
     if (z->key_ < x->key_) {
@@ -112,7 +118,7 @@ void RBTree::insert(const int key, const int data)
       x = x->right_;
     }
   }
-  z->parent_ = y.get();
+  z->parent_ = y;
   if (y == nullptr) {
     root_ = z;
   } else if (z->key_ < y->key_) {
@@ -126,23 +132,25 @@ void RBTree::insert(const int key, const int data)
   insertFixup(z);
 }
 
-void RBTree::insertFixup(std::shared_ptr<RBNode> node)
+void RBTree::insertFixup(RBNode* node)
 {
   std::cout << "insert fixup\n";
   while (node->parent_ && node->parent_->color_ == NodeColor::RED) {
-    if (node->parent_ == node->parent_->parent_->left_.get()) {
+    if (node->parent_ == node->parent_->parent_->left_) {
       auto y = node->parent_->parent_->right_;
       if (y->color_ == NodeColor::RED) {
         node->parent_->color_ = NodeColor::BLACK;
         y->color_ = NodeColor::BLACK;
         node->parent_->parent_->color_ = NodeColor::RED;
-        node = std::shared_ptr<RBNode>(node->parent_->parent_);
-      } else if (node == node->parent_->right_) {
-        node = std::shared_ptr<RBNode>(node->parent_);
-        leftRotate(node);
+        node = node->parent_->parent_;
+      } else {
+        if (node == node->parent_->right_) {
+          node = node->parent_;
+          leftRotate(node);
+        }
         node->parent_->color_ = NodeColor::BLACK;
         node->parent_->parent_->color_ = NodeColor::RED;
-        rightRotate(std::shared_ptr<RBNode>(node->parent_->parent_));
+        rightRotate(node->parent_->parent_);
       }
     } else {
       auto y = node->parent_->parent_->left_;
@@ -150,13 +158,15 @@ void RBTree::insertFixup(std::shared_ptr<RBNode> node)
         node->parent_->color_ = NodeColor::BLACK;
         y->color_ = NodeColor::BLACK;
         node->parent_->parent_->color_ = NodeColor::RED;
-        node = std::shared_ptr<RBNode>(node->parent_->parent_);
-      } else if (node == node->parent_->right_) {
-        node = std::shared_ptr<RBNode>(node->parent_);
-        leftRotate(node);
+        node = node->parent_->parent_;
+      } else {
+        if (node == node->parent_->right_) {
+          node = node->parent_;
+          leftRotate(node);
+        }
         node->parent_->color_ = NodeColor::BLACK;
         node->parent_->parent_->color_ = NodeColor::RED;
-        rightRotate(std::shared_ptr<RBNode>(node->parent_->parent_));
+        rightRotate(node->parent_->parent_);
       }
     }
   }

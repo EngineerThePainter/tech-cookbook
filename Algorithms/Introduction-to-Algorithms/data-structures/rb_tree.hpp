@@ -9,10 +9,19 @@ enum class NodeColor { RED = 0, BLACK };
 
 struct RBNode {
   RBNode(const int key, const int data) : key_(key), data_(data) {}
+  ~RBNode()
+  {
+    if (left_ != nullptr) {
+      delete left_;
+    }
+    if (right_ != nullptr) {
+      delete right_;
+    }
+  }
   const int key_;
   const int data_;
-  std::shared_ptr<RBNode> left_ = nullptr;
-  std::shared_ptr<RBNode> right_ = nullptr;
+  RBNode* left_ = nullptr;
+  RBNode* right_ = nullptr;
   RBNode* parent_ = nullptr;
   NodeColor color_ = NodeColor::BLACK;
 };
@@ -20,21 +29,22 @@ struct RBNode {
 class RBTree
 {
 public:
-  std::shared_ptr<RBNode> search(const int key);
+  ~RBTree();
+  RBNode* search(const int key);
   void inorderTreeWalk();
-  static std::shared_ptr<RBNode> minimum(std::shared_ptr<RBNode> node);
-  static std::shared_ptr<RBNode> maximum(std::shared_ptr<RBNode> node);
-  std::shared_ptr<RBNode> successor(std::shared_ptr<RBNode> node);
-  void leftRotate(std::shared_ptr<RBNode> node);
-  void rightRotate(std::shared_ptr<RBNode> node);
+  static RBNode* minimum(RBNode* node);
+  static RBNode* maximum(RBNode* node);
+  RBNode* successor(RBNode* node);
+  void leftRotate(RBNode* node);
+  void rightRotate(RBNode* node);
   void insert(const int key, const int data);
 
 private:
-  void inorderTreeWalk(std::shared_ptr<RBNode> node);
-  void insertFixup(std::shared_ptr<RBNode> node);
-  std::shared_ptr<RBNode> search(std::shared_ptr<RBNode> elem, const int key);
+  void inorderTreeWalk(RBNode* node);
+  void insertFixup(RBNode* node);
+  RBNode* search(RBNode* elem, const int key);
 
-  std::shared_ptr<RBNode> root_ = nullptr;
+  RBNode* root_ = nullptr;
 };
 
 } // namespace data_structures

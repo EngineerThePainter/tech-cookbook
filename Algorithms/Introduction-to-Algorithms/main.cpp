@@ -221,11 +221,12 @@ void rbTreeUsage()
 {
   std::cout << "*** Red-Black Trees\n";
   data_structures::RBTree rbTree;
+
   rbTree.insert(2, 20);
   rbTree.insert(1, 10);
   rbTree.insert(3, 30);
-  // rbTree.insert(10, 100);
   rbTree.insert(4, 40);
+  rbTree.insert(10, 100);
   rbTree.inorderTreeWalk();
   std::cout << "*****************************" << std::endl;
 }
