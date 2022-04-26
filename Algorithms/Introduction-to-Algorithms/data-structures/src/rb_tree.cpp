@@ -1,6 +1,7 @@
 #include "rb_tree.hpp"
 
 #include <iostream>
+#include <string>
 
 namespace data_structures
 {
@@ -15,9 +16,16 @@ void RBTree::inorderTreeWalk(RBNode* node)
 {
   if (node != nullptr) {
     inorderTreeWalk(node->left_);
-    std::cout << node->key_ << " : " << node->data_ << " : " << (node->color_ == NodeColor::BLACK ? "B" : "R");
+    std::string color = node->color_ == NodeColor::BLACK ? "B" : "R";
+    std::cout << node->key_ << color;
+    if (node->left_ != nullptr) {
+      std::cout << " : L" << node->left_->key_;
+    }
+    if (node->right_ != nullptr) {
+      std::cout << " : R" << node->right_->key_;
+    }
     if (node->parent_ != nullptr) {
-      std::cout << node->parent_->key_;
+      std::cout << " : P" << node->parent_->key_;
     }
     std::cout << std::endl;
     inorderTreeWalk(node->right_);
@@ -53,43 +61,49 @@ RBNode* RBTree::successor(RBNode* node)
   return y;
 }
 
-void RBTree::leftRotate(RBNode* node)
+void RBTree::leftRotate(RBNode* x)
 {
-  auto switch_node = node->right_;
-  node->right_ = switch_node->left_;
-  if (switch_node->left_ != nullptr) {
-    switch_node->left_->parent_ = node;
+  if (x->right_ == nullptr) {
+    return;
   }
-  switch_node->parent_ = node->parent_;
-  if (node->parent_ == nullptr) {
-    root_ = switch_node;
-  } else if (node == node->parent_->left_) {
-    node->parent_->left_ = switch_node;
+  auto y = x->right_;
+  x->right_ = y->left_;
+  if (y->left_ != nullptr) {
+    y->left_->parent_ = x;
+  }
+  y->parent_ = x->parent_;
+  if (x->parent_ == nullptr) {
+    root_ = y;
+  } else if (x == x->parent_->left_) {
+    x->parent_->left_ = y;
   } else {
-    node->parent_->right_ = switch_node;
+    x->parent_->right_ = y;
   }
-  node->left_ = node;
-  node->parent_ = switch_node;
+  y->left_ = x;
+  x->parent_ = y;
 }
 
-void RBTree::rightRotate(RBNode* node)
+void RBTree::rightRotate(RBNode* y)
 {
-  auto switch_node = node->left_;
-  node->left_ = switch_node->right_;
-  if (switch_node->right_ != nullptr) {
-    switch_node->right_->parent_ = node;
+  if (y->left_ == nullptr) {
+    return;
   }
-  switch_node->parent_ = node->parent_;
-  if (node->parent_ == nullptr) {
-    root_ = switch_node;
+  auto x = y->left_;
+  y->left_ = x->right_;
+  if (x->right_ != nullptr) {
+    x->right_->parent_ = y;
+  }
+  x->parent_ = y->parent_;
+  if (y->parent_ == nullptr) {
+    root_ = x;
     // Does these two conditions can remain as they are?
-  } else if (node == node->parent_->right_) {
-    node->parent_->right_ = switch_node;
+  } else if (y == y->parent_->right_) {
+    y->parent_->right_ = x;
   } else {
-    node->parent_->left_ = switch_node;
+    y->parent_->left_ = x;
   }
-  node->right_ = node;
-  node->parent_ = switch_node;
+  x->right_ = y;
+  y->parent_ = x;
 }
 
 RBNode* RBTree::search(RBNode* node, const int key)
@@ -106,7 +120,6 @@ RBNode* RBTree::search(RBNode* node, const int key)
 
 void RBTree::insert(const int key, const int data)
 {
-  std::cout << "insert\n";
   RBNode* z = new RBNode(key, data);
   RBNode* y = nullptr;
   RBNode* x = root_;
@@ -132,41 +145,42 @@ void RBTree::insert(const int key, const int data)
   insertFixup(z);
 }
 
-void RBTree::insertFixup(RBNode* node)
+void RBTree::insertFixup(RBNode* z)
 {
   std::cout << "insert fixup\n";
-  while (node->parent_ && node->parent_->color_ == NodeColor::RED) {
-    if (node->parent_ == node->parent_->parent_->left_) {
-      auto y = node->parent_->parent_->right_;
-      if (y->color_ == NodeColor::RED) {
-        node->parent_->color_ = NodeColor::BLACK;
+  while (z->parent_ && z->parent_->color_ == NodeColor::RED) {
+    if (z->parent_ == z->parent_->parent_->left_) {
+      auto y = z->parent_->parent_->right_;
+      if (y != nullptr && y->color_ == NodeColor::RED) {
+        z->parent_->color_ = NodeColor::BLACK;
         y->color_ = NodeColor::BLACK;
-        node->parent_->parent_->color_ = NodeColor::RED;
-        node = node->parent_->parent_;
+        z->parent_->parent_->color_ = NodeColor::RED;
+        z = z->parent_->parent_;
       } else {
-        if (node == node->parent_->right_) {
-          node = node->parent_;
-          leftRotate(node);
+        if (z == z->parent_->right_) {
+          z = z->parent_;
+          leftRotate(z);
         }
-        node->parent_->color_ = NodeColor::BLACK;
-        node->parent_->parent_->color_ = NodeColor::RED;
-        rightRotate(node->parent_->parent_);
+        z->parent_->color_ = NodeColor::BLACK;
+        z->parent_->parent_->color_ = NodeColor::RED;
+        rightRotate(z->parent_->parent_);
       }
     } else {
-      auto y = node->parent_->parent_->left_;
-      if (y->color_ == NodeColor::RED) {
-        node->parent_->color_ = NodeColor::BLACK;
+      auto y = z->parent_->parent_->left_;
+
+      if (y != nullptr && y->color_ == NodeColor::RED) {
+        z->parent_->color_ = NodeColor::BLACK;
         y->color_ = NodeColor::BLACK;
-        node->parent_->parent_->color_ = NodeColor::RED;
-        node = node->parent_->parent_;
+        z->parent_->parent_->color_ = NodeColor::RED;
+        z = z->parent_->parent_;
       } else {
-        if (node == node->parent_->right_) {
-          node = node->parent_;
-          leftRotate(node);
+        if (z == z->parent_->left_) {
+          z = z->parent_;
+          leftRotate(z);
         }
-        node->parent_->color_ = NodeColor::BLACK;
-        node->parent_->parent_->color_ = NodeColor::RED;
-        rightRotate(node->parent_->parent_);
+        z->parent_->color_ = NodeColor::BLACK;
+        z->parent_->parent_->color_ = NodeColor::RED;
+        rightRotate(z->parent_->parent_);
       }
     }
   }

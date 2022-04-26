@@ -205,10 +205,10 @@ void bstUsage()
 {
   std::cout << "*** BST\n";
   data_structures::BST bst;
+  bst.insert(10, 100);
   bst.insert(2, 20);
   bst.insert(1, 10);
   bst.insert(3, 30);
-  bst.insert(10, 100);
   bst.insert(4, 40);
   bst.inorderTreeWalk();
   auto elem = bst.search(3);
@@ -222,11 +222,19 @@ void rbTreeUsage()
   std::cout << "*** Red-Black Trees\n";
   data_structures::RBTree rbTree;
 
-  rbTree.insert(2, 20);
+   rbTree.insert(41, 100);
+   rbTree.insert(38, 20);
+   rbTree.insert(31, 10);
+   rbTree.insert(12, 10);
+   rbTree.insert(19, 10);
+   rbTree.insert(8, 10);
+
+  rbTree.insert(5, 10);
+  rbTree.insert(15, 10);
   rbTree.insert(1, 10);
-  rbTree.insert(3, 30);
-  rbTree.insert(4, 40);
-  rbTree.insert(10, 100);
+  rbTree.insert(50, 10);
+  rbTree.insert(4, 10);
+
   rbTree.inorderTreeWalk();
   std::cout << "*****************************" << std::endl;
 }
