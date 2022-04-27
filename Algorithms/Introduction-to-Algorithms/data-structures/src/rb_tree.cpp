@@ -147,7 +147,6 @@ void RBTree::insert(const int key, const int data)
 
 void RBTree::insertFixup(RBNode* z)
 {
-  std::cout << "insert fixup\n";
   while (z->parent_ && z->parent_->color_ == NodeColor::RED) {
     if (z->parent_ == z->parent_->parent_->left_) {
       auto y = z->parent_->parent_->right_;
@@ -185,6 +184,109 @@ void RBTree::insertFixup(RBNode* z)
     }
   }
   root_->color_ = NodeColor::BLACK;
+}
+
+void RBTree::transplant(RBNode* toRemove, RBNode* toPut)
+{
+  if (toRemove->parent_ != nullptr) {
+    root_ = toPut;
+  } else if (toRemove == toRemove->parent_->left_) {
+    toRemove->parent_->left_ = toPut;
+  } else {
+    toRemove->parent_->right_ = toPut;
+  }
+  toPut->parent_ = toRemove->parent_;
+}
+
+void RBTree::remove(RBNode* z)
+{
+  RBNode* y = z;
+  RBNode* x = nullptr;
+  NodeColor original_color = y->color_;
+  if (z->left_ == nullptr) {
+    x = z->right_;
+    transplant(z, z->right_);
+  } else if (z->right_ == nullptr) {
+    x = z->left_;
+    transplant(z, z->left_);
+  } else {
+    y = minimum(z->right_);
+    original_color = y->color_;
+    x = y->right_;
+    if (y->parent_ == z) {
+      x->parent_ = y;
+    } else {
+      transplant(y, y->right_);
+      y->right_ = z->right_;
+      y->right_->parent_ = y;
+    }
+    transplant(z, y);
+    y->left_ = z->left_;
+    y->left_->parent_ = y;
+    y->color_ = z->color_;
+  }
+  if (original_color == NodeColor::BLACK) {
+    removeFixup(x);
+  }
+  delete x;
+}
+
+void RBTree::removeFixup(RBNode* x)
+{
+  while (x != root_ && x->color_ == NodeColor::BLACK) {
+    if (x == x->parent_->left_) {
+      RBNode* w = x->parent_->right_;
+      if (w->color_ == NodeColor::RED) {
+        w->color_ = NodeColor::BLACK;
+        x->parent_->color_ = NodeColor::RED;
+        leftRotate(x->parent_);
+        w = x->parent_->right_;
+      }
+      if (w->left_->color_ == NodeColor::BLACK && w->right_->color_ == NodeColor::BLACK) {
+        w->color_ = NodeColor::RED;
+        x = x->parent_;
+      } else {
+        if (w->right_->color_ == NodeColor::BLACK) {
+          w->left_->color_ = NodeColor::BLACK;
+          w->color_ = NodeColor::RED;
+          rightRotate(w);
+          w = x->parent_->right_;
+        }
+        w->color_ = x->parent_->color_;
+        x->parent_->color_ = NodeColor::BLACK;
+        w->right_->color_ = NodeColor::BLACK;
+        leftRotate(x->parent_);
+        x = root_;
+      }
+    } else {
+      if (x == x->parent_->right_) {
+        RBNode* w = x->parent_->left_;
+        if (w->color_ == NodeColor::RED) {
+          w->color_ = NodeColor::BLACK;
+          x->parent_->color_ = NodeColor::RED;
+          leftRotate(x->parent_);
+          w = x->parent_->left_;
+        }
+        if (w->right_->color_ == NodeColor::BLACK && w->left_->color_ == NodeColor::BLACK) {
+          w->color_ = NodeColor::RED;
+          x = x->parent_;
+        } else {
+          if (w->left_->color_ == NodeColor::BLACK) {
+            w->right_->color_ = NodeColor::BLACK;
+            w->color_ = NodeColor::RED;
+            rightRotate(w);
+            w = x->parent_->right_;
+          }
+          w->color_ = x->parent_->color_;
+          x->parent_->color_ = NodeColor::BLACK;
+          w->left_->color_ = NodeColor::BLACK;
+          leftRotate(x->parent_);
+          x = root_;
+        }
+      }
+    }
+  }
+  x->color_ = NodeColor::BLACK;
 }
 
 } // namespace data_structures

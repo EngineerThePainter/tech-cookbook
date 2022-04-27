@@ -38,10 +38,13 @@ public:
   void leftRotate(RBNode* node);
   void rightRotate(RBNode* node);
   void insert(const int key, const int data);
+  void transplant(RBNode* toRemove, RBNode* toPut);
+  void remove(RBNode* z);
 
 private:
   void inorderTreeWalk(RBNode* node);
   void insertFixup(RBNode* node);
+  void removeFixup(RBNode* node);
   RBNode* search(RBNode* elem, const int key);
 
   RBNode* root_ = nullptr;
