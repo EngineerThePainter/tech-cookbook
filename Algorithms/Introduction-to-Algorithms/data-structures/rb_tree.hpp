@@ -35,6 +35,8 @@ public:
   ~RBTree();
   RBNode* search(const int key);
   void inorderTreeWalk();
+  // Going tree level, by tree level
+  void orderTreeWalk();
   static RBNode* minimum(RBNode* node);
   static RBNode* maximum(RBNode* node);
   RBNode* successor(RBNode* node);

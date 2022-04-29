@@ -1,6 +1,7 @@
 #include "rb_tree.hpp"
 
 #include <iostream>
+#include <queue>
 #include <string>
 
 namespace data_structures
@@ -29,6 +30,29 @@ void RBTree::inorderTreeWalk(RBNode* node)
     }
     std::cout << std::endl;
     inorderTreeWalk(node->right_);
+  }
+}
+
+void RBTree::orderTreeWalk()
+{
+  std::queue<RBNode*> queue{};
+  queue.push(root_);
+  while (!queue.empty()) {
+    std::string color = queue.front()->color_ == NodeColor::BLACK ? "B" : "R";
+    std::cout << queue.front()->key_ << color;
+    if (queue.front()->left_ != nullptr) {
+      std::cout << " : L" << queue.front()->left_->key_;
+      queue.push(queue.front()->left_);
+    }
+    if (queue.front()->right_ != nullptr) {
+      std::cout << " : R" << queue.front()->right_->key_;
+      queue.push(queue.front()->right_);
+    }
+    if (queue.front()->parent_ != nullptr) {
+      std::cout << " : P" << queue.front()->parent_->key_;
+    }
+    std::cout << std::endl;
+    queue.pop();
   }
 }
 
