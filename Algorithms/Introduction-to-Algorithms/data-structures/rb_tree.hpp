@@ -8,7 +8,10 @@ namespace data_structures
 enum class NodeColor { RED = 0, BLACK };
 
 struct RBNode {
-  RBNode(const int key, const int data) : key_(key), data_(data) {}
+  RBNode(const int key, const int data)
+      : key_(key), data_(data), left_(nullptr), right_(nullptr), parent_(nullptr), color_(NodeColor::BLACK)
+  {
+  }
   ~RBNode()
   {
     if (left_ != nullptr) {
@@ -20,10 +23,10 @@ struct RBNode {
   }
   const int key_;
   const int data_;
-  RBNode* left_ = nullptr;
-  RBNode* right_ = nullptr;
-  RBNode* parent_ = nullptr;
-  NodeColor color_ = NodeColor::BLACK;
+  RBNode* left_;
+  RBNode* right_;
+  RBNode* parent_;
+  NodeColor color_;
 };
 
 class RBTree

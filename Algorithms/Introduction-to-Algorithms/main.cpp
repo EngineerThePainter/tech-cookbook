@@ -233,12 +233,14 @@ void rbTreeUsage()
   std::cout << "*****************************" << std::endl;
   rbTree.inorderTreeWalk();
 
+  // data_structures::RBNode* node_eight = rbTree.search(8);
   rbTree.remove(rbTree.search(8));
   rbTree.remove(rbTree.search(12));
   rbTree.remove(rbTree.search(19));
   rbTree.remove(rbTree.search(31));
   rbTree.remove(rbTree.search(38));
   rbTree.remove(rbTree.search(41));
+
   std::cout << "*****************************" << std::endl;
 }
 

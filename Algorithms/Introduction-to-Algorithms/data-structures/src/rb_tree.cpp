@@ -108,7 +108,10 @@ void RBTree::rightRotate(RBNode* y)
 
 RBNode* RBTree::search(RBNode* node, const int key)
 {
-  if (node == nullptr || key == node->key_) {
+  if (node == nullptr) {
+    return nullptr;
+  }
+  if (key == node->key_) {
     return node;
   }
   if (key < node->key_) {
@@ -232,6 +235,9 @@ void RBTree::remove(RBNode* z)
   if (original_color == NodeColor::BLACK) {
     removeFixup(x);
   }
+  z->left_ = nullptr;
+  z->right_ = nullptr;
+  delete z;
 }
 
 void RBTree::removeFixup(RBNode* x)
