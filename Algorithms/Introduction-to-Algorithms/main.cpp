@@ -229,18 +229,16 @@ void rbTreeUsage()
   rbTree.insert(19, 10);
   rbTree.insert(8, 10);
 
-  // rbTree.insert(5, 10);
-  // rbTree.insert(15, 10);
-  // rbTree.insert(1, 10);
-  // rbTree.insert(50, 10);
-  // rbTree.insert(4, 10);
-
-  rbTree.inorderTreeWalk();
-
-  auto to_delete = rbTree.search(8);
-  rbTree.remove(to_delete);
+  std::cout << "After add\n";
   std::cout << "*****************************" << std::endl;
   rbTree.inorderTreeWalk();
+
+  rbTree.remove(rbTree.search(8));
+  rbTree.remove(rbTree.search(12));
+  rbTree.remove(rbTree.search(19));
+  rbTree.remove(rbTree.search(31));
+  rbTree.remove(rbTree.search(38));
+  rbTree.remove(rbTree.search(41));
   std::cout << "*****************************" << std::endl;
 }
 

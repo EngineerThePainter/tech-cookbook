@@ -38,7 +38,7 @@ public:
   void leftRotate(RBNode* node);
   void rightRotate(RBNode* node);
   void insert(const int key, const int data);
-  void transplant(RBNode* toRemove, RBNode* toPut);
+  void transplant(RBNode* toRemove, RBNode* toPut, RBNode* toPutParent);
   void remove(RBNode* z);
 
 private:

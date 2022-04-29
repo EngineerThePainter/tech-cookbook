@@ -186,7 +186,7 @@ void RBTree::insertFixup(RBNode* z)
   root_->color_ = NodeColor::BLACK;
 }
 
-void RBTree::transplant(RBNode* u, RBNode* v)
+void RBTree::transplant(RBNode* u, RBNode* v, RBNode* parent_v)
 {
   if (u->parent_ == nullptr) {
     root_ = v;
@@ -195,7 +195,11 @@ void RBTree::transplant(RBNode* u, RBNode* v)
   } else {
     u->parent_->right_ = v;
   }
-  v->parent_ = u->parent_;
+  if (v) {
+    v->parent_ = u->parent_;
+  } else {
+    parent_v = u->parent_;
+  }
 }
 
 void RBTree::remove(RBNode* z)
@@ -205,10 +209,10 @@ void RBTree::remove(RBNode* z)
   NodeColor original_color = y->color_;
   if (z->left_ == nullptr) {
     x = z->right_;
-    transplant(z, z->right_);
+    transplant(z, z->right_, z);
   } else if (z->right_ == nullptr) {
     x = z->left_;
-    transplant(z, z->left_);
+    transplant(z, z->left_, z);
   } else {
     y = minimum(z->right_);
     original_color = y->color_;
@@ -216,11 +220,11 @@ void RBTree::remove(RBNode* z)
     if (y->parent_ == z) {
       x->parent_ = y;
     } else {
-      transplant(y, y->right_);
+      transplant(y, y->right_, y);
       y->right_ = z->right_;
       y->right_->parent_ = y;
     }
-    transplant(z, y);
+    transplant(z, y, y->parent_);
     y->left_ = z->left_;
     y->left_->parent_ = y;
     y->color_ = z->color_;
@@ -232,7 +236,7 @@ void RBTree::remove(RBNode* z)
 
 void RBTree::removeFixup(RBNode* x)
 {
-  while (x != root_ && x->color_ == NodeColor::BLACK) {
+  while (x != nullptr && x != root_ && x->color_ == NodeColor::BLACK) {
     if (x == x->parent_->left_) {
       RBNode* w = x->parent_->right_;
       if (w->color_ == NodeColor::RED) {
@@ -285,7 +289,9 @@ void RBTree::removeFixup(RBNode* x)
       }
     }
   }
-  x->color_ = NodeColor::BLACK;
+  if (x) {
+    x->color_ = NodeColor::BLACK;
+  }
 }
 
 } // namespace data_structures
