@@ -186,16 +186,16 @@ void RBTree::insertFixup(RBNode* z)
   root_->color_ = NodeColor::BLACK;
 }
 
-void RBTree::transplant(RBNode* toRemove, RBNode* toPut)
+void RBTree::transplant(RBNode* u, RBNode* v)
 {
-  if (toRemove->parent_ != nullptr) {
-    root_ = toPut;
-  } else if (toRemove == toRemove->parent_->left_) {
-    toRemove->parent_->left_ = toPut;
+  if (u->parent_ == nullptr) {
+    root_ = v;
+  } else if (u == u->parent_->left_) {
+    u->parent_->left_ = v;
   } else {
-    toRemove->parent_->right_ = toPut;
+    u->parent_->right_ = v;
   }
-  toPut->parent_ = toRemove->parent_;
+  v->parent_ = u->parent_;
 }
 
 void RBTree::remove(RBNode* z)
@@ -228,7 +228,6 @@ void RBTree::remove(RBNode* z)
   if (original_color == NodeColor::BLACK) {
     removeFixup(x);
   }
-  delete x;
 }
 
 void RBTree::removeFixup(RBNode* x)
