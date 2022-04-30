@@ -11,8 +11,8 @@ class SortingAlgorithm
 public:
   virtual ~SortingAlgorithm() = default;
   virtual void Sort(std::vector<int>& array_to_sort) = 0;
-  long long NumberOfComparisons() const;
-  long long NumberOfAssignements() const;
+  virtual long long NumberOfComparisons() const;
+  virtual long long NumberOfAssignements() const;
   void ResetCounters();
 
 protected:

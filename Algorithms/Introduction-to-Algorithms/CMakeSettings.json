@@ -12,6 +12,17 @@
       "addressSanitizerEnabled": false
     },
     {
+      "name": "x64-Debug-Sanitizer",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\out\\debug-sanitizer\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\debug-sanitizer\\install\\${name}",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "addressSanitizerEnabled": true
+    },
+    {
       "name": "x64-Release",
       "generator": "Ninja",
       "configurationType": "Release",
