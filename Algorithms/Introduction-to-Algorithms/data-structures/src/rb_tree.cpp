@@ -7,6 +7,24 @@
 namespace data_structures
 {
 
+namespace
+{
+static bool isLeftChild(RBNode* node)
+{
+  if (node && node->parent_) {
+    return node == node->parent_->left_;
+  }
+  return false;
+}
+static bool isRightChild(RBNode* node)
+{
+  if (node && node->parent_) {
+    return node == node->parent_->right_;
+  }
+  return false;
+}
+} // namespace
+
 RBTree::~RBTree() { delete root_; }
 
 RBNode* RBTree::search(const int key) { return search(root_, key); }
@@ -98,7 +116,7 @@ void RBTree::leftRotate(RBNode* x)
   y->parent_ = x->parent_;
   if (x->parent_ == nullptr) {
     root_ = y;
-  } else if (x == x->parent_->left_) {
+  } else if (isLeftChild(x)) {
     x->parent_->left_ = y;
   } else {
     x->parent_->right_ = y;
@@ -120,8 +138,7 @@ void RBTree::rightRotate(RBNode* y)
   x->parent_ = y->parent_;
   if (y->parent_ == nullptr) {
     root_ = x;
-    // Does these two conditions can remain as they are?
-  } else if (y == y->parent_->right_) {
+  } else if (isRightChild(x)) {
     y->parent_->right_ = x;
   } else {
     y->parent_->left_ = x;
@@ -175,7 +192,7 @@ void RBTree::insert(const int key, const int data)
 void RBTree::insertFixup(RBNode* z)
 {
   while (z->parent_ && z->parent_->color_ == NodeColor::RED) {
-    if (z->parent_ == z->parent_->parent_->left_) {
+    if (isLeftChild(z->parent_)) {
       auto y = z->parent_->parent_->right_;
       if (y != nullptr && y->color_ == NodeColor::RED) {
         z->parent_->color_ = NodeColor::BLACK;
@@ -183,7 +200,7 @@ void RBTree::insertFixup(RBNode* z)
         z->parent_->parent_->color_ = NodeColor::RED;
         z = z->parent_->parent_;
       } else {
-        if (z == z->parent_->right_) {
+        if (isRightChild(z)) {
           z = z->parent_;
           leftRotate(z);
         }
@@ -200,7 +217,7 @@ void RBTree::insertFixup(RBNode* z)
         z->parent_->parent_->color_ = NodeColor::RED;
         z = z->parent_->parent_;
       } else {
-        if (z == z->parent_->left_) {
+        if (isLeftChild(z)) {
           z = z->parent_;
           leftRotate(z);
         }
@@ -217,7 +234,7 @@ void RBTree::transplant(RBNode* u, RBNode* v, RBNode* parent_v)
 {
   if (u->parent_ == nullptr) {
     root_ = v;
-  } else if (u == u->parent_->left_) {
+  } else if (isLeftChild(u)) {
     u->parent_->left_ = v;
   } else {
     u->parent_->right_ = v;
@@ -267,7 +284,7 @@ void RBTree::remove(RBNode* z)
 void RBTree::removeFixup(RBNode* x)
 {
   while (x != nullptr && x != root_ && x->color_ == NodeColor::BLACK) {
-    if (x == x->parent_->left_) {
+    if (isLeftChild(x)) {
       RBNode* w = x->parent_->right_;
       if (w->color_ == NodeColor::RED) {
         w->color_ = NodeColor::BLACK;
@@ -292,30 +309,28 @@ void RBTree::removeFixup(RBNode* x)
         x = root_;
       }
     } else {
-      if (x == x->parent_->right_) {
-        RBNode* w = x->parent_->left_;
-        if (w->color_ == NodeColor::RED) {
-          w->color_ = NodeColor::BLACK;
-          x->parent_->color_ = NodeColor::RED;
-          leftRotate(x->parent_);
-          w = x->parent_->left_;
-        }
-        if (w->right_->color_ == NodeColor::BLACK && w->left_->color_ == NodeColor::BLACK) {
+      RBNode* w = x->parent_->left_;
+      if (w->color_ == NodeColor::RED) {
+        w->color_ = NodeColor::BLACK;
+        x->parent_->color_ = NodeColor::RED;
+        leftRotate(x->parent_);
+        w = x->parent_->left_;
+      }
+      if (w->right_->color_ == NodeColor::BLACK && w->left_->color_ == NodeColor::BLACK) {
+        w->color_ = NodeColor::RED;
+        x = x->parent_;
+      } else {
+        if (w->left_->color_ == NodeColor::BLACK) {
+          w->right_->color_ = NodeColor::BLACK;
           w->color_ = NodeColor::RED;
-          x = x->parent_;
-        } else {
-          if (w->left_->color_ == NodeColor::BLACK) {
-            w->right_->color_ = NodeColor::BLACK;
-            w->color_ = NodeColor::RED;
-            rightRotate(w);
-            w = x->parent_->right_;
-          }
-          w->color_ = x->parent_->color_;
-          x->parent_->color_ = NodeColor::BLACK;
-          w->left_->color_ = NodeColor::BLACK;
-          leftRotate(x->parent_);
-          x = root_;
+          rightRotate(w);
+          w = x->parent_->right_;
         }
+        w->color_ = x->parent_->color_;
+        x->parent_->color_ = NodeColor::BLACK;
+        w->left_->color_ = NodeColor::BLACK;
+        leftRotate(x->parent_);
+        x = root_;
       }
     }
   }

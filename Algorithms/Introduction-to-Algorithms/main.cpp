@@ -230,11 +230,11 @@ void rbTreeUsage()
   rbTree.insert(8, 10);
 
   std::cout << "After add\n";
-  std::cout << "*****************************" << std::endl;
+  std::cout << "Inorder walk *****************************" << std::endl;
   rbTree.inorderTreeWalk();
-  std::cout << "*****************************" << std::endl;
+  std::cout << "Order walk *****************************" << std::endl;
   rbTree.orderTreeWalk();
-  // data_structures::RBNode* node_eight = rbTree.search(8);
+
   rbTree.remove(rbTree.search(8));
   rbTree.remove(rbTree.search(12));
   rbTree.remove(rbTree.search(19));
