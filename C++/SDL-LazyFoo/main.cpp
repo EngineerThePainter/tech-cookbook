@@ -26,6 +26,7 @@
 #include <lesson24/lesson24.hpp>
 #include <lesson25/lesson25.hpp>
 #include <lesson26/lesson26.hpp>
+#include <lesson27/lesson27.hpp>
 
 int main(int argc, char* args[])
 {
@@ -104,7 +105,10 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson25::lesson25();
 
   // Motion
-  sdl_lazyfoo::lesson26::lesson26();
+  // sdl_lazyfoo::lesson26::lesson26();
+
+  // Collision detection
+  sdl_lazyfoo::lesson27::lesson27();
 
   return 0;
 }
