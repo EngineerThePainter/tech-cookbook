@@ -28,6 +28,7 @@
 #include <lesson26/lesson26.hpp>
 #include <lesson27/lesson27.hpp>
 #include <lesson28/lesson28.hpp>
+#include <lesson29/lesson29.hpp>
 
 int main(int argc, char* args[])
 {
@@ -112,7 +113,10 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson27::lesson27();
 
   // Per pixel collision detection
-  sdl_lazyfoo::lesson28::lesson28();
+  // sdl_lazyfoo::lesson28::lesson28();
+
+  // Circular collision detection
+  sdl_lazyfoo::lesson29::lesson29();
 
   return 0;
 }
