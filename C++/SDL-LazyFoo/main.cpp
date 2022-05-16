@@ -29,6 +29,7 @@
 #include <lesson27/lesson27.hpp>
 #include <lesson28/lesson28.hpp>
 #include <lesson29/lesson29.hpp>
+#include <lesson30/lesson30.hpp>
 
 int main(int argc, char* args[])
 {
@@ -116,7 +117,9 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson28::lesson28();
 
   // Circular collision detection
-  sdl_lazyfoo::lesson29::lesson29();
+  // sdl_lazyfoo::lesson29::lesson29();
 
+  // Scrolling
+  sdl_lazyfoo::lesson30::lesson30();
   return 0;
 }
