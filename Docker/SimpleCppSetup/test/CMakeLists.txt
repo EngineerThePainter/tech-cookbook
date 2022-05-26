@@ -1,7 +1,5 @@
 add_executable(docker-setup-unittest testDocker.cpp)
 
-find_package(Gtest REQUIRED)
-
 target_link_libraries(docker-setup-unittest
   PUBLIC
   CONAN_PKG::gtest
