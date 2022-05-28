@@ -5,6 +5,7 @@
 #include "bst.hpp"
 #include "bubble_sort.hpp"
 #include "counting_sort.hpp"
+#include "cut_rod.hpp"
 #include "demo_sorting.hpp"
 #include "heap.hpp"
 #include "heap_sort.hpp"
@@ -19,6 +20,7 @@
 #include "randomized_quicksort.hpp"
 #include "rb_tree.hpp"
 #include "stack.hpp"
+#include "time_tracker.hpp"
 
 #ifdef _DEBUG
 #if _WIN32
@@ -248,10 +250,20 @@ void rbTreeUsage()
 void cutRod()
 {
   std::cout << "*** Dynamic Programming - Cut Rod problem\n";
+  std::cout
+      << "Cut Rod in traditional approach "
+      << utils::runWithTimeMeasure(dynamic_programming::cutRodRecursively, dynamic_programming::ROD_PRICES, 20).count()
+      << "ms" << std::endl;
 
-  
+  std::cout
+      << "Cut Rod in memoized approach "
+      << utils::runWithTimeMeasure(dynamic_programming::memoizedCutRod, dynamic_programming::ROD_PRICES, 20).count()
+      << "ms" << std::endl;
 
-
+  std::cout
+      << "Cut Rod in bottom-up approach "
+      << utils::runWithTimeMeasure(dynamic_programming::bottomUpCutRod, dynamic_programming::ROD_PRICES, 20).count()
+      << "ms" << std::endl;
   std::cout << "*****************************" << std::endl;
 }
 
