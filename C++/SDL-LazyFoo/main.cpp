@@ -30,6 +30,7 @@
 #include <lesson28/lesson28.hpp>
 #include <lesson29/lesson29.hpp>
 #include <lesson30/lesson30.hpp>
+#include <lesson31/lesson31.hpp>
 
 int main(int argc, char* args[])
 {
@@ -120,6 +121,10 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson29::lesson29();
 
   // Scrolling
-  sdl_lazyfoo::lesson30::lesson30();
+  // sdl_lazyfoo::lesson30::lesson30();
+
+  // Scrolling Backgrounds
+  sdl_lazyfoo::lesson31::lesson31();
+
   return 0;
 }
