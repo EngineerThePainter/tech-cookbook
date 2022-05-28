@@ -7,6 +7,7 @@ data-structures/linked_list.hpp
 data-structures/queue.hpp
 data-structures/rb_tree.hpp
 data-structures/stack.hpp
+dynamic-programming/cut_rod.hpp
 divide-and-conquer/maximum_subarray.hpp
 heap/heap.hpp
 matrix/matrix_multiply.hpp
@@ -30,6 +31,7 @@ data-structures/src/linked_list.cpp
 data-structures/src/queue.cpp
 data-structures/src/rb_tree.cpp
 data-structures/src/stack.cpp
+dynamic-programming/src/cut_rod.cpp
 divide-and-conquer/src/maximum_subarray.cpp
 matrix/src/matrix_multiply.cpp
 searching/src/binary_search.cpp
@@ -54,6 +56,7 @@ target_include_directories(${PROJECT_NAME}
   PUBLIC
   data-structures
   divide-and-conquer
+  dynamic-programming
   heap
   matrix
   searching

@@ -245,6 +245,16 @@ void rbTreeUsage()
   std::cout << "*****************************" << std::endl;
 }
 
+void cutRod()
+{
+  std::cout << "*** Dynamic Programming - Cut Rod problem\n";
+
+  
+
+
+  std::cout << "*****************************" << std::endl;
+}
+
 int main()
 {
   std::cout << "***** Introduction to Algorithms 3rd edition" << std::endl << std::endl;
@@ -267,6 +277,8 @@ int main()
   bstUsage();
 
   rbTreeUsage();
+
+  cutRod();
 
 #ifdef WIN_MEMORY_LEAK_CHECKER
   _CrtDumpMemoryLeaks();
