@@ -31,6 +31,7 @@
 #include <lesson29/lesson29.hpp>
 #include <lesson30/lesson30.hpp>
 #include <lesson31/lesson31.hpp>
+#include <lesson32/lesson32.hpp>
 
 int main(int argc, char* args[])
 {
@@ -124,7 +125,10 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson30::lesson30();
 
   // Scrolling Backgrounds
-  sdl_lazyfoo::lesson31::lesson31();
+  // sdl_lazyfoo::lesson31::lesson31();
+
+  // Text Input and Clipboard Handling
+  sdl_lazyfoo::lesson32::lesson32();
 
   return 0;
 }
