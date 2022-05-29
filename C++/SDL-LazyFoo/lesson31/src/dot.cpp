@@ -52,12 +52,12 @@ void Dot::handleEvent(SDL_Event& e)
 void Dot::move()
 {
   x_ += vel_x_;
-  if ((x_ < 0) || (x_ + DOT_WIDTH > LEVEL_WIDTH)) {
+  if ((x_ < 0) || (x_ + DOT_WIDTH > SCREEN_WIDTH)) {
     x_ -= vel_x_;
   }
 
   y_ += vel_y_;
-  if ((y_ < 0) || (y_ + DOT_HEIGHT > LEVEL_HEIGHT)) {
+  if ((y_ < 0) || (y_ + DOT_HEIGHT > SCREEN_HEIGHT)) {
     y_ -= vel_y_;
   }
 }

@@ -89,15 +89,15 @@ bool loadMedia()
     std::cerr << "Failed to load texturr, error: " << SDL_GetError() << std::endl;
     success = false;
   }
-  texture->SetWidth(20);
-  texture->SetHeight(20);
+  texture->SetWidth(Dot::DOT_WIDTH);
+  texture->SetHeight(Dot::DOT_HEIGHT);
 
   if (!background_texture->LoadFromFile("images/scrolling_background.png")) {
     std::cerr << "Failed to load background texture, error: " << SDL_GetError() << std::endl;
     success = false;
   }
-  texture->SetWidth(Dot::LEVEL_WIDTH);
-  texture->SetHeight(Dot::LEVEL_HEIGHT);
+  background_texture->SetWidth(Dot::SCREEN_WIDTH);
+  background_texture->SetHeight(Dot::SCREEN_HEIGHT);
 
   return success;
 }
@@ -132,7 +132,9 @@ void lesson31()
 
       Dot dot(0, 0, *texture);
 
-      SDL_Rect camera = {0, 0, Dot::SCREEN_WIDTH, Dot::SCREEN_HEIGHT};
+      // SDL_Rect camera = {0, 0, Dot::SCREEN_WIDTH, Dot::SCREEN_HEIGHT};
+
+      int scrollingOffset = 0;
 
       while (!quit) {
 
@@ -146,30 +148,36 @@ void lesson31()
 
         dot.move();
 
-        // Center camera over the dot
-        camera.x = (dot.getX() + Dot::DOT_WIDTH / 2) - Dot::SCREEN_WIDTH / 2;
-        camera.y = (dot.getY() + Dot::DOT_HEIGHT / 2) - Dot::SCREEN_HEIGHT / 2;
+        --scrollingOffset;
+        if (scrollingOffset < -background_texture->GetWidth()) {
+          scrollingOffset = 0;
+        }
 
-        // Keep camera in bounds
-        if (camera.x < 0) {
-          camera.x = 0;
-        }
-        if (camera.y < 0) {
-          camera.y = 0;
-        }
-        if (camera.x > Dot::LEVEL_WIDTH - camera.w) {
-          camera.x = Dot::LEVEL_WIDTH - camera.w;
-        }
-        if (camera.y > Dot::LEVEL_HEIGHT - camera.h) {
-          camera.y = Dot::LEVEL_HEIGHT - camera.h;
-        }
+        // // Center camera over the dot
+        // camera.x = (dot.getX() + Dot::DOT_WIDTH / 2) - Dot::SCREEN_WIDTH / 2;
+        // camera.y = (dot.getY() + Dot::DOT_HEIGHT / 2) - Dot::SCREEN_HEIGHT / 2;
+
+        // // Keep camera in bounds
+        // if (camera.x < 0) {
+        //   camera.x = 0;
+        // }
+        // if (camera.y < 0) {
+        //   camera.y = 0;
+        // }
+        // if (camera.x > Dot::LEVEL_WIDTH - camera.w) {
+        //   camera.x = Dot::LEVEL_WIDTH - camera.w;
+        // }
+        // if (camera.y > Dot::LEVEL_HEIGHT - camera.h) {
+        //   camera.y = Dot::LEVEL_HEIGHT - camera.h;
+        // }
 
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
 
-        background_texture->Render(0, 0, &camera);
+        background_texture->Render(scrollingOffset, 0);
+        background_texture->Render(scrollingOffset + background_texture->GetWidth(), 0);
 
-        dot.render(camera.x, camera.y);
+        dot.render();
 
         SDL_RenderPresent(renderer);
       }
