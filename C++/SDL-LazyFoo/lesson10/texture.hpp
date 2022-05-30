@@ -1,5 +1,5 @@
 #ifndef LESSON10_TEXTURE_HPP
-#define LESSON10_HLESSON10_TEXTURE_HPPPP
+#define LESSON10_TEXTURE_HPP
 
 #include <memory>
 #include <string>

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.14)
 
 project(sdl-lazyfoo)
 
@@ -102,5 +102,5 @@ add_subdirectory(lesson32)
 add_custom_command(TARGET sdl-lazyfoo POST_BUILD 
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/images/ ${CMAKE_BINARY_DIR}/bin/images/)
 
-add_custom_command(TARGET sdl-lazyfoo POST_BUILD 
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/sounds/ ${CMAKE_BINARY_DIR}/bin/sounds/)
+#add_custom_command(TARGET sdl-lazyfoo POST_BUILD 
+#  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/sounds/ ${CMAKE_BINARY_DIR}/bin/sounds/)
