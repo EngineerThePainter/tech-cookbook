@@ -11,6 +11,7 @@
 #include "heap_sort.hpp"
 #include "insertion_sort.hpp"
 #include "linked_list.hpp"
+#include "longest_common_subsequence.hpp"
 #include "matrix_multiply.hpp"
 #include "maximum_subarray.hpp"
 #include "merge_sort.hpp"
@@ -267,6 +268,17 @@ void cutRod()
   std::cout << "*****************************" << std::endl;
 }
 
+void longestCommonSubsequence()
+{
+  std::cout << "*** Dynamic Programming - Longest Common Subsequence problem\n";
+  std::vector<int> X{5, 6, 8, 6, 1, 3, 6, 2, 4, 6, 7, 9, 2, 2, 1};
+  std::vector<int> Y{9, 7, 8, 6, 1, 5, 6, 1, 4, 7};
+  // Implementation is awful, but the understanding of the problem counts here for me
+  auto result = dynamic_programming::lcsLength(X, Y);
+  dynamic_programming::printLcs(result, X, X.size(), Y.size());
+  std::cout << "*****************************" << std::endl;
+}
+
 int main()
 {
   std::cout << "***** Introduction to Algorithms 3rd edition" << std::endl << std::endl;
@@ -291,6 +303,8 @@ int main()
   rbTreeUsage();
 
   cutRod();
+
+  longestCommonSubsequence();
 
 #ifdef WIN_MEMORY_LEAK_CHECKER
   _CrtDumpMemoryLeaks();

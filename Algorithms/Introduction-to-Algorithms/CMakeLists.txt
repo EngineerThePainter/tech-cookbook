@@ -8,6 +8,7 @@ data-structures/queue.hpp
 data-structures/rb_tree.hpp
 data-structures/stack.hpp
 dynamic-programming/cut_rod.hpp
+dynamic-programming/longest_common_subsequence.hpp
 divide-and-conquer/maximum_subarray.hpp
 heap/heap.hpp
 matrix/matrix_multiply.hpp
@@ -32,6 +33,7 @@ data-structures/src/queue.cpp
 data-structures/src/rb_tree.cpp
 data-structures/src/stack.cpp
 dynamic-programming/src/cut_rod.cpp
+dynamic-programming/src/longest_common_subsequence.cpp
 divide-and-conquer/src/maximum_subarray.cpp
 matrix/src/matrix_multiply.cpp
 searching/src/binary_search.cpp
