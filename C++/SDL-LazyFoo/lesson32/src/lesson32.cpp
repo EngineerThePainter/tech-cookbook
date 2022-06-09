@@ -19,11 +19,13 @@ namespace lesson32
 namespace
 {
 
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
+
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
 
 std::unique_ptr<Texture> texture;
-std::unique_ptr<Texture> background_texture;
 } // namespace
 
 bool init()
@@ -69,12 +71,6 @@ bool init()
           std::cerr << "Textures failed to create";
           success = false;
         }
-
-        background_texture = std::make_unique<Texture>(renderer);
-        if (background_texture == nullptr) {
-          std::cerr << "Background texture failed to load";
-          success = false;
-        }
       }
     }
   }
@@ -85,19 +81,10 @@ bool loadMedia()
 {
   bool success = true;
 
-  if (!texture->LoadFromFile("images/dot.png")) {
+  if (!texture->LoadTextFromfile("images/lazy.ttf")) {
     std::cerr << "Failed to load texturr, error: " << SDL_GetError() << std::endl;
     success = false;
   }
-  texture->SetWidth(Dot::DOT_WIDTH);
-  texture->SetHeight(Dot::DOT_HEIGHT);
-
-  if (!background_texture->LoadFromFile("images/scrolling_background.png")) {
-    std::cerr << "Failed to load background texture, error: " << SDL_GetError() << std::endl;
-    success = false;
-  }
-  background_texture->SetWidth(Dot::SCREEN_WIDTH);
-  background_texture->SetHeight(Dot::SCREEN_HEIGHT);
 
   return success;
 }
@@ -105,7 +92,6 @@ bool loadMedia()
 void close()
 {
   texture->DeallocateTexture();
-  background_texture->DeallocateTexture();
 
   SDL_DestroyRenderer(renderer);
   renderer = nullptr;
@@ -130,57 +116,58 @@ void lesson32()
       bool quit = false;
       SDL_Event e;
 
-      Dot dot(0, 0, *texture);
+      SDL_Color text_color = {0,0,0,0xFF};
 
-      // SDL_Rect camera = {0, 0, Dot::SCREEN_WIDTH, Dot::SCREEN_HEIGHT};
+      std::string inputText = "Some text";
+      texture->LoadFromRenderedText(inputText.c_str(), text_color);
 
-      int scrollingOffset = 0;
+      SDL_StartTextInput();
 
       while (!quit) {
-
+        bool renderText = false;
         while (SDL_PollEvent(&e) != 0) {
           if (e.type == SDL_QUIT) {
             quit = true;
+          } else if (e.type == SDL_KEYDOWN) {
+            // Handle backspace
+            if (e.key.keysym.sym == SDLK_BACKSPACE && inputText.length() > 0) {
+              inputText.pop_back();
+              renderText = true;
+            }// Handle copy 
+            else if (e.key.keysym.sym == SDLK_c && SDL_GetModState() & KMOD_CTRL) {
+              SDL_SetClipboardText(inputText.c_str());
+            }// Handle paste
+            else if (e.key.keysym.sym == SDLK_v && SDL_GetModState() & KMOD_CTRL) {
+              inputText = SDL_GetClipboardText();
+              renderText = true;
+            } 
+          }  // Special text input event
+          else if (e.type == SDL_TEXTINPUT) {
+              // Not copy or pasting
+              if( !( SDL_GetModState() & KMOD_CTRL && ( e.text.text[ 0 ] == 'c' || e.text.text[ 0 ] == 'C' || e.text.text[ 0 ] == 'v' || e.text.text[ 0 ] == 'V' ) ) ) {
+                  inputText += e.text.text;
+                  renderText = true;
+              }
+            }
+        }
+
+        if (renderText) {
+          if (inputText != "") {
+            texture->LoadFromRenderedText(inputText.c_str(), text_color);
+          } else {
+            texture->LoadFromRenderedText(" ", text_color);
           }
-
-          dot.handleEvent(e);
         }
-
-        dot.move();
-
-        --scrollingOffset;
-        if (scrollingOffset < -background_texture->GetWidth()) {
-          scrollingOffset = 0;
-        }
-
-        // // Center camera over the dot
-        // camera.x = (dot.getX() + Dot::DOT_WIDTH / 2) - Dot::SCREEN_WIDTH / 2;
-        // camera.y = (dot.getY() + Dot::DOT_HEIGHT / 2) - Dot::SCREEN_HEIGHT / 2;
-
-        // // Keep camera in bounds
-        // if (camera.x < 0) {
-        //   camera.x = 0;
-        // }
-        // if (camera.y < 0) {
-        //   camera.y = 0;
-        // }
-        // if (camera.x > Dot::LEVEL_WIDTH - camera.w) {
-        //   camera.x = Dot::LEVEL_WIDTH - camera.w;
-        // }
-        // if (camera.y > Dot::LEVEL_HEIGHT - camera.h) {
-        //   camera.y = Dot::LEVEL_HEIGHT - camera.h;
-        // }
 
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
 
-        background_texture->Render(scrollingOffset, 0);
-        background_texture->Render(scrollingOffset + background_texture->GetWidth(), 0);
-
-        dot.render();
+        texture->Render( ( SCREEN_WIDTH - texture->GetWidth() ) / 2, texture->GetHeight() );
 
         SDL_RenderPresent(renderer);
       }
+
+      SDL_StopTextInput();
       close();
     }
   }
