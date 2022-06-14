@@ -33,6 +33,7 @@
 #include <lesson31/lesson31.hpp>
 #include <lesson32/lesson32.hpp>
 #include <lesson33/lesson33.hpp>
+#include <lesson38/lesson38.hpp>
 
 int main(int argc, char* args[])
 {
@@ -132,7 +133,10 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson32::lesson32();
 
   // File Reading and Writing
-  sdl_lazyfoo::lesson33::lesson33();
+  // sdl_lazyfoo::lesson33::lesson33();
+
+  // Particle Engines
+  sdl_lazyfoo::lesson38::lesson38();
 
   return 0;
 }
