@@ -4,12 +4,14 @@ set(HEADERS
 include/lesson38/circle.hpp
 include/lesson38/dot.hpp
 include/lesson38/lesson38.hpp
+include/lesson38/particle.hpp
 include/lesson38/texture.hpp
 include/lesson38/timer.hpp)
 
 set(SOURCES
 src/dot.cpp
 src/lesson38.cpp
+src/particle.cpp
 src/texture.cpp
 src/timer.cpp)
 
