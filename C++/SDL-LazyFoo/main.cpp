@@ -32,6 +32,7 @@
 #include <lesson30/lesson30.hpp>
 #include <lesson31/lesson31.hpp>
 #include <lesson32/lesson32.hpp>
+#include <lesson33/lesson33.hpp>
 
 int main(int argc, char* args[])
 {
@@ -128,7 +129,10 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson31::lesson31();
 
   // Text Input and Clipboard Handling
-  sdl_lazyfoo::lesson32::lesson32();
+  // sdl_lazyfoo::lesson32::lesson32();
+
+  // File Reading and Writing
+  sdl_lazyfoo::lesson33::lesson33();
 
   return 0;
 }
