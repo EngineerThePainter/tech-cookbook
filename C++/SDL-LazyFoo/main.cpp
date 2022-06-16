@@ -26,6 +26,13 @@
 #include <lesson24/lesson24.hpp>
 #include <lesson25/lesson25.hpp>
 #include <lesson26/lesson26.hpp>
+#include <lesson27/lesson27.hpp>
+#include <lesson28/lesson28.hpp>
+#include <lesson29/lesson29.hpp>
+#include <lesson30/lesson30.hpp>
+#include <lesson31/lesson31.hpp>
+#include <lesson32/lesson32.hpp>
+#include <lesson33/lesson33.hpp>
 
 int main(int argc, char* args[])
 {
@@ -104,7 +111,28 @@ int main(int argc, char* args[])
   // sdl_lazyfoo::lesson25::lesson25();
 
   // Motion
-  sdl_lazyfoo::lesson26::lesson26();
+  // sdl_lazyfoo::lesson26::lesson26();
+
+  // Collision detection
+  // sdl_lazyfoo::lesson27::lesson27();
+
+  // Per pixel collision detection
+  // sdl_lazyfoo::lesson28::lesson28();
+
+  // Circular collision detection
+  // sdl_lazyfoo::lesson29::lesson29();
+
+  // Scrolling
+  // sdl_lazyfoo::lesson30::lesson30();
+
+  // Scrolling Backgrounds
+  // sdl_lazyfoo::lesson31::lesson31();
+
+  // Text Input and Clipboard Handling
+  // sdl_lazyfoo::lesson32::lesson32();
+
+  // File Reading and Writing
+  sdl_lazyfoo::lesson33::lesson33();
 
   return 0;
 }
