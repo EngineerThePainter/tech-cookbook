@@ -107,6 +107,58 @@ public class ReactorMain {
             atomicLong -> System.out.println("State: " + atomicLong)
         );
         consumerGenerate.subscribe(s -> System.out.println(s));
+
+        message("Flux::create");
+        EventObserver fluxCreateObserver = new EventObserver();
+        Flux<String> bridge = Flux.create(
+          stringFluxSink -> {
+              fluxCreateObserver.register(new EventListener<String>() {
+                  @Override
+                  public void onNewData(String data) {
+                      System.out.println("OnNewData: " + data);
+                      stringFluxSink.next(data);
+                  }
+
+                  @Override
+                  public void onDone() {
+                      System.out.println("OnDone");
+                      stringFluxSink.complete();
+                  }
+              });
+          }
+        );
+        bridge.subscribe();
+        fluxCreateObserver.addData("Data");
+        fluxCreateObserver.addData("is");
+        fluxCreateObserver.addData("fun");
+        fluxCreateObserver.done();
+
+
+        message("Flux::Push");
+        EventObserver fluxPushObserver = new EventObserver();
+        Flux<String> pushBridge = Flux.create(
+            stringFluxSink -> {
+                fluxPushObserver.register(new EventListener<String>() {
+                    @Override
+                    public void onNewData(String data) {
+                        System.out.println("OnNewData: " + data);
+                        stringFluxSink.next(data);
+                    }
+
+                    @Override
+                    public void onDone() {
+                        System.out.println("OnDone");
+                        stringFluxSink.complete();
+                    }
+                });
+            }
+        );
+        pushBridge.subscribe();
+        fluxPushObserver.addData("Data");
+        fluxPushObserver.addData("is");
+        fluxPushObserver.addData("fun");
+        fluxPushObserver.done();
+
     }
 
     static void message(String m) {
