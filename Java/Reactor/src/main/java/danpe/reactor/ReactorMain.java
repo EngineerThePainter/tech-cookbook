@@ -3,12 +3,15 @@ package danpe.reactor;
 import org.reactivestreams.Subscription;
 import reactor.core.publisher.BaseSubscriber;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 public class ReactorMain {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         System.out.println("Hello Reactor");
 
         message("Subscribe with lambda");
@@ -159,6 +162,27 @@ public class ReactorMain {
         fluxPushObserver.addData("fun");
         fluxPushObserver.done();
 
+        message("Mono on separate thread");
+        final Mono<String> threadMono = Mono.just("Hello");
+        Thread t = new Thread(() -> threadMono
+            .map(s -> s + " thread: ")
+            .subscribe(s -> System.out.println(s + Thread.currentThread().getName()))
+        );
+        t.start();
+        t.join();
+
+        message("FLux::publishOn");
+        Scheduler publishOnScheduler = Schedulers.newParallel("publish-parallel-scheduler", 4);
+        final Flux<String> publishOnFlux = Flux
+            .range(1, 2)
+            .map(integer -> 10+integer)
+            .publishOn(publishOnScheduler)
+            .map(integer -> "value " + integer);
+        Thread publishOnThread = new Thread(() -> publishOnFlux.subscribe(System.out::println,
+            throwable -> System.out.println("Error"),
+            () -> publishOnScheduler.dispose()));
+        publishOnThread.start();
+        publishOnThread.join();
     }
 
     static void message(String m) {
