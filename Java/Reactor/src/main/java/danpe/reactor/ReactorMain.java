@@ -177,12 +177,27 @@ public class ReactorMain {
             .range(1, 2)
             .map(integer -> 10+integer)
             .publishOn(publishOnScheduler)
-            .map(integer -> "value " + integer);
+            .map(integer -> "publishOn value " + integer);
         Thread publishOnThread = new Thread(() -> publishOnFlux.subscribe(System.out::println,
             throwable -> System.out.println("Error"),
             () -> publishOnScheduler.dispose()));
         publishOnThread.start();
         publishOnThread.join();
+
+        message("Flux::subscribeOn");
+        Scheduler subscribeOnScheduler = Schedulers.newParallel("subscribe-parallel-scheduler", 4);
+        final Flux<String> subscribeOnFlux = Flux
+            .range(1,2)
+            .map(integer -> 10 + integer)
+            .subscribeOn(subscribeOnScheduler)
+            .map(integer -> "subscribeOn value " + integer);
+        Thread subscribeOnThread = new Thread(() -> subscribeOnFlux.subscribe(System.out::println,
+            throwable -> System.out.println("Error"),
+            () -> subscribeOnScheduler.dispose()));
+        subscribeOnThread.start();
+        subscribeOnThread.join();
+
+
     }
 
     static void message(String m) {
