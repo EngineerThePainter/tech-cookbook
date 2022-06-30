@@ -1,14 +1,14 @@
 from conans import ConanFile, CMake
 
-class OpenGLExpertBook(ConanFile):
+class LearnOpenGL(ConanFile):
   settings = "os", "compiler", "build_type", "arch", "arch_build"
    
   generators = "cmake"
 
   requires = [
-    ("sdl/2.0.20"),
-    ("sdl_image/2.0.5"),
     ("opengl/system"),
+    ("glad/0.1.35"),
+    ("glfw/3.3.7"),
     ("glew/2.2.0")
     ]
 
