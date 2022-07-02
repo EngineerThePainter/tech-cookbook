@@ -1,4 +1,4 @@
-#include "hello_triangle.hpp"
+#include "hello_triangle_two_triangles_different_buffers.hpp"
 
 #include <iostream>
 
@@ -25,29 +25,6 @@ void processInput(GLFWwindow* window)
   }
 }
 
-struct Buffers {
-  // Vertex Array Object
-  GLuint VAO;
-  // Vertex Buffer Object
-  GLuint VBO;
-  // Element Buffer Object
-  GLuint EBO;
-
-  void GenerateBuffers(GLsizei n)
-  {
-    glGenVertexArrays(n, &VAO);
-    glGenBuffers(n, &VBO);
-    glGenBuffers(n, &EBO);
-  }
-
-  void BindBuffers()
-  {
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-  }
-};
-
 void initialize(const int majorVersion, const int minorVersion)
 {
   glfwInit();
@@ -62,7 +39,7 @@ void destroy() { glfwTerminate(); }
 
 } // namespace
 
-int helloTriangle()
+int helloTriangleTwoTrianglesDifferentBuffers()
 {
   initialize(3, 3);
 
@@ -86,25 +63,37 @@ int helloTriangle()
   // Adjust the viewport in case if the window will be resized
   glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 
-  const float vertices[] = {0.5f, 0.5f, 0.0f,
-                            //
-                            0.5f, -0.5f, 0.0f,
-                            //
-                            -0.5f, -0.5f, 0.0f,
-                            //
-                            -0.5f, 0.5f, 0.0f};
+  const float left_triangle[] = {-0.5f, 0.0f, 0.0f,
+                                 //
+                                 -0.25f, 0.5f, 0.0f,
+                                 //
+                                 0.0f, 0.0f, 0.0f};
+  const float right_triangle[] = {0.0f, 0.0f, 0.0f,
+                                  //
+                                  0.25f, 0.5f, 0.0f,
+                                  //
+                                  0.5f, 0.0f, 0.0f};
 
-  GLuint indices[] = {0, 1, 3,
-                      //
-                      1, 2, 3};
+  // Vertex Array Object
+  GLuint VAO[2];
+  // Vertex Buffer Object
+  GLuint VBO[2];
+  // Let's have two different buffers
+  glGenVertexArrays(2, VAO);
+  glGenBuffers(2, VBO);
 
-  Buffers buffers;
-  buffers.GenerateBuffers(1);
-  buffers.BindBuffers();
+  glBindVertexArray(VAO[0]);
+  glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(left_triangle), left_triangle, GL_STATIC_DRAW);
+  // In both pointers we could change the stride to 0
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+  glEnableVertexAttribArray(0);
 
-  // Now any assignement to the ARRAY_BUFFER will be available over VBO
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+  glBindVertexArray(VAO[1]);
+  glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(right_triangle), right_triangle, GL_STATIC_DRAW);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+  glEnableVertexAttribArray(0);
 
   const char* vertexShaderSource =
       R"shader(
@@ -171,10 +160,13 @@ int helloTriangle()
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(shaderProgram);
-    glBindVertexArray(buffers.VAO);
 
-    // glDrawArrays(GL_TRIANGLES, 0, 3);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(VAO[0]);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+
+    glBindVertexArray(VAO[1]);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     glfwSwapBuffers(window);
     glfwPollEvents();

@@ -1,4 +1,4 @@
-#include "hello_triangle.hpp"
+#include "hello_triangle_two_triangles.hpp"
 
 #include <iostream>
 
@@ -62,7 +62,7 @@ void destroy() { glfwTerminate(); }
 
 } // namespace
 
-int helloTriangle()
+int helloTriangleTwoTriangles()
 {
   initialize(3, 3);
 
@@ -86,13 +86,17 @@ int helloTriangle()
   // Adjust the viewport in case if the window will be resized
   glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 
-  const float vertices[] = {0.5f, 0.5f, 0.0f,
+  const float vertices[] = {-0.5f, 0.0f, 0.0f,
                             //
-                            0.5f, -0.5f, 0.0f,
+                            -0.25f, 0.5f, 0.0f,
                             //
-                            -0.5f, -0.5f, 0.0f,
+                            0.0f, 0.0f, 0.0f,
                             //
-                            -0.5f, 0.5f, 0.0f};
+                            0.0f, 0.0f, 0.0f,
+                            //
+                            0.25f, 0.5f, 0.0f,
+                            //
+                            0.5f, 0.0f, 0.0f};
 
   GLuint indices[] = {0, 1, 3,
                       //
@@ -173,8 +177,8 @@ int helloTriangle()
     glUseProgram(shaderProgram);
     glBindVertexArray(buffers.VAO);
 
-    // glDrawArrays(GL_TRIANGLES, 0, 3);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     glfwSwapBuffers(window);
     glfwPollEvents();
