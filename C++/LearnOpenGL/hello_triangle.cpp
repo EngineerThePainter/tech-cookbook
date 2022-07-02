@@ -13,7 +13,10 @@
 
 namespace
 {
-void framebufferSizeCallback(GLFWwindow* window, int width, int height) { glViewport(0, 0, width, height); }
+constexpr int SCREEN_WIDTH = 800;
+constexpr int SCREEN_HEIGHT = 600;
+
+void framebufferSizeCallback(GLFWwindow* /*window*/, int width, int height) { glViewport(0, 0, width, height); }
 
 void processInput(GLFWwindow* window)
 {
@@ -21,22 +24,53 @@ void processInput(GLFWwindow* window)
     glfwSetWindowShouldClose(window, true);
   }
 }
+
+struct Buffers {
+  // Vertex Array Object
+  GLuint VAO;
+  // Vertex Buffer Object
+  GLuint VBO;
+  // Element Buffer Object
+  GLuint EBO;
+
+  void GenerateBuffers(GLsizei n)
+  {
+    glGenVertexArrays(n, &VAO);
+    glGenBuffers(n, &VBO);
+    glGenBuffers(n, &EBO);
+  }
+
+  void BindBuffers()
+  {
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+  }
+};
+
+void initialize(const int majorVersion, const int minorVersion)
+{
+  glfwInit();
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, majorVersion);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minorVersion);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  // Required on MacOS
+  // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+}
+
+void destroy() { glfwTerminate(); }
+
 } // namespace
 
 int helloTriangle()
 {
 
-  glfwInit();
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  // Required on MacOS
-  // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+  initialize(3, 3);
 
-  GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
+  GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "LearnOpenGL", nullptr, nullptr);
   if (window == nullptr) {
     std::cout << "Failed to create GLFW window\n";
-    glfwTerminate();
+    destroy();
     return -1;
   }
   glfwMakeContextCurrent(window);
@@ -49,7 +83,8 @@ int helloTriangle()
   }
 
   // Tell the OpenGL the size of the rendering window
-  glViewport(0, 0, 800, 600);
+  glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+  // Adjust the viewport in case if the window will be resized
   glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 
   const float vertices[] = {0.5f, 0.5f, 0.0f,
@@ -64,22 +99,12 @@ int helloTriangle()
                       //
                       1, 2, 3};
 
-  // Vertex Array Object
-  GLuint VAO;
-  glGenVertexArrays(1, &VAO);
-  glBindVertexArray(VAO);
-  // Vertex buffer object
-  GLuint VBO;
-  // Generate buffer and assign it to the VBO
-  glGenBuffers(1, &VBO);
-  // Bind VBO to ARRAY_BUFFER
-  glBindBuffer(GL_ARRAY_BUFFER, VBO);
+  Buffers buffers;
+  buffers.GenerateBuffers(1);
+  buffers.BindBuffers();
+
   // Now any assignement to the ARRAY_BUFFER will be available over VBO
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-  GLuint EBO;
-  glGenBuffers(1, &EBO);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
   const char* vertexShaderSource =
@@ -147,14 +172,16 @@ int helloTriangle()
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(shaderProgram);
-    glBindVertexArray(VAO);
+    glBindVertexArray(buffers.VAO);
+
+    // glDrawArrays(GL_TRIANGLES, 0, 3);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     glfwSwapBuffers(window);
     glfwPollEvents();
   }
 
-  glfwTerminate();
+  destroy();
 
   return 0;
 }
