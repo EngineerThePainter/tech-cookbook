@@ -1,6 +1,7 @@
 #include "hello_triangle.hpp"
 #include "hello_triangle_two_triangles.hpp"
 #include "hello_triangle_two_triangles_different_buffers.hpp"
+#include "hello_triangle_two_triangles_different_shaders.hpp"
 
 int main(int argc, const char* argv[])
 {
@@ -8,6 +9,7 @@ int main(int argc, const char* argv[])
   return_value = helloTriangle();
   return_value = helloTriangleTwoTriangles();
   return_value = helloTriangleTwoTrianglesDifferentBuffers();
+  return_value = helloTriangleTwoTrianglesDifferentShaders();
 
   return return_value;
 }
