@@ -1,4 +1,3 @@
-from importlib.metadata import requires
 from conans import ConanFile, CMake
 
 class SDLLazyFoo(ConanFile):
@@ -6,7 +5,7 @@ class SDLLazyFoo(ConanFile):
    
   generators = "cmake"
 
-  requires = [("sdl/2.0.18"), ("sdl_image/2.0.5"), ("sdl_ttf/2.0.18")]
+  requires = [("sdl/2.0.20"), ("sdl_image/2.0.5"), ("sdl_ttf/2.0.18")]
 
   default_options = {
     "sdl:shared": True
