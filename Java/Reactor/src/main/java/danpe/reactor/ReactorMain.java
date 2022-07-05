@@ -7,7 +7,9 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Function;
 
 public class ReactorMain {
 
@@ -197,7 +199,15 @@ public class ReactorMain {
         subscribeOnThread.start();
         subscribeOnThread.join();
 
+        message("Flux::transform");
+        Function<Flux<String>, Flux<String>> transformFlux =
+            f -> f.filter(color -> !color.equals("orange"))
+                .map(String::toUpperCase);
 
+        Flux.fromIterable(Arrays.asList("blue", "green", "orange", "purple"))
+            .doOnNext(System.out::println)
+            .transform(transformFlux)
+            .subscribe(d -> System.out.println("Subscriber to Transformed MapAndFilter: "+d));
     }
 
     static void message(String m) {
