@@ -29,8 +29,6 @@ int main(int argc, const char* argv[])
   return_value = helloTriangleTwoTrianglesDifferentBuffers();
   return_value = helloTriangleTwoTrianglesDifferentShaders();
 
-  int* i = new int[2];
-
 #ifdef WIN_MEMORY_LEAK_CHECKER
   _CrtDumpMemoryLeaks();
   getchar();
