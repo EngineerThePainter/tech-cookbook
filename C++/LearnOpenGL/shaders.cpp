@@ -71,24 +71,25 @@ void checkShaderCompilation(GLuint shader)
 //           }
 //       )fragment";
 
-const char* vertexShaderSource =
-    R"shader(
-        #version 330 core
-        layout(location = 0) in vec3 aPos;
-        void main() {
-          gl_Position = vec4(aPos, 1.0);
-        }
-      )shader";
+// Shaders for making the changing color triangle
+// const char* vertexShaderSource =
+//     R"shader(
+//         #version 330 core
+//         layout(location = 0) in vec3 aPos;
+//         void main() {
+//           gl_Position = vec4(aPos, 1.0);
+//         }
+//       )shader";
 
-const char* fragmentShaderSource =
-    R"fragment(
-        #version 330 core
-        out vec4 FragColor;
-        uniform vec4 ourcolor;
-        void main() {
-          FragColor = ourcolor;
-          }
-      )fragment";
+// const char* fragmentShaderSource =
+//     R"fragment(
+//         #version 330 core
+//         out vec4 FragColor;
+//         uniform vec4 ourcolor;
+//         void main() {
+//           FragColor = ourcolor;
+//           }
+//       )fragment";
 
 } // namespace
 
@@ -173,11 +174,11 @@ int shaders()
 
     glUseProgram(shaderProgram);
 
-    float timeValue = glfwGetTime();
-    float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
-    int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourcolor");
-
-    glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+    // Code for making the triangle to change the color over time
+    // float timeValue = glfwGetTime();
+    // float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
+    // int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourcolor");
+    // glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
