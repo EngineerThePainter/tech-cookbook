@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#ifdef _WIN32 | _WIN64
+#ifdef _WIN32
 #include <windows.h>
 #endif
 
@@ -57,7 +57,7 @@ const char* vertexShaderSource =
         }
       )shader";
 
-const char* yellowShaderSource =
+const char* fragmentShaderSource =
     R"yellow(
         #version 330 core
         out vec4 FragColor;
@@ -148,7 +148,7 @@ int helloTriangleTwoTrianglesDifferentShaders()
 
   GLuint yellowShader;
   yellowShader = glCreateShader(GL_FRAGMENT_SHADER);
-  glShaderSource(yellowShader, 1, &yellowShaderSource, nullptr);
+  glShaderSource(yellowShader, 1, &fragmentShaderSource, nullptr);
   glCompileShader(yellowShader);
   checkShaderCompilation(yellowShader);
 

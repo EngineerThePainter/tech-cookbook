@@ -2,12 +2,12 @@
 #include "hello_triangle_two_triangles.hpp"
 #include "hello_triangle_two_triangles_different_buffers.hpp"
 #include "hello_triangle_two_triangles_different_shaders.hpp"
+#include "shaders.hpp"
 
 #ifdef _DEBUG
 #ifdef _WIN32
 #define WIN_MEMORY_LEAK_CHECKER
 #define _CRTDBG_MAP_ALLOC
-#include <cstdio>
 #include <stdlib.h>
 
 #include <crtdbg.h>
@@ -24,14 +24,14 @@ int main(int argc, const char* argv[])
 #endif
 
   int return_value = 0;
-  return_value = helloTriangle();
-  return_value = helloTriangleTwoTriangles();
-  return_value = helloTriangleTwoTrianglesDifferentBuffers();
-  return_value = helloTriangleTwoTrianglesDifferentShaders();
+  // return_value = helloTriangle();
+  // return_value = helloTriangleTwoTriangles();
+  // return_value = helloTriangleTwoTrianglesDifferentBuffers();
+  // return_value = helloTriangleTwoTrianglesDifferentShaders();
+  return_value = shaders();
 
 #ifdef WIN_MEMORY_LEAK_CHECKER
   _CrtDumpMemoryLeaks();
-  getchar();
 #endif // WIN_MEMORY_LEAK_CHECKER
 
   return return_value;
