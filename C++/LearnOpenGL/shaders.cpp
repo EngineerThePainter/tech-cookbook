@@ -91,6 +91,30 @@ void checkShaderCompilation(GLuint shader)
 //           }
 //       )fragment";
 
+// Shaders for making vertices with extra attributes
+const char* vertexShaderSource =
+    R"shader(
+        #version 330 core
+        layout(location = 0) in vec3 aPos;
+        layout(location = 1) in vec3 aColor;
+
+        out vec3 ourColor;
+        void main() {
+          gl_Position = vec4(aPos, 1.0);
+          ourColor = aColor;
+        }
+      )shader";
+
+const char* fragmentShaderSource =
+    R"fragment(
+        #version 330 core
+        out vec4 FragColor;
+        in vec3 ourColor;
+        void main() {
+          FragColor = vec4(ourColor, 1.0f);
+          }
+      )fragment";
+
 } // namespace
 
 int shaders()
@@ -117,11 +141,19 @@ int shaders()
   // Adjust the viewport in case if the window will be resized
   glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 
-  const float triangle[] = {-0.5f, -0.5f, 0.0f,
+  // Triangle used for first shaders and changing color triangle
+  // const float triangle[] = {-0.5f, -0.5f, 0.0f,
+  //                           //
+  //                           0.0f, 0.5f, 0.0f,
+  //                           //
+  //                           0.5f, -0.5f, 0.0f};
+
+  const float triangle[] = {// Position          // Color
+                            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
                             //
-                            0.0f, 0.5f, 0.0f,
+                            0.0f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
                             //
-                            0.5f, -0.5f, 0.0f};
+                            0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f};
 
   // Vertex Array Object
   GLuint VAO;
@@ -134,9 +166,15 @@ int shaders()
   glBindVertexArray(VAO);
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(triangle), triangle, GL_STATIC_DRAW);
-  // In both pointers we could change the stride to 0
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+  // Attributes when the traingle was just vertices
+  // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+  // glEnableVertexAttribArray(0);
+
+  // Attribtues when triangle contain both position and color
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
   glEnableVertexAttribArray(0);
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+  glEnableVertexAttribArray(1);
 
   GLuint vertexShader;
   vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -160,16 +198,11 @@ int shaders()
   glDeleteShader(vertexShader);
   glDeleteShader(fragmentShader);
 
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-  glEnableVertexAttribArray(0);
-
-  glBindVertexArray(0);
-
   while (!glfwWindowShouldClose(window)) {
     processInput(window);
 
     // rendering happens here
-    glClearColor(0.1f, 0.1f, 0.8f, 1.0f);
+    glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(shaderProgram);
