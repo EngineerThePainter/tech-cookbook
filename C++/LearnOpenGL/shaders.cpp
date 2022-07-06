@@ -48,14 +48,35 @@ void checkShaderCompilation(GLuint shader)
   }
 }
 
+// Commented to show how vertex and fragment shader looks like when
+// sending the color from one to another.
+// const char* vertexShaderSource =
+//     R"shader(
+//         #version 330 core
+//         layout(location = 0) in vec3 aPos;
+//         out vec4 vertexColor;
+//         void main() {
+//           gl_Position = vec4(aPos, 1.0);
+//           vertexColor = vec4(0.5, 0.0, 0.0, 1.0);
+//         }
+//       )shader";
+
+// const char* fragmentShaderSource =
+//     R"fragment(
+//         #version 330 core
+//         out vec4 FragColor;
+//         in vec4 vertexColor;
+//         void main() {
+//           FragColor = vertexColor;
+//           }
+//       )fragment";
+
 const char* vertexShaderSource =
     R"shader(
         #version 330 core
         layout(location = 0) in vec3 aPos;
-        out vec4 vertexColor;
         void main() {
           gl_Position = vec4(aPos, 1.0);
-          vertexColor = vec4(0.5, 0.0, 0.0, 1.0);
         }
       )shader";
 
@@ -63,9 +84,9 @@ const char* fragmentShaderSource =
     R"fragment(
         #version 330 core
         out vec4 FragColor;
-        in vec4 vertexColor;
+        uniform vec4 ourcolor;
         void main() {
-          FragColor = vertexColor;
+          FragColor = ourcolor;
           }
       )fragment";
 
@@ -152,10 +173,15 @@ int shaders()
 
     glUseProgram(shaderProgram);
 
+    float timeValue = glfwGetTime();
+    float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
+    int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourcolor");
+
+    glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
     // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     glfwSwapBuffers(window);
