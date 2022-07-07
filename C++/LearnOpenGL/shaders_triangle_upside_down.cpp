@@ -1,4 +1,4 @@
-#include "shaders.hpp"
+#include "shaders_triangle_upside_down.hpp"
 
 #include <iostream>
 
@@ -117,7 +117,7 @@ const char* fragmentShaderSource =
 
 } // namespace
 
-int shaders()
+int shadersTriangleUpsideDown()
 {
   initialize(3, 3);
 
@@ -149,11 +149,11 @@ int shaders()
   //                           0.5f, -0.5f, 0.0f};
 
   const float triangle[] = {// Position          // Color
-                            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+                            -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
                             //
-                            0.0f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+                            0.0f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
                             //
-                            0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f};
+                            0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f};
 
   // Vertex Array Object
   GLuint VAO;

@@ -48,60 +48,16 @@ void checkShaderCompilation(GLuint shader)
   }
 }
 
-// Commented to show how vertex and fragment shader looks like when
-// sending the color from one to another.
-// const char* vertexShaderSource =
-//     R"shader(
-//         #version 330 core
-//         layout(location = 0) in vec3 aPos;
-//         out vec4 vertexColor;
-//         void main() {
-//           gl_Position = vec4(aPos, 1.0);
-//           vertexColor = vec4(0.5, 0.0, 0.0, 1.0);
-//         }
-//       )shader";
-
-// const char* fragmentShaderSource =
-//     R"fragment(
-//         #version 330 core
-//         out vec4 FragColor;
-//         in vec4 vertexColor;
-//         void main() {
-//           FragColor = vertexColor;
-//           }
-//       )fragment";
-
-// Shaders for making the changing color triangle
-// const char* vertexShaderSource =
-//     R"shader(
-//         #version 330 core
-//         layout(location = 0) in vec3 aPos;
-//         void main() {
-//           gl_Position = vec4(aPos, 1.0);
-//         }
-//       )shader";
-
-// const char* fragmentShaderSource =
-//     R"fragment(
-//         #version 330 core
-//         out vec4 FragColor;
-//         uniform vec4 ourcolor;
-//         void main() {
-//           FragColor = ourcolor;
-//           }
-//       )fragment";
-
 // Shaders for making vertices with extra attributes
 const char* vertexShaderSource =
     R"shader(
         #version 330 core
         layout(location = 0) in vec3 aPos;
-        layout(location = 1) in vec3 aColor;
 
         out vec3 ourColor;
         void main() {
           gl_Position = vec4(aPos, 1.0);
-          ourColor = aColor;
+          ourColor = aPos;
         }
       )shader";
 
@@ -117,7 +73,7 @@ const char* fragmentShaderSource =
 
 } // namespace
 
-int shaders()
+int shadersColorAsPosition()
 {
   initialize(3, 3);
 
@@ -141,19 +97,13 @@ int shaders()
   // Adjust the viewport in case if the window will be resized
   glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 
-  // Triangle used for first shaders and changing color triangle
-  // const float triangle[] = {-0.5f, -0.5f, 0.0f,
-  //                           //
-  //                           0.0f, 0.5f, 0.0f,
-  //                           //
-  //                           0.5f, -0.5f, 0.0f};
-
-  const float triangle[] = {// Position          // Color
-                            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+  // Left vertex is black as fragment shader clamps negative values to the 0.0f
+  const float triangle[] = {// Position
+                            -0.5f, -0.5f, 0.0f,
                             //
-                            0.0f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+                            0.0f, 0.5f, 0.0f,
                             //
-                            0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f};
+                            0.5f, -0.5f, 0.0f};
 
   // Vertex Array Object
   GLuint VAO;
@@ -171,11 +121,9 @@ int shaders()
   // glEnableVertexAttribArray(0);
 
   // Attribtues when triangle contain both position and color
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
   glEnableVertexAttribArray(0);
   // Offset need to be adjusted, as the color starts after first three elements in array
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-  glEnableVertexAttribArray(1);
 
   GLuint vertexShader;
   vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -207,12 +155,6 @@ int shaders()
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(shaderProgram);
-
-    // Code for making the triangle to change the color over time
-    // float timeValue = glfwGetTime();
-    // float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
-    // int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourcolor");
-    // glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);

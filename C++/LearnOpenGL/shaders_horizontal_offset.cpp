@@ -1,4 +1,4 @@
-#include "shaders.hpp"
+#include "shaders_horizontal_offset.hpp"
 
 #include <iostream>
 
@@ -48,59 +48,16 @@ void checkShaderCompilation(GLuint shader)
   }
 }
 
-// Commented to show how vertex and fragment shader looks like when
-// sending the color from one to another.
-// const char* vertexShaderSource =
-//     R"shader(
-//         #version 330 core
-//         layout(location = 0) in vec3 aPos;
-//         out vec4 vertexColor;
-//         void main() {
-//           gl_Position = vec4(aPos, 1.0);
-//           vertexColor = vec4(0.5, 0.0, 0.0, 1.0);
-//         }
-//       )shader";
-
-// const char* fragmentShaderSource =
-//     R"fragment(
-//         #version 330 core
-//         out vec4 FragColor;
-//         in vec4 vertexColor;
-//         void main() {
-//           FragColor = vertexColor;
-//           }
-//       )fragment";
-
-// Shaders for making the changing color triangle
-// const char* vertexShaderSource =
-//     R"shader(
-//         #version 330 core
-//         layout(location = 0) in vec3 aPos;
-//         void main() {
-//           gl_Position = vec4(aPos, 1.0);
-//         }
-//       )shader";
-
-// const char* fragmentShaderSource =
-//     R"fragment(
-//         #version 330 core
-//         out vec4 FragColor;
-//         uniform vec4 ourcolor;
-//         void main() {
-//           FragColor = ourcolor;
-//           }
-//       )fragment";
-
 // Shaders for making vertices with extra attributes
 const char* vertexShaderSource =
     R"shader(
         #version 330 core
         layout(location = 0) in vec3 aPos;
         layout(location = 1) in vec3 aColor;
-
+        uniform float offset;
         out vec3 ourColor;
         void main() {
-          gl_Position = vec4(aPos, 1.0);
+          gl_Position = vec4(aPos.x + offset, aPos.y, aPos.z, 1.0);
           ourColor = aColor;
         }
       )shader";
@@ -117,7 +74,7 @@ const char* fragmentShaderSource =
 
 } // namespace
 
-int shaders()
+int shadersHorizontalOffset()
 {
   initialize(3, 3);
 
@@ -211,8 +168,10 @@ int shaders()
     // Code for making the triangle to change the color over time
     // float timeValue = glfwGetTime();
     // float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
-    // int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourcolor");
-    // glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+
+    float offset = 0.45f;
+    int vertexOffsetLocation = glGetUniformLocation(shaderProgram, "offset");
+    glUniform1f(vertexOffsetLocation, offset);
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);

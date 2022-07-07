@@ -3,6 +3,9 @@
 #include "hello_triangle_two_triangles_different_buffers.hpp"
 #include "hello_triangle_two_triangles_different_shaders.hpp"
 #include "shaders.hpp"
+#include "shaders_color_as_position.hpp"
+#include "shaders_horizontal_offset.hpp"
+#include "shaders_triangle_upside_down.hpp"
 
 #ifdef _DEBUG
 #ifdef _WIN32
@@ -24,11 +27,14 @@ int main(int argc, const char* argv[])
 #endif
 
   int return_value = 0;
-  // return_value = helloTriangle();
-  // return_value = helloTriangleTwoTriangles();
-  // return_value = helloTriangleTwoTrianglesDifferentBuffers();
-  // return_value = helloTriangleTwoTrianglesDifferentShaders();
+  return_value = helloTriangle();
+  return_value = helloTriangleTwoTriangles();
+  return_value = helloTriangleTwoTrianglesDifferentBuffers();
+  return_value = helloTriangleTwoTrianglesDifferentShaders();
   return_value = shaders();
+  return_value = shadersTriangleUpsideDown();
+  return_value = shadersHorizontalOffset();
+  return_value = shadersColorAsPosition();
 
 #ifdef WIN_MEMORY_LEAK_CHECKER
   _CrtDumpMemoryLeaks();

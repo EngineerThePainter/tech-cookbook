@@ -17,6 +17,9 @@ hello_triangle_two_triangles.hpp
 hello_triangle_two_triangles_different_buffers.hpp
 hello_triangle_two_triangles_different_shaders.hpp
 shaders.hpp
+shaders_triangle_upside_down.hpp
+shaders_horizontal_offset.hpp
+shaders_color_as_position.hpp
 )
 
 set(SOURCES
@@ -25,6 +28,9 @@ hello_triangle_two_triangles.cpp
 hello_triangle_two_triangles_different_buffers.cpp
 hello_triangle_two_triangles_different_shaders.cpp
 shaders.cpp
+shaders_triangle_upside_down.cpp
+shaders_horizontal_offset.cpp
+shaders_color_as_position.cpp
 )
 
 add_executable(${PROJECT_NAME} main.cpp ${HEADERS} ${SOURCES})
