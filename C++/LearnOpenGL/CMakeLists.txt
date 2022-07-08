@@ -20,6 +20,7 @@ shaders.hpp
 shaders_triangle_upside_down.hpp
 shaders_horizontal_offset.hpp
 shaders_color_as_position.hpp
+textures.hpp
 )
 
 set(SOURCES
@@ -31,6 +32,7 @@ shaders.cpp
 shaders_triangle_upside_down.cpp
 shaders_horizontal_offset.cpp
 shaders_color_as_position.cpp
+textures.cpp
 )
 
 add_executable(${PROJECT_NAME} main.cpp ${HEADERS} ${SOURCES})
@@ -39,3 +41,6 @@ target_link_libraries(${PROJECT_NAME}
 PUBLIC
 ${CONAN_TARGETS}
 )
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD 
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/images/ ${CMAKE_BINARY_DIR}/bin/images/)

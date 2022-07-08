@@ -6,6 +6,7 @@
 #include "shaders_color_as_position.hpp"
 #include "shaders_horizontal_offset.hpp"
 #include "shaders_triangle_upside_down.hpp"
+#include "textures.hpp"
 
 #ifdef _DEBUG
 #ifdef _WIN32
@@ -35,6 +36,7 @@ int main(int argc, const char* argv[])
   return_value = shadersTriangleUpsideDown();
   return_value = shadersHorizontalOffset();
   return_value = shadersColorAsPosition();
+  return_value = textures();
 
 #ifdef WIN_MEMORY_LEAK_CHECKER
   _CrtDumpMemoryLeaks();
