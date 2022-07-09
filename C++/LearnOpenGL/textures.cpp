@@ -11,6 +11,9 @@
 
 #include <GLFW/glfw3.h>
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "thirdparty/stb_image.h"
+
 namespace
 {
 constexpr int SCREEN_WIDTH = 800;
@@ -54,11 +57,15 @@ const char* vertexShaderSource =
         #version 330 core
         layout(location = 0) in vec3 aPos;
         layout(location = 1) in vec3 aColor;
+        layout(location = 2) in vec2 aTexCoord;
 
         out vec3 ourColor;
+        out vec2 TexCoord;
+
         void main() {
           gl_Position = vec4(aPos, 1.0);
           ourColor = aColor;
+          TexCoord = aTexCoord;
         }
       )shader";
 
@@ -66,9 +73,14 @@ const char* fragmentShaderSource =
     R"fragment(
         #version 330 core
         out vec4 FragColor;
+
         in vec3 ourColor;
+        in vec2 TexCoord;
+
+        uniform sampler2D outTexture;
+
         void main() {
-          FragColor = vec4(ourColor, 1.0f);
+          FragColor = texture(outTexture, TexCoord);
           }
       )fragment";
 
@@ -98,31 +110,48 @@ int textures()
   // Adjust the viewport in case if the window will be resized
   glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 
-  const float triangle[] = {// Position          // Color
-                            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-                            //
-                            0.0f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-                            //
-                            0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f};
+  const float vertices[] = {
+      // Positions      //Color           //Texture coords
+      0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, // top right
+      //
+      0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // bottom right
+      //
+      -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom left
+      //
+      -0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f // top left
+  };
+
+  GLuint indices[] = {0, 1, 3,
+                      //
+                      1, 2, 3};
 
   // Vertex Array Object
   GLuint VAO;
   // Vertex Buffer Object
   GLuint VBO;
+  // Elemnts buffer object
+  GLuint EBO;
   // Let's have two different buffers
   glGenVertexArrays(1, &VAO);
   glGenBuffers(1, &VBO);
+  glGenBuffers(1, &EBO);
 
   glBindVertexArray(VAO);
+
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(triangle), triangle, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
   // Attribtues when triangle contain both position and color
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
   glEnableVertexAttribArray(0);
   // Offset need to be adjusted, as the color starts after first three elements in array
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
   glEnableVertexAttribArray(1);
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+  glEnableVertexAttribArray(2);
 
   GLuint vertexShader;
   vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -146,6 +175,27 @@ int textures()
   glDeleteShader(vertexShader);
   glDeleteShader(fragmentShader);
 
+  unsigned int texture;
+  glGenTextures(1, &texture);
+  glBindTexture(GL_TEXTURE_2D, texture);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+  int textureWidth, textureHeight, nrChannels;
+  unsigned char* data = stbi_load("images/container.jpg", &textureWidth, &textureHeight, &nrChannels, 0);
+
+  if (data != nullptr) {
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+  } else {
+    std::cout << "Failed to load texture" << std::endl;
+  }
+
+  // Image was loaded into the texture we can free image data
+  stbi_image_free(data);
+
   while (!glfwWindowShouldClose(window)) {
     processInput(window);
 
@@ -153,10 +203,12 @@ int textures()
     glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
+    glBindTexture(GL_TEXTURE_2D, texture);
+
     glUseProgram(shaderProgram);
 
     glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     glfwSwapBuffers(window);
     glfwPollEvents();

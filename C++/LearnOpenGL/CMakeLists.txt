@@ -35,7 +35,7 @@ shaders_color_as_position.cpp
 textures.cpp
 )
 
-add_executable(${PROJECT_NAME} main.cpp ${HEADERS} ${SOURCES})
+add_executable(${PROJECT_NAME} main.cpp ${HEADERS} ${SOURCES} thirdparty/stb_image.h)
 
 target_link_libraries(${PROJECT_NAME}
 PUBLIC
