@@ -80,7 +80,7 @@ const char* fragmentShaderSource =
         uniform sampler2D outTexture;
 
         void main() {
-          FragColor = texture(outTexture, TexCoord);
+          FragColor = texture(outTexture, TexCoord) * vec4(ourColor, 1.0);
           }
       )fragment";
 
