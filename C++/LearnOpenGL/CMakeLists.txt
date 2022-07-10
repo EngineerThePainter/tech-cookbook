@@ -21,6 +21,10 @@ shaders_triangle_upside_down.hpp
 shaders_horizontal_offset.hpp
 shaders_color_as_position.hpp
 textures.hpp
+textures_face_reversed.hpp
+textures_experiments.hpp
+textures_centric.hpp
+textures_visibility_manipulation.hpp
 )
 
 set(SOURCES
@@ -33,6 +37,10 @@ shaders_triangle_upside_down.cpp
 shaders_horizontal_offset.cpp
 shaders_color_as_position.cpp
 textures.cpp
+textures_face_reversed.cpp
+textures_experiments.cpp
+textures_centric.cpp
+textures_visibility_manipulation.cpp
 )
 
 add_executable(${PROJECT_NAME} main.cpp ${HEADERS} ${SOURCES} thirdparty/stb_image.h)

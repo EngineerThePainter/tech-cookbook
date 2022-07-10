@@ -1,4 +1,4 @@
-#include "textures.hpp"
+#include "textures_face_reversed.hpp"
 
 #include <iostream>
 
@@ -10,11 +10,6 @@
 #include <glad/glad.h>
 
 #include <GLFW/glfw3.h>
-
-// define below must happen only once in order to use the STB library
-#ifndef STB_IMAGE_IMPLEMENTATION
-#define STB_IMAGE_IMPLEMENTATION
-#endif
 
 #include "thirdparty/stb_image.h"
 
@@ -85,13 +80,13 @@ const char* fragmentShaderSource =
         uniform sampler2D texture2;
 
         void main() {
-          FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.2);
+          FragColor = mix(texture(texture1, TexCoord), texture(texture2, vec2(1.0-TexCoord.x, TexCoord.y)), 0.2);
           }
       )fragment";
 
 } // namespace
 
-int textures()
+int texturesFaceReversed()
 {
   initialize(3, 3);
 

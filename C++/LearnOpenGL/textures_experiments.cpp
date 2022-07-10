@@ -11,11 +11,6 @@
 
 #include <GLFW/glfw3.h>
 
-// define below must happen only once in order to use the STB library
-#ifndef STB_IMAGE_IMPLEMENTATION
-#define STB_IMAGE_IMPLEMENTATION
-#endif
-
 #include "thirdparty/stb_image.h"
 
 namespace
@@ -85,13 +80,13 @@ const char* fragmentShaderSource =
         uniform sampler2D texture2;
 
         void main() {
-          FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.2);
+          FragColor = mix(texture(texture1, TexCoord), texture(texture2, vec2(2.0*TexCoord.x, 2.0*TexCoord.y)), 0.2);
           }
       )fragment";
 
 } // namespace
 
-int textures()
+int texturesExperiments()
 {
   initialize(3, 3);
 
@@ -203,8 +198,8 @@ int textures()
   unsigned int textureFace;
   glGenTextures(1, &textureFace);
   glBindTexture(GL_TEXTURE_2D, textureFace);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 

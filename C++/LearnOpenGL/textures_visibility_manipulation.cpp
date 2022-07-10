@@ -11,11 +11,6 @@
 
 #include <GLFW/glfw3.h>
 
-// define below must happen only once in order to use the STB library
-#ifndef STB_IMAGE_IMPLEMENTATION
-#define STB_IMAGE_IMPLEMENTATION
-#endif
-
 #include "thirdparty/stb_image.h"
 
 namespace
@@ -25,10 +20,16 @@ constexpr int SCREEN_HEIGHT = 600;
 
 void framebufferSizeCallback(GLFWwindow* /*window*/, int width, int height) { glViewport(0, 0, width, height); }
 
-void processInput(GLFWwindow* window)
+void processInput(GLFWwindow* window, float& blend_value)
 {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
     glfwSetWindowShouldClose(window, true);
+  }
+  if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+    blend_value += 0.1;
+  }
+  if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+    blend_value -= 0.1;
   }
 }
 
@@ -83,15 +84,16 @@ const char* fragmentShaderSource =
 
         uniform sampler2D texture1;
         uniform sampler2D texture2;
+        uniform float blend;
 
         void main() {
-          FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.2);
+          FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), blend);
           }
       )fragment";
 
 } // namespace
 
-int textures()
+int texturesVisibilityManipulation()
 {
   initialize(3, 3);
 
@@ -227,11 +229,13 @@ int textures()
 
   glUseProgram(shaderProgram);
 
+  float blend_value = 0.2f;
+
   glUniform1i(glGetUniformLocation(shaderProgram, "texture1"), 0);
   glUniform1i(glGetUniformLocation(shaderProgram, "texture2"), 1);
 
   while (!glfwWindowShouldClose(window)) {
-    processInput(window);
+    processInput(window, blend_value);
 
     // rendering happens here
     glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
@@ -243,6 +247,7 @@ int textures()
     glBindTexture(GL_TEXTURE_2D, textureFace);
 
     glUseProgram(shaderProgram);
+    glUniform1f(glGetUniformLocation(shaderProgram, "blend"), blend_value);
 
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
