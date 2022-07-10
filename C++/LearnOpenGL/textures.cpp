@@ -77,10 +77,11 @@ const char* fragmentShaderSource =
         in vec3 ourColor;
         in vec2 TexCoord;
 
-        uniform sampler2D outTexture;
+        uniform sampler2D texture1;
+        uniform sampler2D texture2;
 
         void main() {
-          FragColor = texture(outTexture, TexCoord) * vec4(ourColor, 1.0);
+          FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.2);
           }
       )fragment";
 
@@ -193,8 +194,37 @@ int textures()
     std::cout << "Failed to load texture" << std::endl;
   }
 
-  // Image was loaded into the texture we can free image data
   stbi_image_free(data);
+
+  unsigned int textureFace;
+  glGenTextures(1, &textureFace);
+  glBindTexture(GL_TEXTURE_2D, textureFace);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+  int textureFaceWidth, textureFaceHeight, nrChannelsFace;
+  stbi_set_flip_vertically_on_load(true);
+  unsigned char* faceData =
+      stbi_load("images/awesomeface.png", &textureFaceWidth, &textureFaceHeight, &nrChannelsFace, 0);
+
+  if (faceData != nullptr) {
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureFaceWidth, textureFaceHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+                 faceData);
+    glGenerateMipmap(GL_TEXTURE_2D);
+  } else {
+    std::cout << "Failed to load texture" << std::endl;
+  }
+
+  // Image was loaded into the texture we can free image data
+
+  stbi_image_free(faceData);
+
+  glUseProgram(shaderProgram);
+
+  glUniform1i(glGetUniformLocation(shaderProgram, "texture1"), 0);
+  glUniform1i(glGetUniformLocation(shaderProgram, "texture2"), 1);
 
   while (!glfwWindowShouldClose(window)) {
     processInput(window);
@@ -203,7 +233,10 @@ int textures()
     glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, textureFace);
 
     glUseProgram(shaderProgram);
 
