@@ -26,6 +26,7 @@ textures_experiments.hpp
 textures_centric.hpp
 textures_visibility_manipulation.hpp
 transformations.hpp
+transformations_second_container.hpp
 )
 
 set(SOURCES
@@ -43,6 +44,7 @@ textures_experiments.cpp
 textures_centric.cpp
 textures_visibility_manipulation.cpp
 transformations.cpp
+transformations_second_container.cpp
 )
 
 add_executable(${PROJECT_NAME} main.cpp ${HEADERS} ${SOURCES} thirdparty/stb_image.h)

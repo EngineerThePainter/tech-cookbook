@@ -1,4 +1,4 @@
-#include "textures.hpp"
+#include "transformations_second_container.hpp"
 
 #include <iostream>
 
@@ -12,6 +12,10 @@
 #include <GLFW/glfw3.h>
 
 #include "thirdparty/stb_image.h"
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace
 {
@@ -61,8 +65,10 @@ const char* vertexShaderSource =
         out vec3 ourColor;
         out vec2 TexCoord;
 
+        uniform mat4 transform;
+
         void main() {
-          gl_Position = vec4(aPos, 1.0);
+          gl_Position = transform * vec4(aPos, 1.0);
           ourColor = aColor;
           TexCoord = aTexCoord;
         }
@@ -86,11 +92,12 @@ const char* fragmentShaderSource =
 
 } // namespace
 
-int texturesCentric()
+int transformationsSecondContainer()
 {
   initialize(3, 3);
 
-  GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "texturesCentric", nullptr, nullptr);
+  GLFWwindow* window =
+      glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "transformationsSecondContainer", nullptr, nullptr);
   if (window == nullptr) {
     std::cout << "Failed to create GLFW window\n";
     destroy();
@@ -112,13 +119,13 @@ int texturesCentric()
 
   const float vertices[] = {
       // Positions      //Color           //Texture coords
-      0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.55f, 0.55f, // top right
+      0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, // top right
       //
-      0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.55f, 0.45f, // bottom right
+      0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // bottom right
       //
-      -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.45f, 0.45f, // bottom left
+      -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom left
       //
-      -0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.45f, 0.55f // top left
+      -0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f // top left
   };
 
   GLuint indices[] = {0, 1, 3,
@@ -180,8 +187,8 @@ int texturesCentric()
   glBindTexture(GL_TEXTURE_2D, texture);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
   int textureWidth, textureHeight, nrChannels;
   unsigned char* data = stbi_load("images/container.jpg", &textureWidth, &textureHeight, &nrChannels, 0);
@@ -200,8 +207,8 @@ int texturesCentric()
   glBindTexture(GL_TEXTURE_2D, textureFace);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
   int textureFaceWidth, textureFaceHeight, nrChannelsFace;
   stbi_set_flip_vertically_on_load(true);
@@ -239,7 +246,32 @@ int texturesCentric()
 
     glUseProgram(shaderProgram);
 
+    glm::mat4 trans = glm::mat4(1.0f);
+    /*
+    The operations are applied in a reverse order - first the rotation is applied, then translation.
+    If we would change the order, first the element would be translated, then rotated over it's new origin point
+    which will cause it rotating around the screen.
+    */
+    trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0));
+    trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+
+    unsigned int transformLoc = glGetUniformLocation(shaderProgram, "transform");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+
     glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+    trans = glm::mat4(1.0f);
+    /*
+    The operations are applied in a reverse order - first the rotation is applied, then translation.
+    If we would change the order, first the element would be translated, then rotated over it's new origin point
+    which will cause it rotating around the screen.
+    */
+    trans = glm::translate(trans, glm::vec3(-0.5f, 0.5f, 0.0));
+    trans = glm::scale(trans, glm::vec3(sin(glfwGetTime())));
+
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     glfwSwapBuffers(window);

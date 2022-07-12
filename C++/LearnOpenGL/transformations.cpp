@@ -96,7 +96,7 @@ int transformations()
 {
   initialize(3, 3);
 
-  GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "LearnOpenGL", nullptr, nullptr);
+  GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "transformations", nullptr, nullptr);
   if (window == nullptr) {
     std::cout << "Failed to create GLFW window\n";
     destroy();
@@ -246,6 +246,11 @@ int transformations()
     glUseProgram(shaderProgram);
 
     glm::mat4 trans = glm::mat4(1.0f);
+    /*
+    The operations are applied in a reverse order - first the rotation is applied, then translation.
+    If we would change the order, first the element would be translated, then rotated over it's new origin point
+    which will cause it rotating around the screen.
+    */
     trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0));
     trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
 
