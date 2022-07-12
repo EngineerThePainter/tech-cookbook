@@ -6,6 +6,13 @@
 #include "shaders_color_as_position.hpp"
 #include "shaders_horizontal_offset.hpp"
 #include "shaders_triangle_upside_down.hpp"
+#include "textures.hpp"
+#include "textures_centric.hpp"
+#include "textures_experiments.hpp"
+#include "textures_face_reversed.hpp"
+#include "textures_visibility_manipulation.hpp"
+#include "transformations.hpp"
+#include "transformations_second_container.hpp"
 
 #ifdef _DEBUG
 #ifdef _WIN32
@@ -35,6 +42,13 @@ int main(int argc, const char* argv[])
   return_value = shadersTriangleUpsideDown();
   return_value = shadersHorizontalOffset();
   return_value = shadersColorAsPosition();
+  return_value = textures();
+  return_value = texturesFaceReversed();
+  return_value = texturesExperiments();
+  return_value = texturesCentric();
+  return_value = texturesVisibilityManipulation();
+  return_value = transformations();
+  return_value = transformationsSecondContainer();
 
 #ifdef WIN_MEMORY_LEAK_CHECKER
   _CrtDumpMemoryLeaks();

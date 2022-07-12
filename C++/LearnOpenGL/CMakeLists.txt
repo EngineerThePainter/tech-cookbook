@@ -20,6 +20,13 @@ shaders.hpp
 shaders_triangle_upside_down.hpp
 shaders_horizontal_offset.hpp
 shaders_color_as_position.hpp
+textures.hpp
+textures_face_reversed.hpp
+textures_experiments.hpp
+textures_centric.hpp
+textures_visibility_manipulation.hpp
+transformations.hpp
+transformations_second_container.hpp
 )
 
 set(SOURCES
@@ -31,11 +38,21 @@ shaders.cpp
 shaders_triangle_upside_down.cpp
 shaders_horizontal_offset.cpp
 shaders_color_as_position.cpp
+textures.cpp
+textures_face_reversed.cpp
+textures_experiments.cpp
+textures_centric.cpp
+textures_visibility_manipulation.cpp
+transformations.cpp
+transformations_second_container.cpp
 )
 
-add_executable(${PROJECT_NAME} main.cpp ${HEADERS} ${SOURCES})
+add_executable(${PROJECT_NAME} main.cpp ${HEADERS} ${SOURCES} thirdparty/stb_image.h)
 
 target_link_libraries(${PROJECT_NAME}
 PUBLIC
 ${CONAN_TARGETS}
 )
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD 
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/images/ ${CMAKE_BINARY_DIR}/bin/images/)

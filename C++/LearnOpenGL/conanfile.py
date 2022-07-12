@@ -9,7 +9,8 @@ class LearnOpenGL(ConanFile):
     ("opengl/system"),
     ("glad/0.1.35"),
     ("glfw/3.3.7"),
-    ("glew/2.2.0")
+    ("glew/2.2.0"),
+    ("glm/0.9.9.8")
     ]
 
   default_options = {

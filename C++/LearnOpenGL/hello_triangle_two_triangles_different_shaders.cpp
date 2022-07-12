@@ -81,7 +81,8 @@ int helloTriangleTwoTrianglesDifferentShaders()
 {
   initialize(3, 3);
 
-  GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "LearnOpenGL", nullptr, nullptr);
+  GLFWwindow* window =
+      glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "helloTriangleTwoTrianglesDifferentShaders", nullptr, nullptr);
   if (window == nullptr) {
     std::cout << "Failed to create GLFW window\n";
     destroy();
