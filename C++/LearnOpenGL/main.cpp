@@ -11,6 +11,7 @@
 #include "textures_experiments.hpp"
 #include "textures_face_reversed.hpp"
 #include "textures_visibility_manipulation.hpp"
+#include "transformations.hpp"
 
 #ifdef _DEBUG
 #ifdef _WIN32
@@ -32,19 +33,20 @@ int main(int argc, const char* argv[])
 #endif
 
   int return_value = 0;
-  return_value = helloTriangle();
-  return_value = helloTriangleTwoTriangles();
-  return_value = helloTriangleTwoTrianglesDifferentBuffers();
-  return_value = helloTriangleTwoTrianglesDifferentShaders();
-  return_value = shaders();
-  return_value = shadersTriangleUpsideDown();
-  return_value = shadersHorizontalOffset();
-  return_value = shadersColorAsPosition();
+  // return_value = helloTriangle();
+  // return_value = helloTriangleTwoTriangles();
+  // return_value = helloTriangleTwoTrianglesDifferentBuffers();
+  // return_value = helloTriangleTwoTrianglesDifferentShaders();
+  // return_value = shaders();
+  // return_value = shadersTriangleUpsideDown();
+  // return_value = shadersHorizontalOffset();
+  // return_value = shadersColorAsPosition();
   return_value = textures();
-  return_value = texturesFaceReversed();
-  return_value = texturesExperiments();
-  return_value = texturesCentric();
-  return_value = texturesVisibilityManipulation();
+  // return_value = texturesFaceReversed();
+  // return_value = texturesExperiments();
+  // return_value = texturesCentric();
+  // return_value = texturesVisibilityManipulation();
+  return_value = transformations();
 
 #ifdef WIN_MEMORY_LEAK_CHECKER
   _CrtDumpMemoryLeaks();
