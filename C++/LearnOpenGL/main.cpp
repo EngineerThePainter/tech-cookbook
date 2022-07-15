@@ -15,6 +15,7 @@
 #include "textures_visibility_manipulation.hpp"
 #include "transformations.hpp"
 #include "transformations_second_container.hpp"
+#include "camera.hpp"
 
 #ifdef _DEBUG
 #ifdef _WIN32
@@ -51,8 +52,9 @@ int main(int argc, const char* argv[])
   // return_value = texturesVisibilityManipulation();
   // return_value = transformations();
   // return_value = transformationsSecondContainer();
-  return_value = coordinates();
-  return_value = coordinatesContainerRotating();
+  // return_value = coordinates();
+  // return_value = coordinatesContainerRotating();
+  return_value = camera();
 
 #ifdef WIN_MEMORY_LEAK_CHECKER
   _CrtDumpMemoryLeaks();

@@ -29,6 +29,7 @@ transformations.hpp
 transformations_second_container.hpp
 coordinates.hpp
 coordinates_container_rotating.hpp
+camera.hpp
 )
 
 set(SOURCES
@@ -49,6 +50,7 @@ transformations.cpp
 transformations_second_container.cpp
 coordinates.cpp
 coordinates_container_rotating.cpp
+camera.cpp
 )
 
 add_executable(${PROJECT_NAME} main.cpp ${HEADERS} ${SOURCES} thirdparty/stb_image.h)
