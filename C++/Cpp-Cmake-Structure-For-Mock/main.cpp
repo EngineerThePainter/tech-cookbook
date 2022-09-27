@@ -2,6 +2,8 @@
 #include <memory>
 
 #include <classes/animal.hpp>
+#include <classes/user.hpp>
+#include <classes/user_actions.hpp>
 
 void fun(const animals::Animal& animal)
 {
@@ -20,5 +22,13 @@ int main(int argc, const char** argv[])
   animal_shared->Run();
   animal_shared->Eat(125.0f);
   fun(*animal_shared);
+
+  std::cout << "Now with template mocking class\n";
+  user::UserActions actions;
+
+  user::User<user::UserActions> user(actions);
+  user.PerformAction(user::ActionType::JUMP);
+  user.PerformAction(user::ActionType::RUN);
+  user.PerformAction(user::ActionType::SWIM);
   return 0;
 }

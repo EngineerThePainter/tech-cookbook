@@ -1,5 +1,5 @@
-#ifndef ANIMALS_ANIMAL_HPP
-#define ANIMALS_ANIMAL_HPP
+#ifndef CLASSES_ANIMAL_HPP
+#define CLASSES_ANIMAL_HPP
 
 #include <memory>
 
