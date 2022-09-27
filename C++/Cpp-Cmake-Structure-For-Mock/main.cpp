@@ -1,7 +1,7 @@
 #include <iostream>
 #include <memory>
 
-#include <animals/animal.hpp>
+#include <classes/animal.hpp>
 
 void fun(const animals::Animal& animal)
 {

@@ -1,7 +1,7 @@
-project(animals)
+project(classes)
 
 set(HEADERS
-include/animals/animal.hpp
+include/classes/animal.hpp
 )
 
 set(SOURCES

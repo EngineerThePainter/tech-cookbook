@@ -8,6 +8,7 @@ namespace animals
 class Animal
 {
 public:
+  virtual ~Animal() = default;
   virtual void Run() const = 0;
   virtual void Eat(float calories) = 0;
   virtual float Weight() = 0;

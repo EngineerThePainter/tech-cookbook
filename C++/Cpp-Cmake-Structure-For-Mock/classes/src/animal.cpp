@@ -1,4 +1,4 @@
-#include "animals/animal.hpp"
+#include "classes/animal.hpp"
 
 #include <iostream>
 
@@ -9,6 +9,7 @@ namespace
 class AnimalImpl : public Animal
 {
 public:
+  ~AnimalImpl() override {}
   AnimalImpl(float weight) : weight_(weight) { std::cout << "AnimalImpl constructor" << std::endl; }
   AnimalImpl(AnimalImpl& AnimalImpl)
   {

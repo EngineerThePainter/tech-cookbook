@@ -16,4 +16,3 @@ class CppCmakeStructureForGmock(ConanFile):
     cmake = CMake(self)
     cmake.configure()
     cmake.build()
-    cmake.test(output_on_failure=True)

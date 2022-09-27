@@ -8,6 +8,6 @@ add_executable(${PROJECT_NAME} main.cpp)
 
 target_link_libraries(${PROJECT_NAME}
 PUBLIC
-animals)
+classes)
 
-add_subdirectory(animals)
+add_subdirectory(classes)
