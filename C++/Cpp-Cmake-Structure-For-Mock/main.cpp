@@ -11,7 +11,7 @@ void fun(const animals::Animal& animal)
   a.Run();
 }
 
-int main(int argc, const char** argv[])
+int main(int argc, const char** argv)
 {
   std::unique_ptr<animals::Animal> animal = animals::GetAnimal(54.0f);
   animal->Run();
