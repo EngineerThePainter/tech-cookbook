@@ -11,7 +11,7 @@ enum class ActionType { RUN = 0, JUMP, SWIM };
 template <typename Actions> class User
 {
 public:
-  User(const Actions& actions) : actions_(actions) {}
+  User(Actions& actions) : actions_(actions) {}
   ~User() = default;
 
   void PerformAction(const ActionType& type)
@@ -30,7 +30,7 @@ public:
   }
 
 private:
-  Actions actions_;
+  Actions& actions_;
 };
 
 } // namespace user
