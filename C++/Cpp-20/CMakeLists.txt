@@ -16,6 +16,8 @@ three_way_comparison.hpp
 three_way_comparison.cpp
 designated_initializer.hpp
 designated_initializer.cpp
+init_statement_initializer_ranged_for.hpp
+init_statement_initializer_ranged_for.cpp
 )
 
 add_executable(${PROJECT_NAME} main.cpp ${SOURCES})
