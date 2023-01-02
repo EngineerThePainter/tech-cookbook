@@ -22,6 +22,8 @@ likely_unlikely.hpp
 likely_unlikely.cpp
 consteval_and_constinit.hpp
 consteval_and_constinit.cpp
+coroutine.hpp
+coroutine.cpp
 )
 
 add_executable(${PROJECT_NAME} main.cpp ${SOURCES})
