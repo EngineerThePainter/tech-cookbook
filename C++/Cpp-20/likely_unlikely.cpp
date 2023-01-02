@@ -18,8 +18,8 @@ int getRandomInt()
 
 void funWithoutAttributes(int value)
 {
-  if (value % 6 == 0) {
-    ++value;
+  if (value > 10) {
+    funWithoutAttributes(value - 1);
   } else {
     value += 2;
   }
@@ -27,9 +27,9 @@ void funWithoutAttributes(int value)
 
 void funWithAttributes(int value)
 {
-  if (value % 6 == 0) [[unlikely]] {
-    ++value;
-  } else [[likely]] {
+  if (value > 10) [[likely]] {
+    funWithAttributes(value - 1);
+  } else [[unlikely]] {
     value += 2;
   }
 }

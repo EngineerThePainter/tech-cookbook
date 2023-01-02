@@ -20,6 +20,8 @@ init_statement_initializer_ranged_for.hpp
 init_statement_initializer_ranged_for.cpp
 likely_unlikely.hpp
 likely_unlikely.cpp
+consteval_and_constinit.hpp
+consteval_and_constinit.cpp
 )
 
 add_executable(${PROJECT_NAME} main.cpp ${SOURCES})
