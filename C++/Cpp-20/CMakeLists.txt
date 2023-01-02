@@ -18,6 +18,8 @@ designated_initializer.hpp
 designated_initializer.cpp
 init_statement_initializer_ranged_for.hpp
 init_statement_initializer_ranged_for.cpp
+likely_unlikely.hpp
+likely_unlikely.cpp
 )
 
 add_executable(${PROJECT_NAME} main.cpp ${SOURCES})
