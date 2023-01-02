@@ -1,5 +1,7 @@
 package wvd.springboot.sleuth;
 
+import brave.Span;
+import brave.Tracer;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +18,13 @@ public class SleuthController {
     private final SleuthService sleuthService;
     private final Executor executor;
 
+    private final Tracer tracer;
+
     @Autowired
-    public SleuthController(SleuthService sleuthService, Executor executor) {
+    public SleuthController(SleuthService sleuthService, Executor executor, Tracer tracer) {
         this.sleuthService = sleuthService;
         this.executor = executor;
+        this.tracer = tracer;
     }
 
     @RequestMapping("/")
@@ -66,5 +71,18 @@ public class SleuthController {
         sleuthService.asyncMethod();
         log.info("After async method call");
         return "success";
+    }
+
+    @GetMapping("/traceid")
+    public String getSleuthTraceId() {
+        log.info("hello from the traceId");
+        Span span = tracer.currentSpan();
+        if (span != null) {
+            log.info("Trace Id hex {}", span.context().traceIdString());
+            log.info("Trace Id decimal {}", span.context().traceId());
+            log.info("Span Id hex {}", span.context().spanIdString());
+            log.info("Span Id decimal {}", span.context().spanId());
+        }
+        return "hello from the traceId";
     }
 }
