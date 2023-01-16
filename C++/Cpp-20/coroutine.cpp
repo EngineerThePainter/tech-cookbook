@@ -74,7 +74,7 @@ template <typename T> struct Generator {
 
     template <std::convertible_to<T> From> std::suspend_always yield_value(From&& from)
     {
-      std::cout << "Yield Value ";
+      std::cout << "Yield Value \n";
       value_ = std::forward<From>(from); // catching the result in promise
       return {};
     }
@@ -165,10 +165,10 @@ void generate_sequence()
 void coroutine()
 {
   std::cout << "Coroutines \n" << std::endl;
-  // std::cout << "co_await\n";
-  // std::jthread out;
-  // resumingOnNewthread(out);
-  // out.join();
+  std::cout << "co_await\n";
+  std::jthread out;
+  resumingOnNewthread(out);
+  out.join();
   std::cout << "\nCoroutine co_yield\n";
   generate_sequence();
 }
