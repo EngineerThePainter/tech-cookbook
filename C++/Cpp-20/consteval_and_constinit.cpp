@@ -14,6 +14,6 @@ constinit const unsigned int x = factorial(5);
 void constevalAndConstinit()
 {
   std::cout << "Consteval and constinit\n";
-  std::cout << "Consteval factorials: " << multiple_factorials(10, 5);
+  std::cout << "Consteval factorials: " << multiple_factorials(10, 5) << std::endl;
   std::cout << "Constinit factorial: " << x << std::endl;
 }
