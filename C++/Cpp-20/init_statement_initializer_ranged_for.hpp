@@ -1,0 +1,6 @@
+#ifndef INIT_STATEMENT_INITIALIZER_RANGED_FOR_HPP
+#define INIT_STATEMENT_INITIALIZER_RANGED_FOR_HPP
+
+void showInitStatementAndInitializerForRangedFor();
+
+#endif
