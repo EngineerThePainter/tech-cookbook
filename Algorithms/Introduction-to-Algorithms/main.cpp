@@ -9,6 +9,7 @@
 #include "greedy_activity_selector.hpp"
 #include "heap.hpp"
 #include "heap_sort.hpp"
+#include "huffman.hpp"
 #include "insertion_sort.hpp"
 #include "linked_list.hpp"
 #include "matrix_multiply.hpp"
@@ -266,6 +267,12 @@ void greedyAlgorithms()
   for (const auto& a : activitesSelectedIteratively) {
     std::cout << a.start_time_ << " : " << a.end_time_ << std::endl;
   }
+  std::cout << "Huffman codes\n";
+  std::vector<greedy::Node> startingNodes{{45, 'a'}, {13, 'b'}, {12, 'c'}, {16, 'd'}, {9, 'e'}, {5, 'f'}};
+  auto node = greedy::Huffman(startingNodes);
+  greedy::SetValues(node);
+  greedy::TreeWalk(node);
+
   std::cout << "*****************************" << std::endl;
 }
 

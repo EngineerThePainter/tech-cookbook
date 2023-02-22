@@ -1,3 +1,6 @@
+#ifndef GREEDY_ACTIVITY_SELECTOR_HPP
+#define GREEDY_ACTIVITY_SELECTOR_HPP
+
 #include <vector>
 
 namespace greedy
@@ -11,3 +14,5 @@ std::vector<Activity> recursiveActivitySelector(std::vector<Activity>& activitie
 std::vector<Activity> greedyActivitySelector(std::vector<Activity>& activities);
 
 }
+
+#endif
