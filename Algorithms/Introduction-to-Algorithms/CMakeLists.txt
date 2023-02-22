@@ -8,6 +8,8 @@ data-structures/queue.hpp
 data-structures/rb_tree.hpp
 data-structures/stack.hpp
 divide-and-conquer/maximum_subarray.hpp
+greedy/greedy_activity_selector.hpp
+greedy/huffman.hpp
 heap/heap.hpp
 matrix/matrix_multiply.hpp
 searching/binary_search.hpp
@@ -31,6 +33,8 @@ data-structures/src/queue.cpp
 data-structures/src/rb_tree.cpp
 data-structures/src/stack.cpp
 divide-and-conquer/src/maximum_subarray.cpp
+greedy/src/greedy_activity_selector.cpp
+greedy/src/huffman.cpp
 matrix/src/matrix_multiply.cpp
 searching/src/binary_search.cpp
 sorting/src/bubble_sort.cpp
@@ -54,6 +58,7 @@ target_include_directories(${PROJECT_NAME}
   PUBLIC
   data-structures
   divide-and-conquer
+  greedy
   heap
   matrix
   searching
