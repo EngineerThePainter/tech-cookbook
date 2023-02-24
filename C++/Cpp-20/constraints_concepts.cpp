@@ -7,9 +7,12 @@ void constraintsConcepts()
 {
   std::cout << "Constraints & Concepts \n" << std::endl;
 
-  std::set<int> setOfInt{1, 2, 3, 4, 5};
-  hashableFun(setOfInt);
   hashableFun("ABC");
+
+  B b;
+  C c;
+  derivedFun(b);
+  // derivedFun(c); c does not derive from A
 
   std::cout << "-----\n";
 }
