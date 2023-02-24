@@ -24,6 +24,8 @@ consteval_and_constinit.hpp
 consteval_and_constinit.cpp
 coroutine.hpp
 coroutine.cpp
+constraints_concepts.hpp
+constraints_concepts.cpp
 )
 
-add_executable(${PROJECT_NAME} main.cpp ${SOURCES})
+add_executable(${PROJECT_NAME} ${SOURCES} main.cpp)

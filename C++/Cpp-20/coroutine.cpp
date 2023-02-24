@@ -171,4 +171,5 @@ void coroutine()
   out.join();
   std::cout << "\nCoroutine co_yield\n";
   generate_sequence();
+  std::cout << "-----\n";
 }
