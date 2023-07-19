@@ -1,0 +1,6 @@
+#ifndef HELLO_TRIANGLE_TWO_TRIANGLES_DIFFERENT_BUFFERS_HPP
+#define HELLO_TRIANGLE_TWO_TRIANGLES_DIFFERENT_BUFFERS_HPP
+
+int helloTriangleTwoTrianglesDifferentBuffers();
+
+#endif

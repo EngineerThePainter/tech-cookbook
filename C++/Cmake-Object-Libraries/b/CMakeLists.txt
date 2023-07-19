@@ -1,0 +1,1 @@
+add_library(objectB OBJECT b.cpp)
