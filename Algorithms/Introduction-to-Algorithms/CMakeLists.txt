@@ -7,6 +7,8 @@ data-structures/linked_list.hpp
 data-structures/queue.hpp
 data-structures/rb_tree.hpp
 data-structures/stack.hpp
+dynamic-programming/cut_rod.hpp
+dynamic-programming/longest_common_subsequence.hpp
 divide-and-conquer/maximum_subarray.hpp
 greedy/greedy_activity_selector.hpp
 greedy/huffman.hpp
@@ -32,6 +34,8 @@ data-structures/src/linked_list.cpp
 data-structures/src/queue.cpp
 data-structures/src/rb_tree.cpp
 data-structures/src/stack.cpp
+dynamic-programming/src/cut_rod.cpp
+dynamic-programming/src/longest_common_subsequence.cpp
 divide-and-conquer/src/maximum_subarray.cpp
 greedy/src/greedy_activity_selector.cpp
 greedy/src/huffman.cpp
@@ -58,6 +62,7 @@ target_include_directories(${PROJECT_NAME}
   PUBLIC
   data-structures
   divide-and-conquer
+  dynamic-programming
   greedy
   heap
   matrix
