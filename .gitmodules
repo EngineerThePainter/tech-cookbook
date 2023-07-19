@@ -1,3 +1,6 @@
 [submodule "C++/Cpp-Libraries-Without-Package-Manager/googletest"]
 	path = C++/Cpp-Libraries-Without-Package-Manager/googletest
 	url = git@github.com:google/googletest.git
+[submodule "C++/Tracy/thirdparty/tracy"]
+	path = C++/Tracy/thirdparty/tracy
+	url = git@github.com:wolfpld/tracy.git

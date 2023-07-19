@@ -7,8 +7,10 @@
 #include "counting_sort.hpp"
 #include "cut_rod.hpp"
 #include "demo_sorting.hpp"
+#include "greedy_activity_selector.hpp"
 #include "heap.hpp"
 #include "heap_sort.hpp"
+#include "huffman.hpp"
 #include "insertion_sort.hpp"
 #include "linked_list.hpp"
 #include "longest_common_subsequence.hpp"
@@ -279,6 +281,35 @@ void longestCommonSubsequence()
   std::cout << "*****************************" << std::endl;
 }
 
+void greedyAlgorithms()
+{
+  std::cout << "*** Greedy algorithms\n";
+
+  std::cout << "Recursive activity selection\n";
+  // Recursive problem must have artificial activity at the beginning with start time and end time of zero
+  std::vector<greedy::Activity> activities_recursive{{0, 0}, {1, 4},  {3, 5},  {0, 6},  {5, 7},  {3, 9},
+                                                     {5, 9}, {6, 10}, {8, 11}, {8, 12}, {2, 14}, {12, 16}};
+  auto activitiesSelectedRecursively =
+      greedy::recursiveActivitySelector(activities_recursive, 0, activities_recursive.size());
+  for (const auto& a : activitiesSelectedRecursively) {
+    std::cout << a.start_time_ << " : " << a.end_time_ << std::endl;
+  }
+  std::cout << "Iterative activity selection\n";
+  std::vector<greedy::Activity> activities_iterative{{1, 4},  {3, 5},  {0, 6},  {5, 7},  {3, 9},  {5, 9},
+                                                     {6, 10}, {8, 11}, {8, 12}, {2, 14}, {12, 16}};
+  auto activitesSelectedIteratively = greedy::greedyActivitySelector(activities_iterative);
+  for (const auto& a : activitesSelectedIteratively) {
+    std::cout << a.start_time_ << " : " << a.end_time_ << std::endl;
+  }
+  std::cout << "Huffman codes\n";
+  std::vector<greedy::Node> startingNodes{{45, 'a'}, {13, 'b'}, {12, 'c'}, {16, 'd'}, {9, 'e'}, {5, 'f'}};
+  auto node = greedy::Huffman(startingNodes);
+  greedy::SetValues(node);
+  greedy::TreeWalk(node);
+
+  std::cout << "*****************************" << std::endl;
+}
+
 int main()
 {
   std::cout << "***** Introduction to Algorithms 3rd edition" << std::endl << std::endl;
@@ -303,8 +334,10 @@ int main()
   rbTreeUsage();
 
   cutRod();
-
+  
   longestCommonSubsequence();
+  
+  greedyAlgorithms();
 
 #ifdef WIN_MEMORY_LEAK_CHECKER
   _CrtDumpMemoryLeaks();
