@@ -2,19 +2,19 @@ import json
 import math
 
 
-def amount_for(perf, play):
+def amount_for(performance, play):
     if play['type'] == "tragedy":
-        this_amount = 40000
-        if perf["audience"] > 30:
-            this_amount += 1000 * (perf["audience"] - 30)
+        result = 40000
+        if performance["audience"] > 30:
+            result += 1000 * (performance["audience"] - 30)
     elif play['type'] == "comedy":
-        this_amount = 30000
-        if perf["audience"] > 20:
-            this_amount += 10000 + 500 * (perf["audience"] - 20)
-        this_amount += 300 * perf["audience"]
+        result = 30000
+        if performance["audience"] > 20:
+            result += 10000 + 500 * (performance["audience"] - 20)
+        result += 300 * performance["audience"]
     else:
         raise Exception(f"unknown type {play['type']}")
-    return this_amount
+    return result
 
 
 def statement(invoice, plays):
