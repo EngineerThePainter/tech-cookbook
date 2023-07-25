@@ -36,20 +36,23 @@ def volume_credits_for(performance):
     return result
 
 
+def total_volume_credits(invoice):
+    volume_credits = 0
+    for perf in invoice['performances']:
+        volume_credits += volume_credits_for(perf)
+    return volume_credits
+
+
 def statement(invoice):
     total_amount = 0
-    volume_credits = 0
     result = f"Statement for {invoice['customer']}\n"
 
     for perf in invoice['performances']:
         result += f"    {play_for(perf)['name']}: ${usd(amount_for(perf)/100)} ({perf['audience']} seats)\n"
         total_amount += amount_for(perf)
 
-    for perf in invoice['performances']:
-        volume_credits+= volume_credits_for(perf)
-
     result += f"Amount owned is ${usd(total_amount / 100)}\n"
-    result += f"You earned {volume_credits} credits\n"
+    result += f"You earned {total_volume_credits(invoice)} credits\n"
     return result
 
 
