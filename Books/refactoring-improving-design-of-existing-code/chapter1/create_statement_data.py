@@ -7,40 +7,52 @@ class PerformanceCalculator:
         self.play = play
 
     def amount(self):
-        if self.play['type'] == "tragedy":
-            result = 40000
-            if self.performance["audience"] > 30:
-                result += 1000 * (self.performance["audience"] - 30)
-        elif self.play['type'] == "comedy":
-            result = 30000
-            if self.performance["audience"] > 20:
-                result += 10000 + 500 * (self.performance["audience"] - 20)
-            result += 300 * self.performance["audience"]
-        else:
-            raise Exception(f"unknown type {self.play['type']}")
+        raise Exception("subclass responsibility")
+
+    def volume_credits(self):
+        return max(self.performance['audience'] - 30, 0)
+
+
+class TragedyCalculator(PerformanceCalculator):
+    def __init__(self, performance, play):
+        super().__init__(performance, play)
+
+    def amount(self):
+        result = 40000
+        if self.performance["audience"] > 30:
+            result += 1000 * (self.performance["audience"] - 30)
+        return result
+
+
+class ComedyCalculator(PerformanceCalculator):
+    def __init__(self, performance, play):
+        super().__init__(performance, play)
+
+    def amount(self):
+        result = 30000
+        if self.performance["audience"] > 20:
+            result += 10000 + 500 * (self.performance["audience"] - 20)
+        result += 300 * self.performance["audience"]
         return result
 
     def volume_credits(self):
-        result = 0
-        result += max(self.performance['audience'] - 30, 0)
-        if "comedy" == self.play['type']:
-            result += floor(self.performance['audience'] / 5)
-        return result
+        return super().volume_credits() + floor(self.performance["audience"] / 5)
+
+
+def create_performance_calculator(performance, play):
+    if play['type'] == "tragedy":
+        return TragedyCalculator(performance, play)
+    elif play['type'] == "comedy":
+        return ComedyCalculator(performance, play)
+    raise Exception(f"unknown type {play['type']}")
 
 
 def create_statement_data(invoice, plays):
     def play_for(performance):
         return plays[performance["playID"]]
 
-    def volume_credits_for(performance):
-        result = 0
-        result += max(performance['audience'] - 30, 0)
-        if "comedy" == performance['play']['type']:
-            result += floor(performance['audience'] / 5)
-        return result
-
     def enrich_perfomance(performance):
-        calculator = PerformanceCalculator(performance, play_for(performance))
+        calculator = create_performance_calculator(performance, play_for(performance))
         result = performance.copy()
         result['play'] = calculator.play
         result['amount'] = calculator.amount()
