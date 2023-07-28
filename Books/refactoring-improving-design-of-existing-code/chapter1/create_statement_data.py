@@ -1,22 +1,36 @@
 from math import floor
 
+
+class PerformanceCalculator:
+    def __init__(self, performance, play):
+        self.performance = performance
+        self.play = play
+
+    def amount(self):
+        if self.play['type'] == "tragedy":
+            result = 40000
+            if self.performance["audience"] > 30:
+                result += 1000 * (self.performance["audience"] - 30)
+        elif self.play['type'] == "comedy":
+            result = 30000
+            if self.performance["audience"] > 20:
+                result += 10000 + 500 * (self.performance["audience"] - 20)
+            result += 300 * self.performance["audience"]
+        else:
+            raise Exception(f"unknown type {self.play['type']}")
+        return result
+
+    def volume_credits(self):
+        result = 0
+        result += max(self.performance['audience'] - 30, 0)
+        if "comedy" == self.play['type']:
+            result += floor(self.performance['audience'] / 5)
+        return result
+
+
 def create_statement_data(invoice, plays):
     def play_for(performance):
         return plays[performance["playID"]]
-
-    def amount_for(performance):
-        if performance['play']['type'] == "tragedy":
-            result = 40000
-            if performance["audience"] > 30:
-                result += 1000 * (performance["audience"] - 30)
-        elif performance['play']['type'] == "comedy":
-            result = 30000
-            if performance["audience"] > 20:
-                result += 10000 + 500 * (performance["audience"] - 20)
-            result += 300 * performance["audience"]
-        else:
-            raise Exception(f"unknown type {performance['play']['type']}")
-        return result
 
     def volume_credits_for(performance):
         result = 0
@@ -26,10 +40,11 @@ def create_statement_data(invoice, plays):
         return result
 
     def enrich_perfomance(performance):
+        calculator = PerformanceCalculator(performance, play_for(performance))
         result = performance.copy()
-        result['play'] = play_for(result)
-        result['amount'] = amount_for(result)
-        result['volume_credits'] = volume_credits_for(result)
+        result['play'] = calculator.play
+        result['amount'] = calculator.amount()
+        result['volume_credits'] = calculator.volume_credits()
         return result
 
     def total_volume_credits(data):

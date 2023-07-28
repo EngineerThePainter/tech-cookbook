@@ -1,3 +1,4 @@
+import json
 from create_statement_data import create_statement_data
 
 
@@ -36,4 +37,14 @@ def render_html(data):
 def usd(number):
     return f"${number:.2f}$"
 
+
+def main():
+    plays = json.load(open('plays.json'))
+    invoices = json.load(open('invoices.json'))
+    for invoice in invoices:
+        print(statement(invoice, plays))
+
+
+if __name__ == "__main__":
+    main()
 
