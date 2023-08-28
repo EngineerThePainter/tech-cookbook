@@ -30,3 +30,16 @@ let withLastName: WithLastName = hasBoth;
 
 console.log(withFirstName);
 console.log(withLastName);
+
+
+type General = {
+    Nested: {
+        nested_val: string;
+    };
+    general_val: string;
+}
+
+type TypeWithOptionalProperty = {
+    optional?: string;
+    value: number;
+}
