@@ -36,3 +36,8 @@ const hasBoth : HasBothFunctionTypes = {
 
 console.log(hasBoth.property());
 console.log(hasBoth.method());
+
+type FunctionAlias = (input: string) => number;
+interface CallSignarure  {
+    (input: string) => number;
+}
