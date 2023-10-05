@@ -64,3 +64,6 @@ local.properties
 
 **/Debug/**
 **/Release/**
+
+**/HAL_Driver/**
+**/CMSIS/**
