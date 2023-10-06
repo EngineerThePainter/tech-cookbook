@@ -11,10 +11,12 @@
 
 #include "stm32f0xx.h"
 #include "stm32f0xx_nucleo.h"
-			
+
+#include <stdbool.h>
 
 int main(void)
 {
+	bool shorter_delay=true;
 	// Initializes the hardware, e.g. system clock
 	HAL_Init();
 	// Initialize the LED2 clock
@@ -28,6 +30,7 @@ int main(void)
 	for(;;) {
 		// Toggle LED2
 		HAL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
-		HAL_Delay(400);
+		HAL_Delay(shorter_delay ? 300 : 900);
+		shorter_delay = !shorter_delay;
 	}
 }
