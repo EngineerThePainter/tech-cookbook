@@ -12,7 +12,7 @@
 #include "stm32f0xx.h"
 #include "stm32f0xx_nucleo.h"
 
-#define FREQUENCIES_SIZE 4
+#define FREQUENCIES_SIZE 10
 
 int main(void)
 {
@@ -26,7 +26,7 @@ int main(void)
 	gpio_led_init.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(LED2_GPIO_PORT, &gpio_led_init);
 
-	int frequencies[FREQUENCIES_SIZE] = {500, 1000, 1500, 2000};
+	int frequencies[FREQUENCIES_SIZE] = {100, 100, 100, 300, 300, 300, 100, 300, 100, 300};
 	for(;;) {
 		for (int i = 0; i < FREQUENCIES_SIZE; ++i) {
 			HAL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
