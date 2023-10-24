@@ -8,6 +8,9 @@
   ******************************************************************************
 */
 
+#define XON 0x11
+#define XOFF 0x13
+
 #include <stdbool.h>
 #include "stm32f0xx.h"
 #include "stm32f0xx_nucleo.h"
@@ -15,6 +18,7 @@
 // String to print with new line and carriage return
 char hello[] = "Hello World\r\n";
 int current_char;
+uint8_t read_value;
 
 /*
  * @brief this function is called in case of error
@@ -31,6 +35,15 @@ void ErrorHandler(void) {
 
 UART_HandleTypeDef uart_handle;
 
+void lightLed(void) {
+	HAL_GPIO_WritePin(LED2_GPIO_PORT, LED2_PIN, GPIO_PIN_SET);
+	for (int i = 0; i < 10; ++i) {
+		HAL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
+		HAL_Delay(500);
+	}
+	HAL_Delay(1500);
+}
+
 void myPutChar(const char ch) {
 	/* Reads and saves the value of UART_FLAG_TXE at call time.
 	 * ISR is a interrupt and status register electrically connected on the board
@@ -43,9 +56,19 @@ void myPutChar(const char ch) {
 	while ((uart_handle.Instance->ISR & UART_FLAG_TXE) == 0) {
 		continue;
 	}
+	uint8_t rd;
+	HAL_UART_Receive(&uart_handle, &rd, 1, 1000);
 
-	// Send character to UART
-	uart_handle.Instance->TDR = ch;
+	if (rd == 0x13) {
+		HAL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
+		HAL_Delay(1000);
+	} else {
+		// Send character to UART
+		uart_handle.Instance->TDR = ch;
+
+	}
+
+
 }
 
 void led2_Init(void) {
@@ -73,7 +96,6 @@ void uart2_Init(void) {
 	uart_handle.Init.Mode = UART_MODE_TX_RX;
 	// No uart hardware control flow on my board
 	uart_handle.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-
 
 	uart_handle.Init.OverSampling = UART_OVERSAMPLING_16;
 	uart_handle.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;

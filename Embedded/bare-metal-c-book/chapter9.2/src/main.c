@@ -8,6 +8,7 @@
   ******************************************************************************
 */
 
+
 #include <stdbool.h>
 #include "stm32f0xx.h"
 #include "stm32f0xx_nucleo.h"
@@ -64,11 +65,11 @@ void uart2_Init(void) {
 	// Number of bits per second
 	uart_handle.Init.BaudRate = 9600;
 	// The length of the word
-	uart_handle.Init.WordLength = UART_WORDLENGTH_8B;
+	uart_handle.Init.WordLength = UART_WORDLENGTH_9B;
 	// the number of time in bits between words
 	uart_handle.Init.StopBits = UART_STOPBITS_1;
 	// Parity for simple error checking
-	uart_handle.Init.Parity = UART_PARITY_NONE;
+	uart_handle.Init.Parity = UART_PARITY_EVEN;
 	// Enable transmitter and receiver
 	uart_handle.Init.Mode = UART_MODE_TX_RX;
 	// No uart hardware control flow on my board

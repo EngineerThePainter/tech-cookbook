@@ -33,6 +33,9 @@ struct Header {
 int main(void)
 {
 	struct Header header;
-	printf("%d\n", sizeof(header));
-	for (;;) {}
+	assert(288 == sizeof(header));
+	for (;;) {
+		int x;
+		x += 1;
+	}
 }
