@@ -15,7 +15,6 @@
 #include "stm32f0xx.h"
 #include "stm32f0xx_nucleo.h"
 			
-// String to print with new line and carriage return
 char hello[] = "Hello World\r\n";
 int current_char;
 uint8_t read_value;
@@ -35,15 +34,6 @@ void ErrorHandler(void) {
 
 UART_HandleTypeDef uart_handle;
 
-void lightLed(void) {
-	HAL_GPIO_WritePin(LED2_GPIO_PORT, LED2_PIN, GPIO_PIN_SET);
-	for (int i = 0; i < 10; ++i) {
-		HAL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
-		HAL_Delay(500);
-	}
-	HAL_Delay(1500);
-}
-
 void myPutChar(const char ch) {
 	/* Reads and saves the value of UART_FLAG_TXE at call time.
 	 * ISR is a interrupt and status register electrically connected on the board
@@ -56,19 +46,8 @@ void myPutChar(const char ch) {
 	while ((uart_handle.Instance->ISR & UART_FLAG_TXE) == 0) {
 		continue;
 	}
-	uint8_t rd;
-	HAL_UART_Receive(&uart_handle, &rd, 1, 1000);
-
-	if (rd == 0x13) {
-		HAL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
-		HAL_Delay(1000);
-	} else {
-		// Send character to UART
-		uart_handle.Instance->TDR = ch;
-
-	}
-
-
+	// Send character to UART
+	uart_handle.Instance->TDR = ch;
 }
 
 void led2_Init(void) {
@@ -114,9 +93,20 @@ int main(void)
 
 	for (;;) {
 		for(current_char = 0;hello[current_char] != '\0'; ++current_char) {
+			while (read_value == XOFF) {
+				HAL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
+				HAL_Delay(500);
+				HAL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
+				HAL_UART_Receive(&uart_handle, &read_value, 1, 100);
+				if (read_value == XON) {
+					break;
+				}
+			}
+
 			myPutChar(hello[current_char]);
+
+			HAL_UART_Receive(&uart_handle, &read_value, 1, 100);
 		}
-		HAL_Delay(2500);
 	}
 }
 
