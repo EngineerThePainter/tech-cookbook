@@ -14,10 +14,8 @@
 #include <stdbool.h>
 #include "stm32f0xx.h"
 #include "stm32f0xx_nucleo.h"
-			
-char hello[] = "Hello World\r\n";
-int current_char;
-uint8_t read_value;
+
+const char hello[] = "Hello World\r\n";
 
 /*
  * @brief this function is called in case of error
@@ -90,22 +88,42 @@ int main(void)
 	HAL_Init();
 	led2_Init();
 	uart2_Init();
-
+	int current_char;
+	uint8_t read_value;
+	bool stop_sending = false;
 	for (;;) {
+
 		for(current_char = 0;hello[current_char] != '\0'; ++current_char) {
-			while (read_value == XOFF) {
+			if (read_value == XOFF) {
+				stop_sending = true;
+			}
+
+			while (stop_sending) {
+				HAL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
+				HAL_Delay(1000);
 				HAL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
 				HAL_Delay(500);
-				HAL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
-				HAL_UART_Receive(&uart_handle, &read_value, 1, 100);
+
+				if ((uart_handle.Instance->ISR & UART_FLAG_ORE) == UART_FLAG_ORE) {
+					uart_handle.Instance->ICR |= USART_ICR_ORECF;
+					for (int i = 0; i < 5; ++i) {
+						HAL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
+						HAL_Delay(200);
+						HAL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
+						HAL_Delay(200);
+					}
+				}
+
+				read_value = uart_handle.Instance->RDR;
 				if (read_value == XON) {
-					break;
+					stop_sending = false;
 				}
 			}
 
 			myPutChar(hello[current_char]);
+//			HAL_UART_Receive(&uart_handle, &read_value, 1, 100);
 
-			HAL_UART_Receive(&uart_handle, &read_value, 1, 100);
+			read_value = uart_handle.Instance->RDR;
 		}
 	}
 }
