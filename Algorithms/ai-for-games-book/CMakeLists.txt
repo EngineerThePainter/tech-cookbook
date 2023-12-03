@@ -5,10 +5,12 @@ project(ai-for-games)
 set(CMAKE_CXX_STANDARD 20)
 
 set(HEADERS 
-"allegro.hpp")
+"allegro.hpp"
+"algorithm_runner.hpp")
 
 set(SOURCES 
-"allegro.cpp")
+"allegro.cpp"
+"kinematic/seek.cpp")
 
 add_executable(ai-for-games main.cpp ${HEADERS} ${SOURCES})
 
