@@ -6,11 +6,16 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(HEADERS 
 "allegro.hpp"
-"algorithm_runner.hpp")
+"algorithm_runner.hpp"
+"kinematic/seek.hpp"
+"kinematic/kinematic_data.hpp"
+)
 
 set(SOURCES 
 "allegro.cpp"
-"kinematic/seek.cpp")
+"kinematic/seek.cpp"
+"kinematic/kinematic_data.cpp"
+)
 
 add_executable(ai-for-games main.cpp ${HEADERS} ${SOURCES})
 
@@ -22,4 +27,3 @@ loguru
 )
 
 add_subdirectory(thirdparty)
-
