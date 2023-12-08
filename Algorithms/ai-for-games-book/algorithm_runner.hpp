@@ -1,4 +1,5 @@
 #include <concepts>
+#include <type_traits>
 
 #include "allegro.hpp"
 
