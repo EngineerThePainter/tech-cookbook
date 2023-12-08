@@ -56,6 +56,8 @@ Allegro::Allegro(const int screen_width, const int screen_height, const std::str
 
   initializeDisplay(window_title, screen_width, screen_height);
 
+  initializeFont();
+
   LOG_F(INFO, "Starting timer");
   al_start_timer(timer_);
 
@@ -71,11 +73,14 @@ Allegro::~Allegro()
   al_destroy_event_queue(event_queue_);
   LOG_F(INFO, "Destroying timer");
   al_destroy_timer(timer_);
+  LOG_F(INFO, "Destroying font");
+  al_destroy_font(font_);
 }
 
 ALLEGRO_TIMER* Allegro::Timer() const { return timer_; }
 ALLEGRO_EVENT_QUEUE* Allegro::EventQueue() const { return event_queue_; }
 ALLEGRO_DISPLAY* Allegro::Display() const { return display_; }
+ALLEGRO_FONT* Allegro::Font() const { return font_; }
 
 const int Allegro::ScreenWidth() const { return al_get_display_width(display_); }
 const int Allegro::ScreenHeight() const { return al_get_display_height(display_); }
@@ -88,6 +93,7 @@ void Allegro::baseInit()
   must_init_or_throw(al_install_mouse(), "mouse");
   must_init_or_throw(al_init_image_addon(), "images");
   must_init_or_throw(al_init_primitives_addon(), "primitives");
+  must_init_or_throw(al_init_font_addon(), "fonts");
 }
 
 void Allegro::initializeTimer()
@@ -136,6 +142,12 @@ void Allegro::initializeDisplay(const std::string& window_title, int screen_widt
 
   LOG_F(INFO, "Setting additive blending");
   al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ONE);
+}
+
+void Allegro::initializeFont()
+{
+  font_ = al_create_builtin_font();
+  must_init_or_throw(font_ != nullptr, "font");
 }
 
 } // namespace aifg
