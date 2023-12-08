@@ -11,7 +11,7 @@ concept Algorithm = requires(T t) {
     t.Name()
   } -> std::same_as<const std::string>;
   {
-    t.Update(std::declval<ALLEGRO_DISPLAY*>())
+    t.Update(std::declval<ALLEGRO_DISPLAY*>(), std::declval<ALLEGRO_FONT*>())
   } -> std::same_as<void>;
 };
 
@@ -33,7 +33,7 @@ public:
       al_wait_for_event(allegro_.EventQueue(), &event);
       switch (event.type) {
       case ALLEGRO_EVENT_TIMER:
-        algorithm_.Update(allegro_.Display());
+        algorithm_.Update(allegro_.Display(), allegro_.Font());
         break;
       case ALLEGRO_EVENT_DISPLAY_CLOSE:
         finished_ = true;

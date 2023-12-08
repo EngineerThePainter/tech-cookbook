@@ -5,6 +5,7 @@
 #include <string>
 
 #include <allegro5/allegro5.h>
+#include <allegro5/allegro_font.h>
 
 namespace aifg
 {
@@ -29,6 +30,7 @@ public:
   ALLEGRO_TIMER* Timer() const;
   ALLEGRO_EVENT_QUEUE* EventQueue() const;
   ALLEGRO_DISPLAY* Display() const;
+  ALLEGRO_FONT* Font() const;
 
   const int ScreenWidth() const;
   const int ScreenHeight() const;
@@ -38,10 +40,12 @@ private:
   void initializeTimer();
   void initializeEventQueue();
   void initializeDisplay(const std::string& window_title, int screen_width = 0, int screen_height = 0);
+  void initializeFont();
 
   ALLEGRO_TIMER* timer_;
   ALLEGRO_EVENT_QUEUE* event_queue_;
   ALLEGRO_DISPLAY* display_;
+  ALLEGRO_FONT* font_;
 };
 } // namespace aifg
 
