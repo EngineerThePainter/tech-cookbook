@@ -26,8 +26,8 @@ public:
 private:
   void UpdateBodies();
 
-  KinematicBody character;
-  KinematicBody target;
+  KinematicBody character_;
+  KinematicBody target_;
 };
 } // namespace aifg
 

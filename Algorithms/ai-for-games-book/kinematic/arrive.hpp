@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "kinematic_data.hpp"
+
 struct ALLEGRO_DISPLAY;
 struct ALLEGRO_FONT;
 
@@ -20,6 +22,12 @@ public:
   const inline std::string Name() const { return "Arrive"; }
 
   void Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font);
+
+private:
+  void UpdateBodies();
+
+  KinematicBody character_;
+  KinematicBody target_;
 };
 } // namespace aifg
 
