@@ -28,23 +28,23 @@ void drawBody(const KinematicBody& body, const ALLEGRO_COLOR& color)
 }
 } // namespace
 
-Seek::Seek() : character(600, 500, 0, 0, 0, 0), target(200, 100, 0, 0, 0, 0) {}
+Seek::Seek() : character_(600, 500, 0, 0, 0, 0), target_(200, 100, 0, 0, 0, 0) {}
 
 void Seek::UpdateBodies()
 {
   // Reset positions
-  if (character.position_x_ == target.position_x_ && character.position_y_ == target.position_y_) {
-    character.velocity_x_ = 0;
-    character.velocity_y_ = 0;
-    character.rotation_ = 0;
-    character.position_x_ = 600;
-    character.position_y_ = 500;
+  if (character_.position_x_ == target_.position_x_ && character_.position_y_ == target_.position_y_) {
+    character_.velocity_x_ = 0;
+    character_.velocity_y_ = 0;
+    character_.rotation_ = 0;
+    character_.position_x_ = 600;
+    character_.position_y_ = 500;
   }
 
   // Base velocity is set to the target position
   KinematicSteeringOutput steering;
-  steering.velocity_x_ = target.position_x_ - character.position_x_;
-  steering.velocity_y_ = target.position_y_ - character.position_y_;
+  steering.velocity_x_ = target_.position_x_ - character_.position_x_;
+  steering.velocity_y_ = target_.position_y_ - character_.position_y_;
 
   // Normalize the velocity to the maximum speed
   float steering_vector_length =
@@ -53,11 +53,12 @@ void Seek::UpdateBodies()
   steering.velocity_y_ = (steering.velocity_y_ / steering_vector_length) * kMaxSpeed;
 
   // Update the orientation
-  character.orientation_ = character.NewOrientation(character.orientation_, steering.velocity_x_, steering.velocity_y_);
+  character_.orientation_ =
+      character_.NewOrientation(character_.orientation_, steering.velocity_x_, steering.velocity_y_);
   steering.rotation_ = 0;
 
   // Update the kinematic
-  character.Update(steering, 1.0f / 60.0f);
+  character_.Update(steering, 1.0f / 60.0f);
 }
 
 void Seek::Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font)
@@ -67,8 +68,8 @@ void Seek::Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font)
   al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
   al_draw_text(font, al_map_rgb(255, 255, 255), 0, 550, 0, "white - orientation");
   al_draw_text(font, al_map_rgb(255, 255, 255), 0, 570, 0, "purple - velocity direction");
-  drawBody(target, al_map_rgb(255, 0, 0));
-  drawBody(character, al_map_rgb(0, 255, 0));
+  drawBody(target_, al_map_rgb(255, 0, 0));
+  drawBody(character_, al_map_rgb(0, 255, 0));
   al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
   al_flip_display();
 }
