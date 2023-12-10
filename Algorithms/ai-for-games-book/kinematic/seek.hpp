@@ -1,3 +1,6 @@
+#ifndef AIFG_KINEMATIC_SEEK_HPP
+#define AIFG_KINEMATIC_SEEK_HPP
+
 #include <string>
 
 #include "kinematic_data.hpp"
@@ -27,3 +30,5 @@ private:
   KinematicBody target;
 };
 } // namespace aifg
+
+#endif // !AIFG_KINEMATIC_SEEK_HPP
