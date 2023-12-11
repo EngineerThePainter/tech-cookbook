@@ -4,10 +4,11 @@
 #include "algorithm_runner.hpp"
 #include "kinematic/arrive.hpp"
 #include "kinematic/seek.hpp"
+#include "kinematic/wander.hpp"
 
 namespace
 {
-enum class Option { kExit = 0, kSeek = 1, kArrive };
+enum class Option { kExit = 0, kSeek = 1, kArrive, kWander };
 
 template <typename t> void runAlgorithm()
 {
@@ -25,6 +26,7 @@ int main(int argc, char** argv)
     std::cout << "Select an option:" << std::endl;
     std::cout << "1. Seek" << std::endl;
     std::cout << "2. Arrive" << std::endl;
+    std::cout << "3. Wander" << std::endl;
     std::cout << "Pass 0 to exit" << std::endl;
     std::cin >> selected_option;
     Option option = static_cast<Option>(selected_option);
@@ -40,6 +42,10 @@ int main(int argc, char** argv)
     case Option::kArrive:
       std::cout << "Running arrive..." << std::endl;
       runAlgorithm<aifg::Arrive>();
+      break;
+    case Option::kWander:
+      std::cout << "Running wander..." << std::endl;
+      runAlgorithm<aifg::Wander>();
       break;
     }
   }

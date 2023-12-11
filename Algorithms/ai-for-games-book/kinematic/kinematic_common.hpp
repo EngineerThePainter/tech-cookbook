@@ -9,10 +9,11 @@ namespace aifg
 const constexpr float kMaxSpeed = 300.0f;
 const constexpr float kSatisfactionRadius = 100.0f;
 const constexpr float kTimeToTarget = 0.25f;
+const constexpr float kMaxRotation = 3.0f;
 
 class KinematicBody;
 
-void drawBody(const KinematicBody& body, const ALLEGRO_COLOR& color, const ALLEGRO_FONT& font);
+void drawBody(const KinematicBody& body, const ALLEGRO_COLOR& color, const ALLEGRO_FONT* font);
 
 } // namespace aifg
 

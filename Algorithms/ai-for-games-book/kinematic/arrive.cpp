@@ -21,7 +21,6 @@ void Arrive::UpdateBodies()
   if (distance < kSatisfactionRadius) {
     character_.velocity_x_ = 0;
     character_.velocity_y_ = 0;
-    return;
   }
 
   // Base velocity is set to the target position
@@ -53,8 +52,8 @@ void Arrive::Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font)
 {
   UpdateBodies();
   al_clear_to_color(al_map_rgb(0, 0, 0));
-  drawBody(character_, al_map_rgb(255, 0, 0), *font);
-  drawBody(target_, al_map_rgb(0, 255, 0), *font);
+  drawBody(character_, al_map_rgb(255, 0, 0), font);
+  drawBody(target_, al_map_rgb(0, 255, 0), font);
   al_flip_display();
 }
 } // namespace aifg

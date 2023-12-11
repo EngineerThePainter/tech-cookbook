@@ -17,11 +17,7 @@ void Seek::UpdateBodies()
 {
   // Reset positions
   if (character_.position_x_ == target_.position_x_ && character_.position_y_ == target_.position_y_) {
-    character_.velocity_x_ = 0;
-    character_.velocity_y_ = 0;
-    character_.rotation_ = 0;
-    character_.position_x_ = 600;
-    character_.position_y_ = 500;
+    character_.ResetToCenter();
   }
 
   // Base velocity is set to the target position
@@ -48,8 +44,8 @@ void Seek::Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font)
 {
   UpdateBodies();
   al_clear_to_color(al_map_rgb(0, 0, 0));
-  drawBody(target_, al_map_rgb(255, 0, 0), *font);
-  drawBody(character_, al_map_rgb(0, 255, 0), *font);
+  drawBody(target_, al_map_rgb(255, 0, 0), font);
+  drawBody(character_, al_map_rgb(0, 255, 0), font);
   al_flip_display();
 }
 } // namespace aifg
