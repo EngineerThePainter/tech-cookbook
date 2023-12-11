@@ -6,27 +6,10 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_primitives.h>
 
+#include "kinematic_common.hpp"
+
 namespace aifg
 {
-namespace
-{
-const float kMaxSpeed = 300.0f;
-
-void drawBody(const KinematicBody& body, const ALLEGRO_COLOR& color)
-{
-  al_draw_filled_circle(body.position_x_, body.position_y_, 10, color);
-  float x = body.position_x_ + sin(body.orientation_) * 20;
-  float y = body.position_y_ + cos(body.orientation_) * 20;
-
-  float velocity_length = sqrt(body.velocity_x_ * body.velocity_x_ + body.velocity_y_ * body.velocity_y_);
-  float velocity_x = (body.velocity_x_ / velocity_length) * 30;
-  float velocity_y = (body.velocity_y_ / velocity_length) * 30;
-
-  al_draw_line(body.position_x_, body.position_y_, body.position_x_ + velocity_x, body.position_y_ + velocity_y,
-               al_map_rgb(255, 0, 255), 2);
-  al_draw_line(body.position_x_, body.position_y_, x, y, al_map_rgb(255, 255, 255), 2);
-}
-} // namespace
 
 Seek::Seek() : character_(600, 500, 0, 0, 0, 0), target_(200, 100, 0, 0, 0, 0) {}
 
@@ -65,12 +48,8 @@ void Seek::Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font)
 {
   UpdateBodies();
   al_clear_to_color(al_map_rgb(0, 0, 0));
-  al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
-  al_draw_text(font, al_map_rgb(255, 255, 255), 0, 550, 0, "white - orientation");
-  al_draw_text(font, al_map_rgb(255, 255, 255), 0, 570, 0, "purple - velocity direction");
-  drawBody(target_, al_map_rgb(255, 0, 0));
-  drawBody(character_, al_map_rgb(0, 255, 0));
-  al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
+  drawBody(target_, al_map_rgb(255, 0, 0), *font);
+  drawBody(character_, al_map_rgb(0, 255, 0), *font);
   al_flip_display();
 }
 } // namespace aifg

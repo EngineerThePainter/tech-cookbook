@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include "kinematic_common.hpp"
 #include "kinematic_data.hpp"
 
 struct ALLEGRO_DISPLAY;
