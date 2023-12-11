@@ -9,6 +9,7 @@ set(HEADERS
 "algorithm_runner.hpp"
 "kinematic/arrive.hpp"
 "kinematic/seek.hpp"
+"kinematic/wander.hpp"
 "kinematic/kinematic_common.hpp"
 "kinematic/kinematic_data.hpp"
 )
@@ -17,6 +18,7 @@ set(SOURCES
 "allegro.cpp"
 "kinematic/arrive.cpp"
 "kinematic/seek.cpp"
+"kinematic/wander.cpp"
 "kinematic/kinematic_common.cpp"
 "kinematic/kinematic_data.cpp"
 )

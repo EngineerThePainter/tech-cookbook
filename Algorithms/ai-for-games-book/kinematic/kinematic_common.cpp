@@ -8,7 +8,7 @@
 
 namespace aifg
 {
-void drawBody(const KinematicBody& body, const ALLEGRO_COLOR& color, const ALLEGRO_FONT& font)
+void drawBody(const KinematicBody& body, const ALLEGRO_COLOR& color, const ALLEGRO_FONT* font)
 {
   al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
   al_draw_filled_circle(body.position_x_, body.position_y_, 10, color);
@@ -23,8 +23,8 @@ void drawBody(const KinematicBody& body, const ALLEGRO_COLOR& color, const ALLEG
                al_map_rgb(255, 0, 255), 2);
   al_draw_line(body.position_x_, body.position_y_, x, y, al_map_rgb(255, 255, 255), 2);
 
-  al_draw_text(&font, al_map_rgb(255, 255, 255), 0, 550, 0, "white - orientation");
-  al_draw_text(&font, al_map_rgb(255, 255, 255), 0, 570, 0, "purple - velocity direction");
+  al_draw_text(font, al_map_rgb(255, 255, 255), 0, 550, 0, "white - orientation");
+  al_draw_text(font, al_map_rgb(255, 255, 255), 0, 570, 0, "purple - velocity direction");
 
   al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
 }
