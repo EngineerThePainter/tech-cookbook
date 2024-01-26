@@ -1,8 +1,10 @@
 #include <string.h>
+#include <stdio.h>
 
 #include <libopencm3/stm32/usart.h>
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/gpio.h>
+#include <libopencm3/stm32/f0/nvic.h>
 
 #define LED_PORT GPIOA
 #define LED_PIN GPIO5
@@ -48,7 +50,12 @@ void send_data(void)
         {
             break;
         }
-        usart_send_blocking(USART2, data[i]);
+
+        // Wait for the TXE flag to be set
+        while ((USART_ISR(USART2) & USART_ISR_TXE) == 0)
+        {
+        }
+        usart_send(USART2, data[i]);
     }
 }
 
@@ -56,15 +63,9 @@ int main(void)
 {
     setup_led();
     setup_uart();
-
     while (1)
     {
         send_data();
-        gpio_toggle(LED_PORT, LED_PIN);
-        for (int i = 0; i < 1000000; i++)
-        {
-            __asm__("nop");
-        }
     }
     return 0;
 }
