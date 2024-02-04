@@ -1,6 +1,6 @@
 project(template-type-accepting)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 # set(HEADERS
 # no_moveable.hpp
