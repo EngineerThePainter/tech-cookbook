@@ -8,6 +8,8 @@
 #include "no_pass_by_reference_accepting.hpp"
 #include "no_assignable.hpp"
 #include "no_assignable_accepting.hpp"
+#include "no_accept_if_not_derived.hpp"
+#include "classes_with_derivatives.hpp"
 
 int main()
 {
@@ -56,5 +58,15 @@ int main()
 
     // acceptTypeWithSpecificFieldSfinae(class_with_no_specific_field);
     // acceptTypeWithSpecificFieldStaticAssert(class_with_no_specific_field);
+    std::cout << "*** ACCEPT WHEN DERIVED FROM SPECIFIC TYPE" << std::endl;
+    Derived derived;
+    NotDerived not_derived;
+    doNotAcceptIfNotDervivedStaticAssert<Derived, Base>(derived);
+    doNotAcceptIfNotDerivedSfinae<Derived, Base>(derived);
+    doNotAcceptIfNotDervivedConcept<Derived, Base>(derived);
+
+    // doNotAcceptIfNotDervivedStaticAssert<NotDerived, Base>(not_derived);
+    // doNotAcceptIfNotDerivedSfinae<NotDerived, Base>(not_derived);
+    // doNotAcceptIfNotDervivedConcept<NotDerived, Base>(not_derived);
     return 0;
 }
