@@ -65,6 +65,9 @@ int main()
     doNotAcceptIfNotDerivedSfinae<Derived, Base>(derived);
     doNotAcceptIfNotDervivedConcept<Derived, Base>(derived);
 
+    // Error changed order of types
+    // doNotAcceptIfNotDervivedConcept<Base, Derived>(derived);
+
     // doNotAcceptIfNotDervivedStaticAssert<NotDerived, Base>(not_derived);
     // doNotAcceptIfNotDerivedSfinae<NotDerived, Base>(not_derived);
     // doNotAcceptIfNotDervivedConcept<NotDerived, Base>(not_derived);

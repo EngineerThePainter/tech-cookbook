@@ -4,7 +4,7 @@
 #include <type_traits>
 
 template <typename DerivedT, typename BaseT>
-concept ShouldBeDerived = std::is_base_of<BaseT, DerivedT>::value;
+concept ShouldBeDerived = std::is_base_of_v<BaseT, DerivedT>;
 
 template <typename Derived, typename Base>
     requires ShouldBeDerived<Derived, Base>
