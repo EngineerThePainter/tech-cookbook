@@ -4,7 +4,7 @@
 #include "worker.hpp"
 
 /**
- * Waiting for thread to end, but using RAII for it
+ * Scoped thread. It takes a moved thread and it will join when it's scope ends.
  */
 
 class ScopedThread
