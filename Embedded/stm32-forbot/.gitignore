@@ -1,7 +1,6 @@
 **/generated.*
 **/bin/**
 **/.vscode/**
-
 **/*.elf
 **/*.bin
 **/.project
