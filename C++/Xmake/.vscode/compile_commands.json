@@ -1,0 +1,6 @@
+[
+{
+  "directory": "/home/wernhervondata/Repos/tech-cookbook/C++/Xmake",
+  "arguments": ["/usr/bin/clang", "-c", "-Qunused-arguments", "-m64", "-std=c++17", "-isystem", "/home/wernhervondata/Repos/vcpkg/installed/x64-linux/lib/pkgconfig/../../include", "-isystem", "/home/wernhervondata/Repos/vcpkg/installed/x64-linux/include", "-o", "build/.objs/cpp-xmake-example/linux/x86_64/release/main.cpp.o", "main.cpp"],
+  "file": "main.cpp"
+}]

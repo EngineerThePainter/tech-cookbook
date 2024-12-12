@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.cpp": "cpp",
+        "string": "cpp",
+        "stdexcept": "cpp"
+    }
+}

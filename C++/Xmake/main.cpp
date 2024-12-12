@@ -1,30 +1,40 @@
 #include <iostream>
-#include <new>
 
-struct Base {
-  virtual int transmogrify();
-};
+#include <allegro5/allegro5.h>
+#include <allegro5/allegro_primitives.h>
 
-struct Derived : Base {
-  int transmogrify() override {
-    new (this) Base;
-    return 2;
+#include <loguru/loguru.hpp>
+
+int main()
+{
+  LOG_F(INFO, "Initializing");
+  // Initialize Allegro
+  if (!al_init())
+  {
+    std::cerr << "Failed to initialize Allegro!\n";
+    return -1;
   }
-};
+  ALLEGRO_DISPLAY *display = al_create_display(800, 600);
+  if (!display)
+  {
+    std::cerr << "Failed to create display!\n";
+    return -1;
+  }
 
-int Base::transmogrify() {
-  new (this) Derived;
-  return 1;
-}
+  // Set the background color and clear the screen
+  al_clear_to_color(al_map_rgb(0, 0, 0));
 
-static_assert(sizeof(Derived) == sizeof(Base));
+  // Draw a red triangle
+  al_draw_triangle(400, 100, 300, 500, 500, 500, al_map_rgb(255, 0, 0), 5.0);
 
-int main() {
-  std::cout << "Hello\n";
-  Base base;
-  int n = base.transmogrify();
-  // int m = base.transmogrify(); // undefined behavior
-  int m = std::launder(&base)->transmogrify(); // OK
-  assert(m + n == 3);
+  // Display the output
+  al_flip_display();
+
+  // Wait for 5 seconds
+  al_rest(5.0);
+
+  // Cleanup
+  al_destroy_display(display);
+
   return 0;
 }
