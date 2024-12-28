@@ -44,8 +44,8 @@ void Seek::Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font)
 {
   UpdateBodies();
   al_clear_to_color(al_map_rgb(0, 0, 0));
-  drawBody(target_, al_map_rgb(255, 0, 0), font);
-  drawBody(character_, al_map_rgb(0, 255, 0), font);
+  drawMovingBody(target_, al_map_rgb(255, 0, 0), font);
+  drawMovingBody(character_, al_map_rgb(0, 255, 0), font);
   al_flip_display();
 }
 } // namespace aifg

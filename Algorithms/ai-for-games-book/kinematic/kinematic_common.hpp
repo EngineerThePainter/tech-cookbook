@@ -13,7 +13,7 @@ const constexpr float kMaxRotation = 8.0f;
 
 class KinematicBody;
 
-void drawBody(const KinematicBody& body, const ALLEGRO_COLOR& color, const ALLEGRO_FONT* font);
+void drawMovingBody(const KinematicBody& body, const ALLEGRO_COLOR& color, const ALLEGRO_FONT* font);
 
 } // namespace aifg
 

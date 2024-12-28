@@ -19,7 +19,7 @@ void Wander::Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font)
   UpdateBody();
   al_clear_to_color(al_map_rgb(0, 0, 0));
   // LOG_F(INFO, "%f %f", character_.position_x_, character_.position_y_);
-  drawBody(character_, al_map_rgb(255, 255, 0), font);
+  drawMovingBody(character_, al_map_rgb(255, 255, 0), font);
   al_flip_display();
 }
 
