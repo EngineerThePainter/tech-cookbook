@@ -9,7 +9,7 @@ namespace aifg
 const constexpr float kMaxSpeed = 300.0f;
 const constexpr float kSatisfactionRadius = 100.0f;
 const constexpr float kTimeToTarget = 0.25f;
-const constexpr float kMaxRotation = 3.0f;
+const constexpr float kMaxRotation = 8.0f;
 
 class KinematicBody;
 
