@@ -7,18 +7,15 @@ namespace aifg
 {
 template <typename T>
 concept Algorithm = requires(T t) {
-  {
-    t.Name()
-  } -> std::same_as<const std::string>;
-  {
-    t.Update(std::declval<ALLEGRO_DISPLAY*>(), std::declval<ALLEGRO_FONT*>())
-  } -> std::same_as<void>;
+  { t.Name() } -> std::same_as<const std::string>;
+  { t.Update(std::declval<ALLEGRO_DISPLAY*>(), std::declval<ALLEGRO_FONT*>()) } -> std::same_as<void>;
 };
 
 template <Algorithm T> class AlgorithmRunner
 {
 public:
-  AlgorithmRunner(const T& algorithm) : algorithm_(algorithm), finished_(false), allegro_(800, 600, algorithm_.Name())
+  AlgorithmRunner(const T& algorithm)
+      : algorithm_(algorithm), finished_(false), allegro_(SCREEN_WIDTH, SCREEN_HEIGHT, algorithm_.Name())
   {
   }
   AlgorithmRunner(const AlgorithmRunner&) = delete;

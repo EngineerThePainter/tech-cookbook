@@ -3,10 +3,10 @@
 
 namespace aifg
 {
-struct KinematicSteeringOutput {
-  float velocity_x_ = 0.0f;
-  float velocity_y_ = 0.0f;
-  float rotation_ = 0.0f;
+struct KinematicSteering {
+  float linear_velocity_x_ = 0.0f;
+  float linear_velocity_y_ = 0.0f;
+  float angular_velocity_ = 0.0f;
 };
 
 struct KinematicBody {
@@ -28,7 +28,7 @@ struct KinematicBody {
   KinematicBody(KinematicBody&&) = default;
   KinematicBody& operator=(KinematicBody&&) = default;
   void ResetToCenter();
-  void Update(const KinematicSteeringOutput& steering, float time);
+  void Update(const KinematicSteering& steering, float time);
   float NewOrientation(const float& current_orientation, const int& velocity_x, const int& velocity_y);
 };
 

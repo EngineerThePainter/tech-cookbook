@@ -1,7 +1,7 @@
 #include "kinematic_data.hpp"
 
 #include <cmath>
-#include <loguru.hpp>
+#include <loguru/loguru.hpp>
 
 namespace aifg
 {
@@ -16,17 +16,17 @@ void KinematicBody::ResetToCenter()
   LOG_F(INFO, "Reset to center %f %f", position_x_, position_y_);
 }
 
-void KinematicBody::Update(const KinematicSteeringOutput& steering, float time)
+void KinematicBody::Update(const KinematicSteering& steering, float time)
 {
-  position_x_ += steering.velocity_x_ * time;
-  position_y_ += steering.velocity_y_ * time;
-  LOG_F(INFO, "Velocity %f %f", steering.velocity_x_, steering.velocity_y_);
+  position_x_ += steering.linear_velocity_x_ * time;
+  position_y_ += steering.linear_velocity_y_ * time;
+  LOG_F(INFO, "Velocity %f %f", steering.linear_velocity_x_, steering.linear_velocity_y_);
   LOG_F(INFO, "Position update to %f %f", position_x_, position_y_);
-  orientation_ += steering.rotation_ * time;
+  orientation_ += steering.angular_velocity_ * time;
 
-  velocity_x_ += steering.velocity_x_ * time;
-  velocity_y_ += steering.velocity_y_ * time;
-  rotation_ += steering.rotation_ * time;
+  velocity_x_ += steering.linear_velocity_x_ * time;
+  velocity_y_ += steering.linear_velocity_y_ * time;
+  rotation_ += steering.angular_velocity_ * time;
 }
 
 float KinematicBody::NewOrientation(const float& current_orientation, const int& velocity_x, const int& velocity_y)

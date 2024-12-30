@@ -21,20 +21,20 @@ void Seek::UpdateBodies()
   }
 
   // Base velocity is set to the target position
-  KinematicSteeringOutput steering;
-  steering.velocity_x_ = target_.position_x_ - character_.position_x_;
-  steering.velocity_y_ = target_.position_y_ - character_.position_y_;
+  KinematicSteering steering;
+  steering.linear_velocity_x_ = target_.position_x_ - character_.position_x_;
+  steering.linear_velocity_y_ = target_.position_y_ - character_.position_y_;
 
   // Normalize the velocity to the maximum speed
-  float steering_vector_length =
-      sqrt(steering.velocity_x_ * steering.velocity_x_ + steering.velocity_y_ * steering.velocity_y_);
-  steering.velocity_x_ = (steering.velocity_x_ / steering_vector_length) * kMaxSpeed;
-  steering.velocity_y_ = (steering.velocity_y_ / steering_vector_length) * kMaxSpeed;
+  float steering_vector_length = sqrt(steering.linear_velocity_x_ * steering.linear_velocity_x_ +
+                                      steering.linear_velocity_y_ * steering.linear_velocity_y_);
+  steering.linear_velocity_x_ = (steering.linear_velocity_x_ / steering_vector_length) * kMaxSpeed;
+  steering.linear_velocity_y_ = (steering.linear_velocity_y_ / steering_vector_length) * kMaxSpeed;
 
   // Update the orientation
   character_.orientation_ =
-      character_.NewOrientation(character_.orientation_, steering.velocity_x_, steering.velocity_y_);
-  steering.rotation_ = 0;
+      character_.NewOrientation(character_.orientation_, steering.linear_velocity_x_, steering.linear_velocity_y_);
+  steering.angular_velocity_ = 0;
 
   // Update the kinematic
   character_.Update(steering, 1.0f / 60.0f);

@@ -2,7 +2,7 @@
 
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
-#include <loguru.hpp>
+#include <loguru/loguru.hpp>
 
 namespace aifg
 {
