@@ -67,3 +67,113 @@ local.properties
 
 **/HAL_Driver/**
 **/CMSIS/**
+
+button-interrupt/.project
+button-interrupt/LinkerScript.ld
+button-interrupt/NUCLEO-F030R8.xml
+button-interrupt/Utilities/
+button-interrupt/button-interrupt Run.cfg
+button-interrupt/inc/
+button-interrupt/src/stm32f0xx_it.c
+button-interrupt/src/syscalls.c
+button-interrupt/src/system_stm32f0xx.c
+button-interrupt/startup/
+chapter10.1/
+chapter10.2/.project
+chapter10.2/LinkerScript.ld
+chapter10.2/NUCLEO-F030R8.xml
+chapter10.2/Utilities/
+chapter10.2/chapter10.2 Run.cfg
+chapter10.2/inc/
+chapter10.2/src/stm32f0xx_it.c
+chapter10.2/src/syscalls.c
+chapter10.2/src/system_stm32f0xx.c
+chapter10.2/startup/
+chapter10/
+chapter3/.project
+chapter3/LinkerScript.ld
+chapter3/NUCLEO-F030R8.xml
+chapter3/Utilities/
+chapter3/chapter3 Debug.cfg
+chapter3/inc/
+chapter3/startup/
+chapter5.3/.project
+chapter5.3/LinkerScript.ld
+chapter5.3/NUCLEO-F030R8.xml
+chapter5.3/Utilities/
+chapter5.3/chapter5.3 Run.cfg
+chapter5.3/inc/
+chapter5.3/src/stm32f0xx_it.c
+chapter5.3/src/syscalls.c
+chapter5.3/src/system_stm32f0xx.c
+chapter5.3/startup/
+chapter5.4/.project
+chapter5.4/LinkerScript.ld
+chapter5.4/NUCLEO-F030R8.xml
+chapter5.4/Utilities/
+chapter5.4/chapter5.4 Run.cfg
+chapter5.4/inc/
+chapter5.4/src/stm32f0xx_it.c
+chapter5.4/src/syscalls.c
+chapter5.4/src/system_stm32f0xx.c
+chapter5.4/startup/
+chapter5/.project
+chapter5/LinkerScript.ld
+chapter5/NUCLEO-F030R8.xml
+chapter5/Utilities/
+chapter5/inc/
+chapter5/src/stm32f0xx_it.c
+chapter5/src/syscalls.c
+chapter5/src/system_stm32f0xx.c
+chapter5/startup/
+chapter8.4/.project
+chapter8.4/LinkerScript.ld
+chapter8.4/NUCLEO-F030R8.xml
+chapter8.4/Utilities/
+chapter8.4/chapter8.4 Debug.cfg
+chapter8.4/inc/
+chapter8.4/src/stm32f0xx_it.c
+chapter8.4/src/syscalls.c
+chapter8.4/src/system_stm32f0xx.c
+chapter8.4/startup/
+chapter9.2/.project
+chapter9.2/LinkerScript.ld
+chapter9.2/NUCLEO-F030R8.xml
+chapter9.2/Utilities/
+chapter9.2/chapter9.2 Run.cfg
+chapter9.2/inc/
+chapter9.2/src/stm32f0xx_it.c
+chapter9.2/src/syscalls.c
+chapter9.2/src/system_stm32f0xx.c
+chapter9.2/startup/
+chapter9.3/.project
+chapter9.3/LinkerScript.ld
+chapter9.3/NUCLEO-F030R8.xml
+chapter9.3/Utilities/
+chapter9.3/chapter9.3 Debug.cfg
+chapter9.3/inc/
+chapter9.3/src/stm32f0xx_it.c
+chapter9.3/src/syscalls.c
+chapter9.3/src/system_stm32f0xx.c
+chapter9.3/startup/
+chapter9.4/.project
+chapter9.4/LinkerScript.ld
+chapter9.4/NUCLEO-F030R8.xml
+chapter9.4/Utilities/
+chapter9.4/chapter9.4 Run.cfg
+chapter9.4/inc/
+chapter9.4/src/stm32f0xx_it.c
+chapter9.4/src/syscalls.c
+chapter9.4/src/system_stm32f0xx.c
+chapter9.4/startup/
+chapter9/.project
+chapter9/LinkerScript.ld
+chapter9/NUCLEO-F030R8.xml
+chapter9/Utilities/
+chapter9/chapter9 Run.cfg
+chapter9/inc/
+chapter9/src/stm32f0xx_it.c
+chapter9/src/syscalls.c
+chapter9/src/system_stm32f0xx.c
+chapter9/startup/
+
