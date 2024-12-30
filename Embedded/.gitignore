@@ -1,0 +1,9 @@
+/makefiles opencm3
+stm32-blink-no-ide/bin/
+stm32-blink-no-ide/generated.STM32F030R8T6.ld
+stm32-blink-no-ide/stm32f0-blink.bin
+stm32-blink-no-ide/stm32f0-blink.elf
+stm32-forbot/10-port-expander/src/main.c
+stm32-forbot/4-3-first-uart/
+stm32-forbot/4-8-1-commands-via-uart/
+stm32-forbot/7-interrupts/
