@@ -49,5 +49,3 @@ Allegro::allegro_image
 Allegro::allegro_font
 loguru
 )
-
-add_subdirectory(thirdparty)
