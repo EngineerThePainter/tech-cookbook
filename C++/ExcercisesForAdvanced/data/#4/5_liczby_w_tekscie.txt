@@ -1,0 +1,2 @@
+abc 12 defg -431 hij 14.4 klmno +1 prst 89.172 u99w44.55yz
+abc 42 defg -123 hij -14.4 klmno 1 prst +172.98 u99w44.55yz

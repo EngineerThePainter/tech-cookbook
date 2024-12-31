@@ -1,0 +1,11 @@
+id imie gatunek
+1 Brutus pies
+2 Misza owca
+3 Biełka kot
+4 Groguś borsuk
+5 Kima kura
+6 Piórka gołąb
+7 Futrzor szynszyl
+8 Ząbek chomik
+9 Gałka sowa
+10 Spidi żółw

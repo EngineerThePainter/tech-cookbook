@@ -1,0 +1,9 @@
+zabawka;wielkosc;cena;ilosc
+figurka batmana;3;20zl10gr;12
+pluszowy misiek;12;10zl44gr;5
+gwizdek;2;50gr;30
+gumowa noga z otwartym zlamaniem;24;150zl;1
+dron;18;300zl50gr;2
+kostka do gier rpg;4;1zl;50
+pilka do kosza;10;45zl;10
+proca;6;35zl;12

@@ -1,0 +1,4 @@
+vector<Element> V = {{10,true},{-5,false},{1,true},{50,false},
+{0,false},{0,true},{33,false}, {-5,true},{-5,true},{12,false},
+{-6,false},{-7,true},{44,false},{1,true},{20,false},{17,false},
+{19,false},{33,true},{-22,true}};
