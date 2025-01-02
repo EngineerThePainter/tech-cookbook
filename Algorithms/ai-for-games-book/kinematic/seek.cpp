@@ -13,6 +13,15 @@ namespace aifg
 
 Seek::Seek() : character_(600, 500, 0, 0, 0, 0), target_(200, 100, 0, 0, 0, 0) {}
 
+void Seek::Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font)
+{
+  UpdateBodies();
+  al_clear_to_color(al_map_rgb(0, 0, 0));
+  drawMovingBody(target_, al_map_rgb(255, 0, 0), font);
+  drawMovingBody(character_, al_map_rgb(0, 255, 0), font);
+  al_flip_display();
+}
+
 void Seek::UpdateBodies()
 {
   // Reset positions
@@ -40,12 +49,4 @@ void Seek::UpdateBodies()
   character_.Update(steering, 1.0f / 60.0f);
 }
 
-void Seek::Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font)
-{
-  UpdateBodies();
-  al_clear_to_color(al_map_rgb(0, 0, 0));
-  drawMovingBody(target_, al_map_rgb(255, 0, 0), font);
-  drawMovingBody(character_, al_map_rgb(0, 255, 0), font);
-  al_flip_display();
-}
 } // namespace aifg
