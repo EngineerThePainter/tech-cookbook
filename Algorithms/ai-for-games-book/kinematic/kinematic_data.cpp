@@ -3,38 +3,36 @@
 #include <cmath>
 #include <loguru/loguru.hpp>
 
+#include "allegro.hpp"
+
 namespace aifg
 {
 void KinematicBody::ResetToCenter()
 {
-  position_x_ = 400.0f;
-  position_y_ = 300.0f;
-  velocity_x_ = 0.0f;
-  velocity_y_ = 0.0f;
+  position_.X(SCREEN_WIDTH / 2);
+  position_.Y(SCREEN_HEIGHT / 2);
+  velocity_.X(0);
+  velocity_.Y(0);
   rotation_ = 0.0f;
   orientation_ = 0.0f;
-  LOG_F(INFO, "Reset to center %f %f", position_x_, position_y_);
+  LOG_F(INFO, "Reset to center");
 }
 
 void KinematicBody::Update(const KinematicSteering& steering, float time)
 {
-  position_x_ += steering.linear_velocity_x_ * time;
-  position_y_ += steering.linear_velocity_y_ * time;
-  LOG_F(INFO, "Velocity %f %f", steering.linear_velocity_x_, steering.linear_velocity_y_);
-  LOG_F(INFO, "Position update to %f %f", position_x_, position_y_);
+  position_ += Vector2::multiplyByScalar(steering.linear_velocity_ * time);
   orientation_ += steering.angular_velocity_ * time;
 
-  velocity_x_ += steering.linear_velocity_x_ * time;
-  velocity_y_ += steering.linear_velocity_y_ * time;
+  velocity_ += Vector2::multiplyByScalar(steering.linear_velocity_ * time);
   rotation_ += steering.angular_velocity_ * time;
 }
 
-float KinematicBody::NewOrientation(const float& current_orientation, const int& velocity_x, const int& velocity_y)
+float KinematicBody::NewOrientation(const float& current_orientation, const Vector2D& velocity)
 {
-  if (velocity_x == 0 && velocity_y == 0) {
+  if (velocity.X() == 0 && velocity.Y() == 0) {
     return current_orientation;
   }
-  return atan2(velocity_y, velocity_x);
+  return atan2(velocity.Y(), velocity.X());
 }
 
 } // namespace aifg

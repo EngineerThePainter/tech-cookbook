@@ -21,8 +21,7 @@ public:
   Wander& operator=(Wander&&) = default;
 
   const inline std::string Name() const { return "Wander"; }
-
-  void Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font);
+  x_ void Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font);
 
 private:
   void UpdateBody();

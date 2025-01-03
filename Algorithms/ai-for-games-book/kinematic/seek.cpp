@@ -7,11 +7,12 @@
 #include <allegro5/allegro_primitives.h>
 
 #include "kinematic_common.hpp"
+#include "vector2d.hpp"
 
 namespace aifg
 {
 
-Seek::Seek() : character_(600, 500, 0, 0, 0, 0), target_(200, 100, 0, 0, 0, 0) {}
+Seek::Seek() : character_({600, 500}, {}, 0, 0), target_({200, 100}, {}, 0, 0) {}
 
 void Seek::Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font)
 {
@@ -24,25 +25,15 @@ void Seek::Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font)
 
 void Seek::UpdateBodies()
 {
-  // Reset positions
-  if (character_.position_x_ == target_.position_x_ && character_.position_y_ == target_.position_y_) {
-    character_.ResetToCenter();
-  }
-
   // Base velocity is set to the target position
   KinematicSteering steering;
-  steering.linear_velocity_x_ = target_.position_x_ - character_.position_x_;
-  steering.linear_velocity_y_ = target_.position_y_ - character_.position_y_;
+  steering.linear_velocity_ = target_.position_ - character_.position_;
 
   // Normalize the velocity to the maximum speed
-  float steering_vector_length = sqrt(steering.linear_velocity_x_ * steering.linear_velocity_x_ +
-                                      steering.linear_velocity_y_ * steering.linear_velocity_y_);
-  steering.linear_velocity_x_ = (steering.linear_velocity_x_ / steering_vector_length) * kMaxSpeed;
-  steering.linear_velocity_y_ = (steering.linear_velocity_y_ / steering_vector_length) * kMaxSpeed;
+  steering.linear_velocity_.NormalizeTo(kMaxSpeed);
 
   // Update the orientation
-  character_.orientation_ =
-      character_.NewOrientation(character_.orientation_, steering.linear_velocity_x_, steering.linear_velocity_y_);
+  character_.orientation_ = character_.NewOrientation(character_.orientation_, steering.linear_velocity_);
   steering.angular_velocity_ = 0;
 
   // Update the kinematic

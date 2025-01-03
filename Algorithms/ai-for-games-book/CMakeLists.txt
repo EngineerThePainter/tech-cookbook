@@ -23,6 +23,7 @@ find_package(loguru CONFIG REQUIRED)
 
 set(HEADERS 
 "allegro_common/allegro.hpp"
+"common/vector2d.hpp"
 "algorithm_runner.hpp"
 "kinematic/arrive.hpp"
 "kinematic/seek.hpp"
@@ -34,6 +35,7 @@ set(HEADERS
 
 set(SOURCES 
 "allegro_common/allegro.cpp"
+"common/vector2d.cpp"
 "kinematic/arrive.cpp"
 "kinematic/seek.cpp"
 "kinematic/seek_dynamic.cpp"
@@ -44,7 +46,7 @@ set(SOURCES
 
 add_executable(ai-for-games main.cpp ${HEADERS} ${SOURCES})
 
-target_include_directories(${PROJECT_NAME} PUBLIC allegro_common)
+target_include_directories(${PROJECT_NAME} PUBLIC allegro_common common)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
 Allegro::allegro_main

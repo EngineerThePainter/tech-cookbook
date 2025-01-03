@@ -1,26 +1,24 @@
 #ifndef KINEMATIC_DATA_HPP_
 #define KINEMATIC_DATA_HPP_
 
+#include "vector2d.hpp"
+
 namespace aifg
 {
+
 struct KinematicSteering {
-  float linear_velocity_x_ = 0.0f;
-  float linear_velocity_y_ = 0.0f;
+  Vector2D linear_velocity_;
   float angular_velocity_ = 0.0f;
 };
 
 struct KinematicBody {
-  float position_x_;
-  float position_y_;
-  float velocity_x_;
-  float velocity_y_;
+  Vector2D position_;
+  Vector2D velocity_;
   float orientation_;
   float rotation_;
 
-  KinematicBody(float position_x, float position_y, float velocity_x, float velocity_y, float orientation,
-                float rotation)
-      : position_x_(position_x), position_y_(position_y), velocity_x_(velocity_x), velocity_y_(velocity_y),
-        orientation_(orientation), rotation_(rotation)
+  KinematicBody(Vector2D position, Vector2D velocity, float orientation, float rotation)
+      : position_(std::move(position)), velocity_(std::move(velocity)), orientation_(orientation), rotation_(rotation)
   {
   }
   KinematicBody(const KinematicBody&) = default;
@@ -29,7 +27,7 @@ struct KinematicBody {
   KinematicBody& operator=(KinematicBody&&) = default;
   void ResetToCenter();
   void Update(const KinematicSteering& steering, float time);
-  float NewOrientation(const float& current_orientation, const int& velocity_x, const int& velocity_y);
+  float NewOrientation(const float& current_orientation, const Vector2D& velocity);
 };
 
 } // namespace aifg
