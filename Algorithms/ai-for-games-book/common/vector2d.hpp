@@ -6,14 +6,16 @@ class Vector2D
 {
 public:
   static Vector2D multiplyByScalar(const Vector2D& vec, const int scalar);
-
+  static Vector2D multiplyByScalar(const Vector2D& vec, const float scalar);
+  static Vector2D divideByScalar(const Vector2D& vec, const int scalar);
+  static int distance(const Vector2D& a, const Vector2D& b);
   Vector2D();
   Vector2D(int x, int y);
 
-  Vector2D(Vector2D& other) = default;
-  Vector2D& operator=(const Vector2D& other) = default;
-  Vector2D(Vector2D&& other) = default;
-  Vector2D& operator=(const Vector2D&& other) = default;
+  Vector2D(Vector2D& other);
+  Vector2D& operator=(const Vector2D& other);
+  Vector2D(Vector2D&& other);
+  Vector2D& operator=(const Vector2D&& other);
 
   void NormalizeTo(const int& max_value);
   const int Length() const;

@@ -11,38 +11,29 @@
 namespace aifg
 {
 
-Arrive::Arrive() : character_(600, 500, 0, 0, 0, 0), target_(200, 100, 0, 0, 0, 0) {}
+Arrive::Arrive() : character_({600, 500}, {}, 0, 0), target_({200, 100}, {}, 0, 0) {}
 
 void Arrive::UpdateBodies()
 {
   // Reset positions
-  float distance =
-      sqrt(pow(character_.position_x_ - target_.position_x_, 2) + pow(character_.position_y_ - target_.position_y_, 2));
+  float distance = Vector2D::distance(character_.position_, target_.position_);
   if (distance < kSatisfactionRadius) {
-    character_.velocity_x_ = 0;
-    character_.velocity_y_ = 0;
+    character_.velocity_ = Vector2D();
   }
 
   // Base velocity is set to the target position
   KinematicSteering steering;
-  steering.linear_velocity_x_ = target_.position_x_ - character_.position_x_;
-  steering.linear_velocity_y_ = target_.position_y_ - character_.position_y_;
+  steering.linear_velocity_ = target_.position_ - character_.position_;
 
-  steering.linear_velocity_x_ = steering.linear_velocity_x_ / kTimeToTarget;
-  steering.linear_velocity_y_ = steering.linear_velocity_y_ / kTimeToTarget;
+  steering.linear_velocity_ = Vector2D::divideByScalar(steering.linear_velocity_, kTimeToTarget);
 
-  if (sqrt(steering.linear_velocity_x_ * steering.linear_velocity_x_ +
-           steering.linear_velocity_y_ * steering.linear_velocity_y_) > kMaxSpeed) {
+  if (steering.linear_velocity_.Length() > kMaxSpeed) {
     // Normalize the velocity to the maximum speed if going too fast
-    float steering_vector_length = sqrt(steering.linear_velocity_x_ * steering.linear_velocity_x_ +
-                                        steering.linear_velocity_y_ * steering.linear_velocity_y_);
-    steering.linear_velocity_x_ = (steering.linear_velocity_x_ / steering_vector_length) * kMaxSpeed;
-    steering.linear_velocity_y_ = (steering.linear_velocity_y_ / steering_vector_length) * kMaxSpeed;
+    steering.linear_velocity_.NormalizeTo(kMaxSpeed);
   }
 
   // Update the orientation
-  character_.orientation_ =
-      character_.NewOrientation(character_.orientation_, steering.linear_velocity_x_, steering.linear_velocity_y_);
+  character_.orientation_ = character_.NewOrientation(character_.orientation_, steering.linear_velocity_);
   steering.angular_velocity_ = 0;
 
   // Update the kinematic

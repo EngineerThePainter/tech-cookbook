@@ -13,8 +13,8 @@ namespace aifg
 {
 
 SeekDynamic::SeekDynamic()
-    : character_(SCREEN_WIDTH * 0.25, SCREEN_HEIGHT * 0.75, 0, 0, 0, 0),
-      target_(SCREEN_WIDTH * 0.85, SCREEN_HEIGHT * 0.1, 0, 0, 0, 0)
+    : character_({SCREEN_WIDTH * 0.25, SCREEN_HEIGHT * 0.75}, {}, 0, 0),
+      target_({SCREEN_WIDTH * 0.85, SCREEN_HEIGHT * 0.1}, {}, 0, 0)
 {
 }
 
@@ -30,25 +30,20 @@ void SeekDynamic::Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font)
 void SeekDynamic::UpdateBodies()
 {
   // Reset positions
-  if (character_.position_x_ == target_.position_x_ && character_.position_y_ == target_.position_y_) {
+  if (character_.position_.X() == target_.position_.X() && character_.position_.Y() == target_.position_.Y()) {
     character_.ResetToCenter();
   }
   KinematicSteering steering;
   // Direction to target
-  steering.linear_velocity_x_ = target_.position_x_ - character_.position_x_;
-  steering.linear_velocity_y_ = target_.position_y_ - character_.position_y_;
+  steering.linear_velocity_ = target_.position_ - character_.position_;
 
   // Set full acceleration along this direction
-  float steering_vector_length = sqrt(steering.linear_velocity_x_ * steering.linear_velocity_x_ +
-                                      steering.linear_velocity_y_ * steering.linear_velocity_y_);
-  steering.linear_velocity_x_ = (steering.linear_velocity_x_ / steering_vector_length) * kMaxAcceleration;
-  steering.linear_velocity_y_ = (steering.linear_velocity_y_ / steering_vector_length) * kMaxAcceleration;
-
+  steering.linear_velocity_.NormalizeTo(kMaxAcceleration);
   character_.Update(steering, 1.0f / 60.f);
 
   KinematicSteering target_steering;
-  target_steering.linear_velocity_x_ = 0.0f;
-  target_steering.linear_velocity_y_ = 1.0f * (kMaxSpeed / 4);
+  target_steering.linear_velocity_.X(0);
+  target_steering.linear_velocity_.Y(kMaxSpeed / 4);
   target_.Update(target_steering, 1.0f / 60.0f);
 }
 

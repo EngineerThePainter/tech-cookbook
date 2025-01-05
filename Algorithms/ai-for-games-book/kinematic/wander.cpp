@@ -13,7 +13,7 @@
 
 namespace aifg
 {
-Wander::Wander() : character_(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0, 0, 0.0f, 0.0f), distribution_(-1, 1)
+Wander::Wander() : character_({SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2}, Vector2D(), 0.0f, 0.0f), distribution_(-1, 1)
 {
   character_.orientation_ = distribution_(generator_);
 }
@@ -30,12 +30,12 @@ void Wander::Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font)
 void Wander::UpdateBody()
 {
   KinematicSteering steering;
-  if (character_.position_x_ < 0 || character_.position_x_ > SCREEN_WIDTH || character_.position_y_ < 0 ||
-      character_.position_y_ > SCREEN_HEIGHT) {
+  if (character_.position_.X() < 0 || character_.position_.X() > SCREEN_WIDTH || character_.position_.Y() < 0 ||
+      character_.position_.Y() > SCREEN_HEIGHT) {
     character_.ResetToCenter();
   } else {
-    steering.linear_velocity_x_ = kMaxSpeed * sin(character_.orientation_);
-    steering.linear_velocity_y_ = kMaxSpeed * cos(character_.orientation_);
+    steering.linear_velocity_.X(kMaxSpeed * sin(character_.orientation_));
+    steering.linear_velocity_.Y(kMaxSpeed * cos(character_.orientation_));
 
     steering.angular_velocity_ = kMaxRotation * distribution_(generator_);
   }

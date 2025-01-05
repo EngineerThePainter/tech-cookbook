@@ -20,10 +20,10 @@ void KinematicBody::ResetToCenter()
 
 void KinematicBody::Update(const KinematicSteering& steering, float time)
 {
-  position_ += Vector2::multiplyByScalar(steering.linear_velocity_ * time);
+  position_ += Vector2D::multiplyByScalar(steering.linear_velocity_, time);
   orientation_ += steering.angular_velocity_ * time;
 
-  velocity_ += Vector2::multiplyByScalar(steering.linear_velocity_ * time);
+  velocity_ += Vector2D::multiplyByScalar(steering.linear_velocity_, time);
   rotation_ += steering.angular_velocity_ * time;
 }
 
