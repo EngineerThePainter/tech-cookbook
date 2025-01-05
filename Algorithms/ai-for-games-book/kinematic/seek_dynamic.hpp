@@ -13,7 +13,7 @@ class SeekDynamic
 {
 public:
   SeekDynamic();
-  SeekDynamic(const SeekDynamic&) = default;
+  SeekDynamic(SeekDynamic&) = default;
   SeekDynamic& operator=(const SeekDynamic&) = default;
   SeekDynamic(SeekDynamic&&) = default;
   SeekDynamic& operator=(SeekDynamic&&) = default;

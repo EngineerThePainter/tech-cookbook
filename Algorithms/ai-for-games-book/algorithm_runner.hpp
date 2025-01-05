@@ -14,8 +14,8 @@ concept Algorithm = requires(T t) {
 template <Algorithm T> class AlgorithmRunner
 {
 public:
-  AlgorithmRunner(const T& algorithm)
-      : algorithm_(algorithm), finished_(false), allegro_(SCREEN_WIDTH, SCREEN_HEIGHT, algorithm_.Name())
+  AlgorithmRunner(T&& algorithm)
+      : algorithm_(std::move(algorithm)), finished_(false), allegro_(SCREEN_WIDTH, SCREEN_HEIGHT, algorithm_.Name())
   {
   }
   AlgorithmRunner(const AlgorithmRunner&) = delete;

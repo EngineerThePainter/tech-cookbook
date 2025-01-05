@@ -11,17 +11,13 @@ namespace
 {
 enum class Option { kExit = 0, kSeek = 1, kArrive, kWander, kSeekDynamic };
 
-template <typename t> void runAlgorithm()
+template <typename T> void runAlgorithm()
 {
-  t algorithm;
-  aifg::AlgorithmRunner<t> runner(algorithm);
+  aifg::AlgorithmRunner<T> runner({});
   runner.run();
 }
 } // namespace
-// TODO:
-// * add vector 2D for convienient operations and "normalize" operation
-// * unified passed "time" as result of 1.0f/60.0f
-// * better handling same parts
+
 int main(int argc, char** argv)
 {
   int selected_option = static_cast<std::underlying_type_t<Option>>(Option::kExit);

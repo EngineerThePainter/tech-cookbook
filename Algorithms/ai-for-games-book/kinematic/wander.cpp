@@ -13,7 +13,7 @@
 
 namespace aifg
 {
-Wander::Wander() : character_({SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2}, Vector2D(), 0.0f, 0.0f), distribution_(-1, 1)
+Wander::Wander() : character_({SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2}, {}, 0.0f, 0.0f), distribution_(-1, 1)
 {
   character_.orientation_ = distribution_(generator_);
 }
@@ -40,7 +40,7 @@ void Wander::UpdateBody()
     steering.angular_velocity_ = kMaxRotation * distribution_(generator_);
   }
 
-  character_.Update(steering, 1.0f / 60.0f);
+  character_.Update(steering, TIME);
 }
 
 } // namespace aifg

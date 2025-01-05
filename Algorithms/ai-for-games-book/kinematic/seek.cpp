@@ -2,6 +2,7 @@
 
 #include <cmath>
 
+#include "allegro.hpp"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_primitives.h>
@@ -12,7 +13,7 @@
 namespace aifg
 {
 
-Seek::Seek() : character_({600, 500}, {}, 0, 0), target_({200, 100}, {}, 0, 0) {}
+Seek::Seek() : character_({SCREEN_WIDTH * 0.8, SCREEN_HEIGHT * 0.8}, {}, 0, 0), target_({200, 100}, {}, 0, 0) {}
 
 void Seek::Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font)
 {

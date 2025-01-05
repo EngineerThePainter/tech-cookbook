@@ -2,6 +2,7 @@
 
 #include <cmath>
 
+#include "allegro.hpp"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_primitives.h>
@@ -11,7 +12,11 @@
 namespace aifg
 {
 
-Arrive::Arrive() : character_({600, 500}, {}, 0, 0), target_({200, 100}, {}, 0, 0) {}
+Arrive::Arrive()
+    : character_({SCREEN_WIDTH * 0.8, SCREEN_HEIGHT * 0.8}, {}, 0, 0),
+      target_({SCREEN_WIDTH * 0.2, SCREEN_WIDTH * 0.1}, {}, 0, 0)
+{
+}
 
 void Arrive::UpdateBodies()
 {
@@ -37,7 +42,7 @@ void Arrive::UpdateBodies()
   steering.angular_velocity_ = 0;
 
   // Update the kinematic
-  character_.Update(steering, 1.0f / 60.0f);
+  character_.Update(steering, TIME);
 }
 
 void Arrive::Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font)

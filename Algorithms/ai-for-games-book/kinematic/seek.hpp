@@ -14,7 +14,7 @@ class Seek
 {
 public:
   Seek();
-  Seek(const Seek&) = default;
+  Seek(Seek&) = default;
   Seek& operator=(const Seek&) = default;
   Seek(Seek&&) = default;
   Seek& operator=(Seek&&) = default;

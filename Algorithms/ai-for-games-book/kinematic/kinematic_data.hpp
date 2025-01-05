@@ -18,11 +18,11 @@ struct KinematicBody {
   float rotation_;
 
   KinematicBody(Vector2D position, Vector2D velocity, float orientation, float rotation)
-      : position_(std::move(position)), velocity_(std::move(velocity)), orientation_(orientation), rotation_(rotation)
+      : position_(position), velocity_(velocity), orientation_(orientation), rotation_(rotation)
   {
   }
-  KinematicBody(const KinematicBody&) = default;
-  KinematicBody& operator=(const KinematicBody&) = default;
+  KinematicBody(KinematicBody&) = default;
+  KinematicBody& operator=(KinematicBody&) = default;
   KinematicBody(KinematicBody&&) = default;
   KinematicBody& operator=(KinematicBody&&) = default;
   void ResetToCenter();
