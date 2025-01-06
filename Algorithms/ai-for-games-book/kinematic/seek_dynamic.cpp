@@ -39,12 +39,12 @@ void SeekDynamic::UpdateBodies()
 
   // Set full acceleration along this direction
   steering.linear_velocity_.NormalizeTo(kMaxAcceleration);
-  character_.Update(steering, TIME);
+  character_.Update(steering, kTime);
 
   KinematicSteering target_steering;
   target_steering.linear_velocity_.X(0);
   target_steering.linear_velocity_.Y(kMaxSpeed / 4);
-  target_.Update(target_steering, TIME);
+  target_.Update(target_steering, kTime);
 }
 
 } // namespace aifg

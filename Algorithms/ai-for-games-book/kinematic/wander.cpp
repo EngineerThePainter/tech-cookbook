@@ -40,7 +40,7 @@ void Wander::UpdateBody()
     steering.angular_velocity_ = kMaxRotation * distribution_(generator_);
   }
 
-  character_.Update(steering, TIME);
+  character_.Update(steering, kTime);
 }
 
 } // namespace aifg

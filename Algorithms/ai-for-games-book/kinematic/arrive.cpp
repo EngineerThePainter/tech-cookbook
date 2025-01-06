@@ -42,7 +42,7 @@ void Arrive::UpdateBodies()
   steering.angular_velocity_ = 0;
 
   // Update the kinematic
-  character_.Update(steering, TIME);
+  character_.Update(steering, kTime);
 }
 
 void Arrive::Update(ALLEGRO_DISPLAY* display, ALLEGRO_FONT* font)
