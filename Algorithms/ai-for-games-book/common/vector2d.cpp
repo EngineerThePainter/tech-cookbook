@@ -47,9 +47,16 @@ const float Vector2D::Y() const { return y_; };
 
 void Vector2D::NormalizeTo(const float& max_value)
 {
+  this->Normalize();
+  this->x_ *= max_value;
+  this->y_ *= max_value;
+}
+
+void Vector2D::Normalize()
+{
   const float length = this->Length();
-  this->x_ = this->x_ / length * max_value;
-  this->y_ = this->y_ / length * max_value;
+  this->x_ /= Length();
+  this->y_ /= Length();
 }
 
 const float Vector2D::Length() const { return sqrt(this->x_ * this->x_ + this->y_ * this->y_); }

@@ -30,7 +30,7 @@ void Arrive::UpdateBodies()
   KinematicSteering steering;
   steering.linear_velocity_ = target_.position_ - character_.position_;
 
-  steering.linear_velocity_ = Vector2D::divideByScalar(steering.linear_velocity_, kTimeToTarget);
+  steering.linear_velocity_ = Vector2D::divideByScalar(steering.linear_velocity_, kTimeToTargetSpeed);
 
   if (steering.linear_velocity_.Length() > kMaxSpeed) {
     // Normalize the velocity to the maximum speed if going too fast
@@ -38,7 +38,7 @@ void Arrive::UpdateBodies()
   }
 
   // Update the orientation
-  character_.orientation_ = character_.NewOrientation(character_.orientation_, steering.linear_velocity_);
+  character_.NewOrientation(steering.linear_velocity_);
   steering.angular_velocity_ = 0;
 
   // Update the kinematic

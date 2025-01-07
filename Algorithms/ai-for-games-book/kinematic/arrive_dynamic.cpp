@@ -6,6 +6,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_primitives.h>
+#include <loguru/loguru.hpp>
 
 #include "kinematic_common.hpp"
 
@@ -13,7 +14,7 @@ namespace aifg
 {
 
 ArriveDynamic::ArriveDynamic()
-    : character_({SCREEN_WIDTH * 0.8, SCREEN_HEIGHT * 0.8}, {}, 3 * M_PI / 4, 0),
+    : character_({SCREEN_WIDTH * 0.5, SCREEN_HEIGHT * 0.5}, {}, 0, 0),
       target_({SCREEN_WIDTH * 0.2, SCREEN_WIDTH * 0.1}, {}, 0, 0)
 {
 }
@@ -35,9 +36,7 @@ void ArriveDynamic::UpdateBodies()
   Vector2D direction = target_.position_ - character_.position_;
   float distance = direction.Length();
   float target_speed = 0.0f;
-  if (distance < kSatisfactionRadius) {
-    character_.Update(steering, kTime);
-  } else {
+  if (distance >= kSatisfactionRadius) {
     if (distance > kSlowRadius) {
       // Go full speed
       target_speed = kMaxSpeed;
@@ -48,25 +47,19 @@ void ArriveDynamic::UpdateBodies()
     // Target velocity combines speed and direction
     Vector2D target_velocity = direction;
     target_velocity.NormalizeTo(target_speed);
-
     // Acceleration tries to get to the target velocity
     steering.linear_velocity_ = target_velocity - character_.velocity_;
-    steering.linear_velocity_ = Vector2D::divideByScalar(steering.linear_velocity_, kTimeToTarget);
+    steering.linear_velocity_ = Vector2D::divideByScalar(steering.linear_velocity_, kTimeToTargetSpeed);
 
     // Clip too fast acceleration
     if (steering.linear_velocity_.Length() > kMaxAcceleration) {
       steering.linear_velocity_.NormalizeTo(kMaxAcceleration);
     }
-    character_.Update(steering, kTime);
+
+    // Update the orientation
+    character_.NewOrientation(steering.linear_velocity_);
+    steering.angular_velocity_ = 0;
   }
-
-  // Update the orientation
-  character_.orientation_ = character_.NewOrientation(character_.orientation_, steering.linear_velocity_);
-  steering.angular_velocity_ = 0;
-
-  KinematicSteering target_steering;
-  target_steering.linear_velocity_.X(0);
-  target_steering.linear_velocity_.Y(kMaxSpeed / 4);
-  target_.Update(target_steering, kTime);
+  character_.UpdateDynamic(steering, kTime);
 }
 } // namespace aifg

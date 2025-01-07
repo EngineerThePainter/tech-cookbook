@@ -27,7 +27,9 @@ struct KinematicBody {
   KinematicBody& operator=(KinematicBody&&) = default;
   void ResetToCenter();
   void Update(const KinematicSteering& steering, float time);
-  float NewOrientation(const float& current_orientation, const Vector2D& velocity);
+
+  void UpdateDynamic(const KinematicSteering& steering, float time);
+  void NewOrientation(const Vector2D& velocity);
 };
 
 } // namespace aifg

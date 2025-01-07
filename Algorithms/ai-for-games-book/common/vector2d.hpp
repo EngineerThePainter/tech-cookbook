@@ -17,6 +17,7 @@ public:
   Vector2D& operator=(const Vector2D&& other);
 
   void NormalizeTo(const float& max_value);
+  void Normalize();
   const float Length() const;
 
   void X(float new_x);

@@ -39,7 +39,8 @@ void SeekDynamic::UpdateBodies()
 
   // Set full acceleration along this direction
   steering.linear_velocity_.NormalizeTo(kMaxAcceleration);
-  character_.Update(steering, kTime);
+  steering.angular_velocity_ = 0;
+  character_.UpdateDynamic(steering, kTime);
 
   KinematicSteering target_steering;
   target_steering.linear_velocity_.X(0);

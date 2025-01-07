@@ -4,6 +4,7 @@
 #include <loguru/loguru.hpp>
 
 #include "allegro.hpp"
+#include "kinematic_common.hpp"
 
 namespace aifg
 {
@@ -27,12 +28,24 @@ void KinematicBody::Update(const KinematicSteering& steering, float time)
   rotation_ += steering.angular_velocity_ * time;
 }
 
-float KinematicBody::NewOrientation(const float& current_orientation, const Vector2D& velocity)
+void KinematicBody::UpdateDynamic(const KinematicSteering& steering, float time)
 {
-  if (velocity.X() == 0 && velocity.Y() == 0) {
-    return current_orientation;
+  position_ += Vector2D::multiplyByScalar(steering.linear_velocity_, time);
+  orientation_ += steering.angular_velocity_ * time;
+
+  velocity_ += Vector2D::multiplyByScalar(steering.linear_velocity_, time);
+  rotation_ += steering.angular_velocity_ * time;
+
+  if (velocity_.Length() > kMaxSpeed) {
+    velocity_.NormalizeTo(kMaxSpeed);
   }
-  return atan2(velocity.Y(), velocity.X());
+}
+
+void KinematicBody::NewOrientation(const Vector2D& velocity)
+{
+  if (velocity.X() != 0 && velocity.Y() != 0) {
+    orientation_ = atan2(-velocity.Y(), velocity.X());
+  }
 }
 
 } // namespace aifg

@@ -34,7 +34,7 @@ void Seek::UpdateBodies()
   steering.linear_velocity_.NormalizeTo(kMaxSpeed);
 
   // Update the orientation
-  character_.orientation_ = character_.NewOrientation(character_.orientation_, steering.linear_velocity_);
+  character_.NewOrientation(steering.linear_velocity_);
   steering.angular_velocity_ = 0;
 
   // Update the kinematic
