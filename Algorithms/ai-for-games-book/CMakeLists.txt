@@ -25,6 +25,7 @@ set(HEADERS
 "allegro_common/allegro.hpp"
 "common/vector2d.hpp"
 "algorithm_runner.hpp"
+"kinematic/align.hpp"
 "kinematic/arrive.hpp"
 "kinematic/arrive_dynamic.hpp"
 "kinematic/seek.hpp"
@@ -37,6 +38,7 @@ set(HEADERS
 set(SOURCES 
 "allegro_common/allegro.cpp"
 "common/vector2d.cpp"
+"kinematic/align.cpp"
 "kinematic/arrive.cpp"
 "kinematic/arrive_dynamic.cpp"
 "kinematic/seek.cpp"

@@ -31,7 +31,7 @@ void KinematicBody::Update(const KinematicSteering& steering, float time)
 void KinematicBody::UpdateDynamic(const KinematicSteering& steering, float time)
 {
   position_ += Vector2D::multiplyByScalar(steering.linear_velocity_, time);
-  orientation_ += steering.angular_velocity_ * time;
+  orientation_ += rotation_ * time;
 
   velocity_ += Vector2D::multiplyByScalar(steering.linear_velocity_, time);
   rotation_ += steering.angular_velocity_ * time;

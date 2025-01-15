@@ -22,10 +22,23 @@ void drawMovingBody(const KinematicBody& body, const ALLEGRO_COLOR& color, const
   al_draw_line(body.position_.X(), body.position_.Y(), body.position_.X() + velocity_x, body.position_.Y() + velocity_y,
                al_map_rgb(255, 0, 255), 2);
   al_draw_line(body.position_.X(), body.position_.Y(), x, y, al_map_rgb(255, 255, 255), 2);
-
   al_draw_text(font, al_map_rgb(255, 255, 255), 0, 550, 0, "white - orientation");
   al_draw_text(font, al_map_rgb(255, 255, 255), 0, 570, 0, "purple - velocity direction");
 
   al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
 }
+
+float mapToPiRange(float angleInRadians)
+{
+  const constexpr float DOUBLED_PI = 2 * M_PI;
+  while (angleInRadians > M_PI || angleInRadians < -M_PI) {
+    if (angleInRadians > M_PI) {
+      angleInRadians -= DOUBLED_PI;
+    } else {
+      angleInRadians += DOUBLED_PI;
+    }
+  }
+  return std::move(angleInRadians);
+}
+
 } // namespace aifg

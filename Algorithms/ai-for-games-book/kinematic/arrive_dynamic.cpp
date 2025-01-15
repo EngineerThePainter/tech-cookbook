@@ -6,7 +6,6 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_primitives.h>
-#include <loguru/loguru.hpp>
 
 #include "kinematic_common.hpp"
 
